@@ -99,7 +99,7 @@ export const ArticlesPage: React.FC = () => {
       <div className="max-w-5xl mx-auto">
         
         {/* Header */}
-        <div className="pb-12 border-b border-[#D8CBB3]/15">
+        <div className="p-8 sm:p-12 rounded-3xl topbar-glass-card mb-8">
           <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#2F6BFF] mb-2 font-bold">
             <BookOpen className="w-4 h-4" />
             <span>Editorial Archives & Catalog</span>
@@ -113,7 +113,7 @@ export const ArticlesPage: React.FC = () => {
         </div>
 
         {/* Filter & Search Bar */}
-        <div className="py-8 border-b border-[#D8CBB3]/15 flex flex-col sm:flex-row gap-4 items-center justify-between">
+        <div className="p-6 rounded-2xl topbar-glass-card mb-8 flex flex-col sm:flex-row gap-4 items-center justify-between">
           <div className="relative w-full sm:w-80">
             <Search className="w-4 h-4 text-[#D8CBB3]/50 absolute left-3.5 top-1/2 transform -translate-y-1/2" />
             <input
@@ -144,7 +144,7 @@ export const ArticlesPage: React.FC = () => {
         </div>
 
         {/* Article Cards Grid */}
-        <div className="mt-8 space-y-6">
+        <div className="space-y-6">
           {filtered.map((art) => {
             const isPublished = art.status === 'published';
             return (
@@ -153,7 +153,7 @@ export const ArticlesPage: React.FC = () => {
                 onClick={() => handleSelectArticle(art.slug, art.status)}
                 className={`p-6 sm:p-8 rounded-2xl border transition-all duration-300 ${
                   isPublished
-                    ? 'border-[#D8CBB3]/25 hover:border-[#2F6BFF] glass-panel-elevated cursor-pointer shadow-liquid-glass group'
+                    ? 'topbar-glass-card cursor-pointer shadow-liquid-glass group'
                     : 'border-[#D8CBB3]/10 bg-[#121210]/50 opacity-60 cursor-not-allowed'
                 }`}
               >

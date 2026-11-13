@@ -92,7 +92,7 @@ export const RIPArticlePage: React.FC = () => {
       {/* ========================================================================= */}
       {/* ARTICLE HERO */}
       {/* ========================================================================= */}
-      <header className="max-w-5xl mx-auto px-4 sm:px-8 md:px-16 pb-16 border-b border-[#D8CBB3]/15">
+      <header className="max-w-5xl mx-auto px-6 sm:px-10 md:px-14 py-12 sm:py-16 rounded-3xl topbar-glass-card mb-12">
         <div className="flex flex-wrap items-center gap-3 text-xs font-mono uppercase tracking-widest text-[#2F6BFF] mb-6 font-bold">
           <span className="px-2.5 py-1 rounded-full bg-[#2F6BFF]/20 border border-[#2F6BFF]/50 shadow-glow-electric text-[#FAF7F2]">
             ARTICLE 001
@@ -147,10 +147,10 @@ export const RIPArticlePage: React.FC = () => {
       {/* ========================================================================= */}
       {/* READING LAYOUT (Main Column: 680-780px + Sticky TOC) */}
       {/* ========================================================================= */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 md:px-12 mt-16 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 md:px-12 mt-8 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
         
         {/* Sticky Table of Contents (Desktop Sidebar) */}
-        <aside className="hidden lg:block lg:col-span-3 sticky top-28 space-y-4 max-h-[82vh] overflow-y-auto pr-3 font-mono text-xs">
+        <aside className="hidden lg:block lg:col-span-3 sticky top-28 p-5 rounded-2xl topbar-glass-card space-y-4 max-h-[82vh] overflow-y-auto pr-3 font-mono text-xs">
           <div className="text-[11px] uppercase tracking-widest text-[#D8CBB3]/60 pb-2 border-b border-[#D8CBB3]/15 flex items-center justify-between font-bold">
             <span>Article Contents</span>
             <span>15 Sections</span>
@@ -187,12 +187,12 @@ export const RIPArticlePage: React.FC = () => {
         </aside>
 
         {/* Main Editorial Reading Column (Max-W 740px) */}
-        <article className="lg:col-span-9 max-w-[740px] mx-auto text-[#D8CBB3] font-sans text-base sm:text-lg leading-relaxed space-y-16">
+        <article className="lg:col-span-9 max-w-[780px] w-full mx-auto text-[#D8CBB3] font-sans text-base sm:text-lg leading-relaxed space-y-10">
           
           {/* ========================================================================= */}
           {/* 01 — INTRODUCTION */}
           {/* ========================================================================= */}
-          <section id="sec-01" className="scroll-mt-24 space-y-6">
+          <section id="sec-01" className="scroll-mt-28 p-6 sm:p-10 md:p-12 rounded-3xl topbar-glass-card space-y-6">
             <div className="text-xs font-mono uppercase tracking-widest text-[#2F6BFF] font-bold">01 / Foundation</div>
             <h2 className="text-3xl sm:text-4xl font-serif text-[#FAF7F2] tracking-tight">Introduction</h2>
             <p>
@@ -209,7 +209,7 @@ export const RIPArticlePage: React.FC = () => {
           {/* ========================================================================= */}
           {/* 02 — UNDERSTANDING NETWORK ROUTING */}
           {/* ========================================================================= */}
-          <section id="sec-02" className="scroll-mt-24 space-y-6">
+          <section id="sec-02" className="scroll-mt-28 p-6 sm:p-10 md:p-12 rounded-3xl topbar-glass-card space-y-6">
             <div className="text-xs font-mono uppercase tracking-widest text-[#2F6BFF] font-bold">02 / Architecture</div>
             <h2 className="text-3xl sm:text-4xl font-serif text-[#FAF7F2] tracking-tight">Understanding Network Routing</h2>
             <p>
@@ -253,7 +253,7 @@ export const RIPArticlePage: React.FC = () => {
           {/* ========================================================================= */}
           {/* 03 — WHAT IS RIP? */}
           {/* ========================================================================= */}
-          <section id="sec-03" className="scroll-mt-24 space-y-6">
+          <section id="sec-03" className="scroll-mt-28 p-6 sm:p-10 md:p-12 rounded-3xl topbar-glass-card space-y-6">
             <div className="text-xs font-mono uppercase tracking-widest text-[#2F6BFF] font-bold">03 / Protocol Definition</div>
             <h2 className="text-3xl sm:text-4xl font-serif text-[#FAF7F2] tracking-tight">What is RIP?</h2>
             <p>
@@ -279,7 +279,7 @@ export const RIPArticlePage: React.FC = () => {
           {/* ========================================================================= */}
           {/* 04 — DISTANCE-VECTOR ROUTING */}
           {/* ========================================================================= */}
-          <section id="sec-04" className="scroll-mt-24 space-y-6">
+          <section id="sec-04" className="scroll-mt-28 p-6 sm:p-10 md:p-12 rounded-3xl topbar-glass-card space-y-6">
             <div className="text-xs font-mono uppercase tracking-widest text-[#2F6BFF] font-bold">04 / Algorithmic Paradigm</div>
             <h2 className="text-3xl sm:text-4xl font-serif text-[#FAF7F2] tracking-tight">Distance-Vector Routing</h2>
             <p>
@@ -296,7 +296,7 @@ export const RIPArticlePage: React.FC = () => {
           {/* ========================================================================= */}
           {/* 05 — THE BELLMAN-FORD ALGORITHM */}
           {/* ========================================================================= */}
-          <section id="sec-05" className="scroll-mt-24 space-y-6">
+          <section id="sec-05" className="scroll-mt-28 p-6 sm:p-10 md:p-12 rounded-3xl topbar-glass-card space-y-6">
             <div className="text-xs font-mono uppercase tracking-widest text-[#2F6BFF] font-bold">05 / Mathematical Engine</div>
             <h2 className="text-3xl sm:text-4xl font-serif text-[#FAF7F2] tracking-tight">The Bellman-Ford Algorithm</h2>
             <p>
@@ -326,7 +326,7 @@ export const RIPArticlePage: React.FC = () => {
           {/* ========================================================================= */}
           {/* 06 — HOW RIP WORKS */}
           {/* ========================================================================= */}
-          <section id="sec-06" className="scroll-mt-24 space-y-6">
+          <section id="sec-06" className="scroll-mt-28 p-6 sm:p-10 md:p-12 rounded-3xl topbar-glass-card space-y-6">
             <div className="text-xs font-mono uppercase tracking-widest text-[#2F6BFF] font-bold">06 / Operational Dynamics</div>
             <h2 className="text-3xl sm:text-4xl font-serif text-[#FAF7F2] tracking-tight">How RIP Works</h2>
             <p>
@@ -348,7 +348,7 @@ export const RIPArticlePage: React.FC = () => {
           {/* ========================================================================= */}
           {/* 07 — UNDERSTANDING HOP COUNT & THE 15-HOP CEILING */}
           {/* ========================================================================= */}
-          <section id="sec-07" className="scroll-mt-24 space-y-6">
+          <section id="sec-07" className="scroll-mt-28 p-6 sm:p-10 md:p-12 rounded-3xl topbar-glass-card space-y-6">
             <div className="text-xs font-mono uppercase tracking-widest text-[#2F6BFF] font-bold">07 / Routing Metric</div>
             <h2 className="text-3xl sm:text-4xl font-serif text-[#FAF7F2] tracking-tight">Understanding Hop Count</h2>
             <p>
@@ -372,7 +372,7 @@ export const RIPArticlePage: React.FC = () => {
           {/* ========================================================================= */}
           {/* 08 — RIP VERSIONS (V1, V2, RIPNG) */}
           {/* ========================================================================= */}
-          <section id="sec-08" className="scroll-mt-24 space-y-6">
+          <section id="sec-08" className="scroll-mt-28 p-6 sm:p-10 md:p-12 rounded-3xl topbar-glass-card space-y-6">
             <div className="text-xs font-mono uppercase tracking-widest text-[#2F6BFF] font-bold">08 / Protocol Evolution</div>
             <h2 className="text-3xl sm:text-4xl font-serif text-[#FAF7F2] tracking-tight">RIP Versions: v1, v2, and RIPng</h2>
             <p>
@@ -387,7 +387,7 @@ export const RIPArticlePage: React.FC = () => {
           {/* ========================================================================= */}
           {/* 09 — RIP TIMERS & STATE MACHINES */}
           {/* ========================================================================= */}
-          <section id="sec-09" className="scroll-mt-24 space-y-6">
+          <section id="sec-09" className="scroll-mt-28 p-6 sm:p-10 md:p-12 rounded-3xl topbar-glass-card space-y-6">
             <div className="text-xs font-mono uppercase tracking-widest text-[#2F6BFF] font-bold">09 / Temporal Mechanics</div>
             <h2 className="text-3xl sm:text-4xl font-serif text-[#FAF7F2] tracking-tight">RIP Timers & State Machines</h2>
             <p>
@@ -406,7 +406,7 @@ export const RIPArticlePage: React.FC = () => {
           {/* ========================================================================= */}
           {/* 10 — ROUTING LOOPS AND PREVENTION */}
           {/* ========================================================================= */}
-          <section id="sec-10" className="scroll-mt-24 space-y-6">
+          <section id="sec-10" className="scroll-mt-28 p-6 sm:p-10 md:p-12 rounded-3xl topbar-glass-card space-y-6">
             <div className="text-xs font-mono uppercase tracking-widest text-[#2F6BFF] font-bold">10 / Loop Mitigation</div>
             <h2 className="text-3xl sm:text-4xl font-serif text-[#FAF7F2] tracking-tight">Routing Loops & Prevention</h2>
             <p>
@@ -423,7 +423,7 @@ export const RIPArticlePage: React.FC = () => {
           {/* ========================================================================= */}
           {/* 11 — PRACTICAL CISCO CONFIGURATION */}
           {/* ========================================================================= */}
-          <section id="sec-11" className="scroll-mt-24 space-y-6">
+          <section id="sec-11" className="scroll-mt-28 p-6 sm:p-10 md:p-12 rounded-3xl topbar-glass-card space-y-6">
             <div className="text-xs font-mono uppercase tracking-widest text-[#2F6BFF] font-bold">11 / Practical Engineering</div>
             <h2 className="text-3xl sm:text-4xl font-serif text-[#FAF7F2] tracking-tight">Practical Cisco Configuration</h2>
             <p>
@@ -436,7 +436,7 @@ export const RIPArticlePage: React.FC = () => {
           {/* ========================================================================= */}
           {/* 12 — RIP VS OTHER ROUTING PROTOCOLS */}
           {/* ========================================================================= */}
-          <section id="sec-12" className="scroll-mt-24 space-y-6">
+          <section id="sec-12" className="scroll-mt-28 p-6 sm:p-10 md:p-12 rounded-3xl topbar-glass-card space-y-6">
             <div className="text-xs font-mono uppercase tracking-widest text-[#2F6BFF] font-bold">12 / Comparative Analysis</div>
             <h2 className="text-3xl sm:text-4xl font-serif text-[#FAF7F2] tracking-tight">RIP vs. Other Routing Protocols</h2>
             <p>
@@ -449,7 +449,7 @@ export const RIPArticlePage: React.FC = () => {
           {/* ========================================================================= */}
           {/* 13 — ADVANTAGES AND LIMITATIONS */}
           {/* ========================================================================= */}
-          <section id="sec-13" className="scroll-mt-24 space-y-6">
+          <section id="sec-13" className="scroll-mt-28 p-6 sm:p-10 md:p-12 rounded-3xl topbar-glass-card space-y-6">
             <div className="text-xs font-mono uppercase tracking-widest text-[#2F6BFF] font-bold">13 / Objective Evaluation</div>
             <h2 className="text-3xl sm:text-4xl font-serif text-[#FAF7F2] tracking-tight">Advantages and Limitations</h2>
             
@@ -479,7 +479,7 @@ export const RIPArticlePage: React.FC = () => {
           {/* ========================================================================= */}
           {/* 14 — CONCLUSION: IS RIP STILL RELEVANT? */}
           {/* ========================================================================= */}
-          <section id="sec-14" className="scroll-mt-24 space-y-6">
+          <section id="sec-14" className="scroll-mt-28 p-6 sm:p-10 md:p-12 rounded-3xl topbar-glass-card space-y-6">
             <div className="text-xs font-mono uppercase tracking-widest text-[#2F6BFF] font-bold">14 / Retrospective</div>
             <h2 className="text-3xl sm:text-4xl font-serif text-[#FAF7F2] tracking-tight">Conclusion: Is RIP Still Relevant?</h2>
             <p>
@@ -493,7 +493,7 @@ export const RIPArticlePage: React.FC = () => {
           {/* ========================================================================= */}
           {/* 15 — STANDARDS & REFERENCES */}
           {/* ========================================================================= */}
-          <section id="sec-15" className="scroll-mt-24 space-y-6">
+          <section id="sec-15" className="scroll-mt-28 p-6 sm:p-10 md:p-12 rounded-3xl topbar-glass-card space-y-6">
             <div className="text-xs font-mono uppercase tracking-widest text-[#2F6BFF] font-bold">15 / Academic Bibliography</div>
             <h2 className="text-3xl sm:text-4xl font-serif text-[#FAF7F2] tracking-tight">Standards & Primary References</h2>
             <p className="text-sm">
@@ -516,7 +516,7 @@ export const RIPArticlePage: React.FC = () => {
           </section>
 
           {/* Glossary Embedded at bottom of Article */}
-          <div className="pt-12 border-t border-[#D8CBB3]/15">
+          <div className="p-6 sm:p-10 rounded-3xl topbar-glass-card">
             <GlossaryDrawer />
           </div>
 
