@@ -1,62 +1,56 @@
 import React from 'react';
-import { LiquidMetalButton } from '../../effects/liquid-metal-button/LiquidMetalButton';
+import { LiquidMetalButton, LiquidMetalButtonVariant } from '../../effects/liquid-metal-button/LiquidMetalButton';
 import '../../effects/liquid-metal-button/styles.css';
 import { sound } from '../../audio/soundEngine';
 
 export { LiquidMetalButton };
+export type { LiquidMetalButtonVariant };
 
 export interface LiquidMetalActionProps {
-  variant?: "pill" | "circle" | "play";
+  variant?: LiquidMetalButtonVariant;
   text?: string;
   diameter?: number;
   strokeWidth?: number;
   rendering?: "colored" | "monotone";
-  onClick?: () => void;
+  onClick?: (e?: React.MouseEvent<HTMLButtonElement | HTMLDivElement>) => void;
   className?: string;
   width?: number | string;
   height?: number | string;
+  icon?: React.ReactNode;
+  children?: React.ReactNode;
 }
 
+/**
+ * Signature Liquid Metal Action Button
+ * Features a real-time reactive mercury fluid shader with mouse-following
+ * specular caustics, ambient waves, physical press ripples, and precision glass rim.
+ */
 export const LiquidMetalAction: React.FC<LiquidMetalActionProps> = ({
   variant = "pill",
-  text = "Sign up",
-  diameter = 88,
-  strokeWidth = 3.0,
+  text,
+  diameter = 56,
   rendering = "colored",
   onClick,
   className = "",
   width,
-  height = 56
+  height,
+  icon,
+  children
 }) => {
-  const handleClick = () => {
-    sound.playClick();
-    if (onClick) onClick();
-  };
-
-  const cleanText = (text || "Sign up").slice(0, 24);
-  const autoWidth = width || Math.max(175, Math.min(320, cleanText.length * 12 + 96));
-
   return (
-    <div 
-      className={`shader-frame cursor-pointer relative ${className}`}
-      style={{ width: autoWidth, height }}
-      onClick={handleClick}
+    <LiquidMetalButton
+      variant={variant}
+      rendering={rendering}
+      diameter={diameter}
+      text={text}
+      icon={icon}
+      width={width}
+      height={height}
+      onClick={onClick}
+      className={className}
     >
-      <span className="pointer-events-none absolute inset-0 flex items-center justify-center font-mono text-xs font-bold text-[#F5EFE6] tracking-wide z-0">
-        {cleanText}
-      </span>
-      <div className="relative z-10 w-full h-full">
-        <LiquidMetalButton
-          variant={variant}
-          rendering={rendering}
-          diameter={diameter}
-          strokeWidth={strokeWidth}
-          text={cleanText}
-          embedded={true}
-          onClick={handleClick}
-        />
-      </div>
-    </div>
+      {children}
+    </LiquidMetalButton>
   );
 };
 
@@ -69,6 +63,11 @@ export interface LiquidButtonProps extends React.ButtonHTMLAttributes<HTMLButton
   text?: string;
 }
 
+/**
+ * Universal publication button.
+ * - 'primary' / 'secondary': Liquid Metal Glass action with fluid caustic physics
+ * - 'pill': Precision glass selector pill for filters and interactive tabs
+ */
 export const LiquidButton: React.FC<LiquidButtonProps> = ({
   children,
   icon,
@@ -80,49 +79,40 @@ export const LiquidButton: React.FC<LiquidButtonProps> = ({
   text,
   ...props
 }) => {
-  const rawText = text || (typeof children === 'string' ? children : 'Sign up');
-  const cleanLabel = rawText.slice(0, 24).trim();
+  const rawText = text || (typeof children === 'string' ? children : undefined);
 
-  // If primary or secondary, render the authentic ThreeUI <LiquidMetalButton variant="pill" /> inside .shader-frame!
   if (variant === 'primary' || variant === 'secondary') {
     const heightMap = {
-      sm: 56,
-      md: 58,
-      lg: 64
+      sm: 44,
+      md: 52,
+      lg: 58
     };
     const buttonHeight = heightMap[size];
-    const buttonWidth = Math.max(175, Math.min(320, cleanLabel.length * 12 + 96));
 
     return (
-      <div 
-        className={`shader-frame cursor-pointer inline-flex items-center justify-center relative ${className}`}
-        style={{ width: buttonWidth, height: buttonHeight }}
+      <LiquidMetalButton
+        variant="pill"
+        rendering={variant === 'secondary' ? 'monotone' : 'colored'}
+        text={rawText}
+        icon={icon}
+        height={buttonHeight}
         onClick={(e) => {
-          sound.playClick();
           if (onClick) onClick(e as any);
         }}
+        className={className}
       >
-        <span className="pointer-events-none absolute inset-0 flex items-center justify-center font-mono text-xs font-bold text-[#F5EFE6] tracking-wide z-0">
-          {cleanLabel}
-        </span>
-        <div className="relative z-10 w-full h-full">
-          <LiquidMetalButton
-            variant="pill"
-            embedded={true}
-            text={cleanLabel}
-            onClick={() => {
-              sound.playClick();
-              if (onClick) onClick({} as any);
-            }}
-          />
-        </div>
-      </div>
+        {typeof children !== 'string' ? children : undefined}
+      </LiquidMetalButton>
     );
   }
 
-  // Lightweight pill selector for filters and tabs
+  // Lightweight glass pill selector for filters and tabs
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    sound.playClick();
+    try {
+      sound.playClick();
+    } catch {
+      // Audio fallback
+    }
     if (onClick) onClick(e);
   };
 

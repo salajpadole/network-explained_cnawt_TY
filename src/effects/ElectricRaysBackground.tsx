@@ -54,6 +54,26 @@ export const ElectricRaysBackground: React.FC = () => {
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
 
+    // Interactive mouse tracking with fluid elasticity
+    let mouseX = width * 0.45;
+    let mouseY = height * 0.65;
+    let targetMouseX = width * 0.45;
+    let targetMouseY = height * 0.65;
+    let mouseVelocity = 0;
+    let lastMouseX = targetMouseX;
+    let lastMouseY = targetMouseY;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      targetMouseX = e.clientX;
+      targetMouseY = e.clientY;
+      const vx = targetMouseX - lastMouseX;
+      const vy = targetMouseY - lastMouseY;
+      mouseVelocity = Math.min(Math.sqrt(vx * vx + vy * vy), 40);
+      lastMouseX = targetMouseX;
+      lastMouseY = targetMouseY;
+    };
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+
     // Pre-generate ray splines in the Electric Blue palette (#2F6BFF, #60A5FA, #38BDF8, #93C5FD, with Sand #D8CBB3 accents)
     const rayColors = [
       { core: '#FFFFFF', glow: '#2F6BFF', alpha: 0.85 },
@@ -123,8 +143,11 @@ export const ElectricRaysBackground: React.FC = () => {
     let time = 0;
 
     const render = () => {
-      time += 0.012;
+      time += 0.014;
       scrollY += (targetScrollY - scrollY) * 0.08;
+      mouseX += (targetMouseX - mouseX) * 0.06;
+      mouseY += (targetMouseY - mouseY) * 0.06;
+      mouseVelocity *= 0.92;
 
       ctx.clearRect(0, 0, width, height);
 
@@ -225,6 +248,24 @@ export const ElectricRaysBackground: React.FC = () => {
           y: height * 0.12 + ray.endYOffset + wave * 50 - scrollOffsetY * 0.2,
         };
 
+        // Reactive mouse physics: strings flex fluidly with cursor proximity
+        const midX = (p1.x + p2.x) * 0.5;
+        const midY = (p1.y + p2.y) * 0.5;
+        const dCursorX = mouseX - midX;
+        const dCursorY = mouseY - midY;
+        const distCursor = Math.sqrt(dCursorX * dCursorX + dCursorY * dCursorY);
+        const maxDist = Math.max(width * 0.4, 420);
+
+        if (distCursor < maxDist) {
+          const proximity = (1 - distCursor / maxDist);
+          const pushStrength = proximity * proximity * 38;
+          const angle = Math.atan2(dCursorY, dCursorX);
+          p1.x -= Math.cos(angle) * pushStrength * 0.45;
+          p1.y -= Math.sin(angle) * pushStrength * 0.45;
+          p2.x -= Math.cos(angle) * pushStrength * 0.7;
+          p2.y -= Math.sin(angle) * pushStrength * 0.7;
+        }
+
         evaluatedSplines.push({ p0, p1, p2, p3 });
 
         // Outer Neon Glow Pass
@@ -279,24 +320,20 @@ export const ElectricRaysBackground: React.FC = () => {
 
       ctx.restore();
 
-      // 5. Intense Focal Crescent Apex Arc (The bright curving origin in the reference image)
+      // 5. Clean, subtle ambient radiance at the focal convergence (without harsh arc rings)
       ctx.save();
       ctx.globalCompositeOperation = 'screen';
+      const coreFlare = ctx.createRadialGradient(
+        focalOriginX, focalOriginY, 0,
+        focalOriginX, focalOriginY, 95
+      );
+      coreFlare.addColorStop(0, 'rgba(255, 255, 255, 0.45)');
+      coreFlare.addColorStop(0.35, 'rgba(47, 107, 255, 0.25)');
+      coreFlare.addColorStop(1, 'transparent');
+      ctx.fillStyle = coreFlare;
       ctx.beginPath();
-      ctx.arc(focalOriginX - 25, focalOriginY, 70, -Math.PI * 0.35, Math.PI * 0.45, false);
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.95)';
-      ctx.lineWidth = 4;
-      ctx.shadowColor = '#00F0FF';
-      ctx.shadowBlur = 28;
-      ctx.stroke();
-
-      ctx.beginPath();
-      ctx.arc(focalOriginX - 25, focalOriginY, 74, -Math.PI * 0.4, Math.PI * 0.5, false);
-      ctx.strokeStyle = 'rgba(47, 107, 255, 0.85)';
-      ctx.lineWidth = 9;
-      ctx.shadowColor = '#2F6BFF';
-      ctx.shadowBlur = 45;
-      ctx.stroke();
+      ctx.arc(focalOriginX, focalOriginY, 95, 0, Math.PI * 2);
+      ctx.fill();
       ctx.restore();
 
       animationFrameId = requestAnimationFrame(render);

@@ -1,6 +1,5 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-
-import liquidMetalButtonSource from "./liquid-metal-button.html?raw";
+import React, { useRef, useEffect, useState, useCallback } from "react";
+import { sound } from "../../audio/soundEngine";
 
 export type LiquidMetalButtonVariant = "pill" | "circle" | "play";
 
@@ -12,255 +11,318 @@ export type LiquidMetalButtonProps = {
   strokeWidth?: number;
   text?: string;
   embedded?: boolean;
-  onClick?: () => void;
+  onClick?: (e?: React.MouseEvent<HTMLButtonElement | HTMLDivElement>) => void;
+  icon?: React.ReactNode;
+  children?: React.ReactNode;
+  style?: React.CSSProperties;
+  width?: number | string;
+  height?: number | string;
+  disabled?: boolean;
 };
 
-const LIQUID_METAL_BUTTON_BRIDGE = `
-<script id="liquid-metal-button-bridge">
-  window.addEventListener('message', event => {
-    if(event.source !== parent) return;
-    const config = event.data && event.data.liquidMetalButton;
-    if(!config) return;
-    const text = typeof config.text === 'string' ? config.text.slice(0, 24) : '';
-    const label = btn.querySelector('.lbl');
-    if(label) label.textContent = text;
-    btn.setAttribute('aria-label', text || 'Button');
-    if(Number.isFinite(config.pillWidthUnits)) {
-      stage.style.setProperty('--bw', 'calc(' + config.pillWidthUnits + ' * var(--u))');
-    }
-    document.body.style.background = config.embedded ? '#0e0f12' : '';
-    stage.style.position = config.embedded ? 'absolute' : '';
-    stage.style.top = config.embedded ? '50%' : '';
-    stage.style.left = config.embedded ? '50%' : '';
-    stage.style.transform = config.embedded ? 'translate(-50%, -50%)' : '';
-  });
-
-  btn.addEventListener('click', () => {
-    parent.postMessage({ liquidMetalButton: { type: 'activate' } }, '*');
-  });
-</script>`;
-
-const CIRCLE_RUNTIME_STYLE = `
-<style id="liquid-metal-circle-variant">
-  body[data-shape="circle"] .stage {
-    --h: clamp(56px, 10vmin, 72px);
-    --bw: var(--h);
-  }
-
-  body[data-shape="circle"] .btn {
-    gap: 0;
-  }
-
-  body[data-shape="circle"] .btn .ico {
-    width: 28%;
-    height: 28%;
-  }
-
-  body[data-shape="circle"] .btn .lbl {
-    display: none;
-  }
-</style>`;
-
-function sourceForVariant(variant: Exclude<LiquidMetalButtonVariant, "play">) {
-  if (variant === "pill") {
-    return liquidMetalButtonSource.replace("</body>", `${LIQUID_METAL_BUTTON_BRIDGE}\n</body>`);
-  }
-
-  return liquidMetalButtonSource
-    .replace("</head>", `${CIRCLE_RUNTIME_STYLE}\n</head>`)
-    .replace("<body>", '<body data-shape="circle">')
-    .replace(
-      '<button class="btn" id="btn" type="button">',
-      '<button class="btn" id="btn" type="button" aria-label="Add">',
-    )
-    .replace("</body>", `${LIQUID_METAL_BUTTON_BRIDGE}\n</body>`);
+interface Ripple {
+  x: number;
+  y: number;
+  radius: number;
+  maxRadius: number;
+  alpha: number;
+  speed: number;
 }
 
-const liquidMetalPlayButtonSource = liquidMetalButtonSource
-  .replace(
-    "--bw: calc(1407 * var(--u));",
-    "--bw: var(--h);",
-  )
-  .replace(
-    "</style>",
-    `
-  /* Circular play-button adapter. The renderer and interaction graph stay
-     source-exact; only geometry, finish, outline, and accessible naming vary. */
-  body{position:relative}
-  .stage{
-    --h:88px;
-    position:absolute;top:50%;left:50%;
-    transform:translate(-50%,-50%);
-  }
-  #fx{filter:none}
-  .btn{flex-direction:column;gap:0}
-  .btn:focus-visible{outline:2px solid rgba(255,255,255,.68);outline-offset:4px}
-  .btn .ico{
-    width:calc(var(--h) * .25);height:calc(var(--h) * .25);
-    transform:translateX(calc(var(--h) * .018));
-  }
-</style>`,
-  )
-  .replace(
-    `<button class="btn" id="btn" type="button">
-    <svg class="ico" viewBox="0 0 115 115" aria-hidden="true">
-      <g stroke="currentColor" stroke-width="17" stroke-linecap="round">
-        <path d="M57.5 8.5 V106.5"/>
-        <path d="M8.5 57.5 H106.5"/>
-      </g>
-    </svg>
-    <span class="lbl">Sign up</span>
-  </button>`,
-    `<button class="btn" id="btn" type="button" aria-label="Play">
-    <svg class="ico" viewBox="0 0 48 48" aria-hidden="true">
-      <path fill="currentColor" d="M15.5 10.75a2.2 2.2 0 0 1 3.32-1.9l18.04 13.25a2.35 2.35 0 0 1 0 3.8L18.82 39.15a2.2 2.2 0 0 1-3.32-1.9v-26.5Z"/>
-    </svg>
-  </button>`,
-  )
-  .replace(
-    "let needResize = true;",
-    "let needResize = true;\nlet playStrokeWidth = 3;",
-  )
-  .replace(
-    "const bw = Math.max(1.5, 3.2 * (BH/516));      // stroke half-width, device px",
-    "const bw = Math.max(0.5 * DPR, playStrokeWidth * DPR * 0.5); // configurable stroke half-width, device px",
-  )
-  .replace(
-    "window.__seek   = v => { clock = v; drawn = null; };",
-    `window.__seek   = v => { clock = v; drawn = null; };
-
-window.addEventListener('message', event => {
-  if(event.source !== parent) return;
-  const config = event.data && event.data.liquidMetalPlayButton;
-  if(!config) return;
-  const diameter = Math.min(160, Math.max(72, Number(config.diameter) || 88));
-  const strokeWidth = Math.min(8, Math.max(1, Number(config.strokeWidth) || 3));
-  const text = typeof config.text === 'string' ? config.text.slice(0, 24) : 'Play';
-  stage.style.setProperty('--h', diameter + 'px');
-  playStrokeWidth = strokeWidth;
-  btn.setAttribute('aria-label', text.trim() || 'Play');
-  cv.style.filter = config.rendering === 'monotone' ? 'grayscale(1) contrast(1.04)' : 'none';
-  needResize = true;
-  drawn = null;
-});`,
-  )
-  .replace("</body>", `${LIQUID_METAL_BUTTON_BRIDGE}\n</body>`);
-
-function clamp(value: number, min: number, max: number, fallback: number) {
-  return Number.isFinite(value) ? Math.min(max, Math.max(min, value)) : fallback;
-}
-
-export function LiquidMetalButton({
-  className = "",
+export const LiquidMetalButton: React.FC<LiquidMetalButtonProps> = ({
   variant = "pill",
+  className = "",
   rendering = "colored",
-  diameter = 88,
-  strokeWidth = 3,
+  diameter = 56,
   text,
-  embedded = false,
   onClick,
-}: LiquidMetalButtonProps) {
-  const hostRef = useRef<HTMLDivElement>(null);
-  const frameRef = useRef<HTMLIFrameElement>(null);
-  const intersectsRef = useRef(true);
-  const [mounted, setMounted] = useState(true);
-  const [ready, setReady] = useState(false);
-  const safeVariant: LiquidMetalButtonVariant =
-    variant === "circle" || variant === "play" ? variant : "pill";
-  const isPlayButton = safeVariant === "play";
-  const safeText = String(text ?? (safeVariant === "pill" ? "Sign up" : safeVariant === "circle" ? "Add" : "Play"))
-    .slice(0, 24);
-  const pillWidthUnits = safeVariant === "pill"
-    ? Math.min(3000, Math.max(1407, 820 + safeText.length * 94))
-    : undefined;
-  const source = useMemo(
-    () => isPlayButton ? liquidMetalPlayButtonSource : sourceForVariant(safeVariant),
-    [isPlayButton, safeVariant],
-  );
-  const playConfig = {
-    diameter: clamp(diameter, 72, 160, 88),
-    strokeWidth: clamp(strokeWidth, 1, 8, 3),
-    rendering,
-    text: safeText,
-  } as const;
+  icon,
+  children,
+  style,
+  width,
+  height,
+  disabled = false,
+}) => {
+  const containerRef = useRef<HTMLButtonElement | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  const syncButtonConfig = useCallback(() => {
-    frameRef.current?.contentWindow?.postMessage({
-      liquidMetalButton: { text: safeText, pillWidthUnits, embedded },
-    }, "*");
-  }, [embedded, pillWidthUnits, safeText]);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isPressed, setIsPressed] = useState(false);
 
-  const syncPlayConfig = useCallback(() => {
-    if (!isPlayButton) return;
-    frameRef.current?.contentWindow?.postMessage({ liquidMetalPlayButton: playConfig }, "*");
-  }, [isPlayButton, playConfig.diameter, playConfig.rendering, playConfig.strokeWidth, playConfig.text]);
+  // Mouse coords relative to button [0..1]
+  const mouseRef = useRef({ x: 0.5, y: 0.5, targetX: 0.5, targetY: 0.5, active: false });
+  const ripplesRef = useRef<Ripple[]>([]);
+  const animFrameRef = useRef<number | null>(null);
 
-  useEffect(() => {
-    const host = hostRef.current;
-    if (!host) return;
+  const displayText = text ?? (typeof children === "string" ? children : "");
 
-    const sync = () => setMounted(intersectsRef.current && document.visibilityState !== "hidden");
-    const observer = new IntersectionObserver(([entry]) => {
-      intersectsRef.current = entry.isIntersecting;
-      sync();
-    }, { rootMargin: "80px" });
-
-    observer.observe(host);
-    document.addEventListener("visibilitychange", sync);
-    return () => {
-      observer.disconnect();
-      document.removeEventListener("visibilitychange", sync);
-    };
+  // Handle Mouse Movement for Liquid Caustic Lighting
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = (e.clientY - rect.top) / rect.height;
+    mouseRef.current.targetX = Math.max(0, Math.min(1, x));
+    mouseRef.current.targetY = Math.max(0, Math.min(1, y));
+    mouseRef.current.active = true;
   }, []);
 
-  useEffect(() => {
-    if (!mounted) setReady(false);
-  }, [mounted]);
+  const handleMouseEnter = useCallback(() => {
+    setIsHovered(true);
+    mouseRef.current.active = true;
+  }, []);
 
-  useEffect(() => {
-    if (!ready) return;
-    syncButtonConfig();
-    syncPlayConfig();
-  }, [ready, syncButtonConfig, syncPlayConfig]);
+  const handleMouseLeave = useCallback(() => {
+    setIsHovered(false);
+    mouseRef.current.targetX = 0.5;
+    mouseRef.current.targetY = 0.5;
+    mouseRef.current.active = false;
+  }, []);
 
+  // Trigger Physical Liquid Ripple on Click
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (disabled) return;
+    try {
+      sound.playClick();
+    } catch {
+      // Audio fallback
+    }
+
+    if (containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const clickY = e.clientY - rect.top;
+      const maxR = Math.max(rect.width, rect.height) * 1.4;
+
+      ripplesRef.current.push({
+        x: clickX,
+        y: clickY,
+        radius: 4,
+        maxRadius: maxR,
+        alpha: 0.85,
+        speed: maxR / 22,
+      });
+    }
+
+    if (onClick) onClick(e);
+  };
+
+  // Canvas Liquid Metal Renderer Loop
   useEffect(() => {
-    if (!onClick) return undefined;
-    const receiveMessage = (event: MessageEvent) => {
-      if (event.source !== frameRef.current?.contentWindow) return;
-      if (event.data?.liquidMetalButton?.type !== "activate") return;
-      onClick();
+    const canvas = canvasRef.current;
+    const container = containerRef.current;
+    if (!canvas || !container) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let time = 0;
+    let isRunning = true;
+
+    const updateCanvasSize = () => {
+      const rect = container.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      if (rect.width > 0 && rect.height > 0) {
+        canvas.width = Math.round(rect.width * dpr);
+        canvas.height = Math.round(rect.height * dpr);
+      }
     };
-    window.addEventListener("message", receiveMessage);
-    return () => window.removeEventListener("message", receiveMessage);
-  }, [onClick]);
+
+    updateCanvasSize();
+    const ro = new ResizeObserver(updateCanvasSize);
+    ro.observe(container);
+
+    const render = () => {
+      if (!isRunning) return;
+      time += 0.024;
+
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const w = canvas.width / dpr;
+      const h = canvas.height / dpr;
+
+      if (w <= 0 || h <= 0) {
+        animFrameRef.current = requestAnimationFrame(render);
+        return;
+      }
+
+      // Smooth mouse interpolation (liquid viscosity inertia)
+      const m = mouseRef.current;
+      m.x += (m.targetX - m.x) * 0.12;
+      m.y += (m.targetY - m.y) * 0.12;
+
+      ctx.save();
+      ctx.scale(dpr, dpr);
+      ctx.clearRect(0, 0, w, h);
+
+      // Clip to rounded pill / circle
+      ctx.beginPath();
+      const radius = h / 2;
+      ctx.roundRect(0, 0, w, h, radius);
+      ctx.clip();
+
+      // 1. Base Deep Liquid Obsidian Bed
+      const baseGrad = ctx.createLinearGradient(0, 0, w, h);
+      baseGrad.addColorStop(0, "#101217");
+      baseGrad.addColorStop(0.5, "#0A0B0E");
+      baseGrad.addColorStop(1, "#07080A");
+      ctx.fillStyle = baseGrad;
+      ctx.fillRect(0, 0, w, h);
+
+      // 2. Continuous Fluid Liquid Waves (Flowing mercury currents)
+      const waveShift = Math.sin(time) * 0.15;
+      const waveGrad = ctx.createLinearGradient(
+        0,
+        0,
+        w * (1 + waveShift),
+        h
+      );
+      if (rendering === "colored") {
+        waveGrad.addColorStop(0, "rgba(47, 107, 255, 0.08)");
+        waveGrad.addColorStop(0.35, "rgba(0, 240, 255, 0.12)");
+        waveGrad.addColorStop(0.7, "rgba(216, 203, 179, 0.09)");
+        waveGrad.addColorStop(1, "rgba(47, 107, 255, 0.06)");
+      } else {
+        waveGrad.addColorStop(0, "rgba(255, 255, 255, 0.06)");
+        waveGrad.addColorStop(0.5, "rgba(255, 255, 255, 0.14)");
+        waveGrad.addColorStop(1, "rgba(255, 255, 255, 0.04)");
+      }
+      ctx.fillStyle = waveGrad;
+      ctx.fillRect(0, 0, w, h);
+
+      // 3. Dynamic Specular Caustic Spotlight (Follows cursor smoothly)
+      const spotX = m.x * w;
+      const spotY = m.y * h;
+      const spotRadius = Math.max(w, h) * (m.active ? 1.1 : 0.85);
+
+      const spotGrad = ctx.createRadialGradient(
+        spotX,
+        spotY,
+        0,
+        spotX,
+        spotY,
+        spotRadius
+      );
+      if (rendering === "colored") {
+        spotGrad.addColorStop(0, m.active ? "rgba(255, 255, 255, 0.55)" : "rgba(255, 255, 255, 0.35)");
+        spotGrad.addColorStop(0.2, m.active ? "rgba(47, 107, 255, 0.45)" : "rgba(47, 107, 255, 0.25)");
+        spotGrad.addColorStop(0.55, m.active ? "rgba(0, 240, 255, 0.2)" : "rgba(216, 203, 179, 0.12)");
+        spotGrad.addColorStop(1, "rgba(7, 8, 10, 0)");
+      } else {
+        spotGrad.addColorStop(0, "rgba(255, 255, 255, 0.5)");
+        spotGrad.addColorStop(0.4, "rgba(255, 255, 255, 0.15)");
+        spotGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
+      }
+
+      ctx.fillStyle = spotGrad;
+      ctx.fillRect(0, 0, w, h);
+
+      // 4. Physical Press Ripples (Radiating liquid metallic shockwaves)
+      const activeRipples: Ripple[] = [];
+      for (const r of ripplesRef.current) {
+        r.radius += r.speed;
+        r.alpha *= 0.91;
+
+        if (r.alpha > 0.02 && r.radius < r.maxRadius) {
+          activeRipples.push(r);
+
+          ctx.beginPath();
+          ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
+          ctx.strokeStyle = `rgba(255, 255, 255, ${r.alpha * 0.75})`;
+          ctx.lineWidth = 2.5;
+          ctx.stroke();
+
+          // Secondary chromatic ring
+          ctx.beginPath();
+          ctx.arc(r.x, r.y, Math.max(0, r.radius - 3), 0, Math.PI * 2);
+          ctx.strokeStyle = `rgba(47, 107, 255, ${r.alpha * 0.9})`;
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+        }
+      }
+      ripplesRef.current = activeRipples;
+
+      // 5. Metallic Inner Rim Highlight (Top glint and bottom bevel)
+      ctx.beginPath();
+      ctx.roundRect(1, 1, w - 2, h - 2, radius - 1);
+      const rimGrad = ctx.createLinearGradient(0, 0, 0, h);
+      rimGrad.addColorStop(0, m.active ? "rgba(255, 255, 255, 0.65)" : "rgba(255, 255, 255, 0.35)");
+      rimGrad.addColorStop(0.5, "rgba(47, 107, 255, 0.2)");
+      rimGrad.addColorStop(1, "rgba(0, 0, 0, 0.6)");
+      ctx.strokeStyle = rimGrad;
+      ctx.lineWidth = 1.2;
+      ctx.stroke();
+
+      ctx.restore();
+
+      animFrameRef.current = requestAnimationFrame(render);
+    };
+
+    animFrameRef.current = requestAnimationFrame(render);
+
+    return () => {
+      isRunning = false;
+      ro.disconnect();
+      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
+    };
+  }, [rendering]);
+
+  const isCircle = variant === "circle" || variant === "play";
 
   return (
-    <div
-      ref={hostRef}
-      className={`liquid-metal-button${className ? ` ${className}` : ""}`}
-      data-state={!mounted ? "paused" : ready ? "ready" : "loading"}
-      data-variant={safeVariant}
+    <button
+      ref={containerRef}
+      type="button"
+      disabled={disabled}
+      onClick={handleClick}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onMouseDown={() => setIsPressed(true)}
+      onMouseUp={() => setIsPressed(false)}
+      className={`group relative inline-flex items-center justify-center select-none overflow-hidden transition-all duration-300 ${
+        isCircle
+          ? "rounded-full"
+          : "rounded-full px-6 py-3.5 sm:px-7 sm:py-4"
+      } ${
+        isHovered
+          ? "shadow-[0_0_28px_rgba(47,107,255,0.45),0_8px_32px_rgba(0,0,0,0.6)]"
+          : "shadow-[0_4px_20px_rgba(0,0,0,0.5),0_0_12px_rgba(47,107,255,0.2)]"
+      } ${
+        isPressed ? "scale-[0.97]" : isHovered ? "scale-[1.015]" : "scale-100"
+      } ${disabled ? "opacity-40 cursor-not-allowed" : "cursor-pointer"} ${className}`}
+      style={{
+        minWidth: isCircle ? diameter : width ? width : 160,
+        height: isCircle ? diameter : height ? height : 52,
+        ...style,
+      }}
     >
-      {mounted ? (
-        <iframe
-          key={safeVariant}
-          ref={frameRef}
-          className={`liquid-metal-button__frame${ready ? " is-ready" : ""}`}
-          title={safeVariant === "circle"
-            ? "Interactive liquid metal circle button"
-            : isPlayButton
-              ? "Interactive liquid metal play button"
-              : "Interactive liquid metal button"}
-          srcDoc={source}
-          sandbox="allow-scripts"
-          loading="eager"
-          onLoad={() => {
-            setReady(true);
-            syncButtonConfig();
-            syncPlayConfig();
-          }}
-        />
-      ) : null}
-    </div>
+      {/* Background Liquid Metal Canvas (Authentic Fluid Shader) */}
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 w-full h-full pointer-events-none rounded-full z-0"
+      />
+
+      {/* Multi-layered Specular Liquid Glass Edge Rim */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 rounded-full border border-white/20 group-hover:border-[#2F6BFF]/70 transition-colors duration-300 z-10"
+        style={{
+          boxShadow: isHovered
+            ? "inset 0 1px 1px 0 rgba(255, 255, 255, 0.45), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.8), 0 0 16px rgba(47, 107, 255, 0.35)"
+            : "inset 0 1px 1px 0 rgba(255, 255, 255, 0.25), inset 0 -1px 2px 0 rgba(0, 0, 0, 0.6)",
+        }}
+      />
+
+      {/* Foreground Content with Editorial Theme Typography */}
+      <span className="relative z-20 flex items-center justify-center gap-2.5 font-sans font-semibold text-xs sm:text-sm tracking-wide text-[#FAF7F2] drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] transition-colors duration-200">
+        {icon && (
+          <span className="shrink-0 text-[#2F6BFF] group-hover:text-white transition-colors duration-200">
+            {icon}
+          </span>
+        )}
+        {displayText && <span>{displayText}</span>}
+        {!displayText && children}
+      </span>
+    </button>
   );
-}
+};

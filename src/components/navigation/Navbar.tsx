@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter, RoutePath } from '../../router';
 import { sound } from '../../audio/soundEngine';
-import { Network, Volume2, VolumeX, Menu, X, Compass, BookOpen, Info } from 'lucide-react';
+import { Network, Menu, X, Compass, BookOpen, Info } from 'lucide-react';
 import { ReadingProgressBar } from '../layout/ReadingProgressBar';
-import { LiquidMetalButton } from '../../effects/liquid-metal-button/LiquidMetalButton';
-import '../../effects/liquid-metal-button/styles.css';
-import { LiquidMetalAction, LiquidButton } from '../buttons/LiquidMetalAction';
 
 export const Navbar: React.FC = () => {
   const { currentPath, navigate } = useRouter();
-  const [isMuted, setIsMuted] = useState(true);
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -25,11 +21,6 @@ export const Navbar: React.FC = () => {
     sound.playClick();
     navigate(path);
     setMobileMenuOpen(false);
-  };
-
-  const handleToggleSound = () => {
-    const active = sound.toggle();
-    setIsMuted(!active);
   };
 
   const navLinks: { label: string; path: RoutePath; icon: React.FC<{ className?: string }> }[] = [
@@ -50,83 +41,52 @@ export const Navbar: React.FC = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 flex items-center justify-between">
         
-        {/* Publication Wordmark */}
+        {/* Publication Wordmark matching Image 4 */}
         <button
           onClick={() => handleNav('/')}
           className="flex items-center gap-3 group text-left focus:outline-none"
         >
-          <div className="w-8 h-8 rounded-lg bg-[#2F6BFF]/15 border border-[#2F6BFF]/40 flex items-center justify-center text-[#2F6BFF] group-hover:border-[#2F6BFF] transition-colors shadow-glow-electric">
-            <Network className="w-4 h-4" />
+          <div className="w-9 h-9 rounded-xl bg-[#141518]/90 border border-[#2F6BFF]/50 flex items-center justify-center text-[#2F6BFF] group-hover:border-[#2F6BFF] transition-all shadow-[0_0_15px_rgba(47,107,255,0.25)]">
+            <Network className="w-4.5 h-4.5" />
           </div>
           <div>
             <div className="text-base sm:text-lg font-bold tracking-tight text-[#D8CBB3] flex items-center gap-1.5">
-              <span className="font-display uppercase tracking-widest text-xs sm:text-sm font-black text-[#F5EFE6]">NETWORK</span>
+              <span className="font-sans uppercase tracking-wider text-xs sm:text-sm font-extrabold text-[#F5EFE6]">NETWORK</span>
               <span className="font-serif italic font-normal text-[#2F6BFF]">EXPLAINED</span>
             </div>
-            <div className="hidden sm:block text-[9px] uppercase font-mono tracking-widest text-[#A8997C]">
-              Interactive Technical Monograph
+            <div className="text-[9px] uppercase font-mono tracking-widest text-[#A8997C]">
+              INTERACTIVE TECHNICAL MONOGRAPH
             </div>
           </div>
         </button>
 
-        {/* Desktop Navigation Links */}
-        <div className="hidden md:flex items-center gap-1 bg-[#181816]/90 p-1.5 rounded-full border border-[#D8CBB3]/20 text-xs font-mono">
+        {/* Symmetric Clean Top Navigation Pill matching Image 4 */}
+        <div className="hidden md:flex items-center gap-1.5 bg-[#141518]/90 backdrop-blur-md p-1.5 rounded-full border border-[#D8CBB3]/20 text-xs font-mono shadow-xl">
           {navLinks.map((item) => {
             const isActive = currentPath === item.path || (item.path === '/articles' && currentPath.startsWith('/articles'));
             const Icon = item.icon;
             return (
-              <LiquidButton
+              <button
                 key={item.path}
-                variant="pill"
-                isActive={isActive}
                 onClick={() => handleNav(item.path)}
-                className="px-4 py-1.5 text-xs font-mono"
-                icon={<Icon className={`w-3.5 h-3.5 ${isActive ? 'text-white' : 'text-[#2F6BFF]'}`} />}
+                className={`px-4 py-1.5 rounded-full text-xs font-medium flex items-center gap-2 transition-all duration-200 ${
+                  isActive
+                    ? 'bg-[#18284B] border border-[#2F6BFF] text-white shadow-[0_0_14px_rgba(47,107,255,0.45)]'
+                    : 'text-[#D8CBB3]/80 hover:text-white hover:bg-white/5 border border-transparent'
+                }`}
               >
-                {item.label}
-              </LiquidButton>
+                <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-[#2F6BFF]' : 'text-[#D8CBB3]/70'}`} />
+                <span>{item.label}</span>
+              </button>
             );
           })}
         </div>
 
-        {/* Right Actions */}
-        <div className="flex items-center gap-2 sm:gap-3">
-          {/* Status Badge matching Relay: '● all systems normal' */}
-          <div className="hidden xl:inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-mono bg-[#121316]/90 border border-[#2F6BFF]/30 text-[#D8CBB3] shadow-inner">
-            <span className="w-2 h-2 rounded-full bg-[#2F6BFF] animate-pulse shadow-glow-electric" />
-            <span className="text-[#FAF7F2] font-semibold">STD 56</span>
-            <span className="text-[#A8997C]">•</span>
-            <span className="text-[#D8CBB3]/80">all systems normal</span>
-          </div>
-
-          {/* Direct Monograph Action */}
-          {currentPath !== '/articles/rip-routing-protocol' && (
-            <LiquidMetalAction
-              text="Read Monograph"
-              onClick={() => handleNav('/articles/rip-routing-protocol')}
-              className="hidden lg:flex"
-              width={160}
-              height={46}
-            />
-          )}
-
-          {/* Audio Synthesizer Toggle */}
-          <button
-            onClick={handleToggleSound}
-            title={isMuted ? "Enable Synthetic Audio Feedback" : "Mute Sound Synthesizer"}
-            className={`p-2 rounded-lg border transition-all ${
-              !isMuted
-                ? 'border-[#2F6BFF] bg-[#2F6BFF]/25 text-[#2F6BFF] shadow-glow-electric'
-                : 'border-[#D8CBB3]/20 bg-[#181816]/80 text-[#A8997C] hover:text-[#D8CBB3] hover:border-[#D8CBB3]/40'
-            }`}
-          >
-            {!isMuted ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
-          </button>
-
-          {/* Mobile Menu Button */}
+        {/* Mobile Menu Toggle (Only on small screens) */}
+        <div className="md:hidden">
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-lg border border-[#D8CBB3]/20 bg-[#181816] text-[#D8CBB3]"
+            className="p-2 rounded-lg border border-[#D8CBB3]/20 bg-[#181816] text-[#D8CBB3]"
             aria-label="Toggle Navigation Menu"
           >
             {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
