@@ -52,25 +52,25 @@ export const Navbar: React.FC = () => {
             </span>
             <span className="relative inline-block font-serif italic font-normal text-base sm:text-lg text-[#2F6BFF] transition-colors group-hover:text-[#4d82ff]">
               EXPLAINED
-              {/* Hand-drawn sketch SVG underline for organic depth */}
+              {/* Hand-drawn golden sketch SVG underline overlapping bottom */}
               <svg
-                className="absolute -bottom-1.5 left-0 w-full h-2 text-[#2F6BFF] overflow-visible pointer-events-none opacity-85 transition-opacity group-hover:opacity-100"
+                className="absolute -bottom-0.5 left-0 w-[104%] h-2.5 overflow-visible pointer-events-none"
                 viewBox="0 0 100 8"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="M1 5.5C20 2 45 6.5 65 3.5C78 1.5 88 4 99 2.5"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
+                  d="M1 5.2C18 2.2 44 6.8 68 3.5C80 1.8 90 4.2 99 2.8"
+                  stroke="#C5A880"
+                  strokeWidth="3.0"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
                 <path
-                  d="M4 6.8C25 4 52 7.2 75 4.8C86 3.5 94 5.2 97 3.8"
-                  stroke="#D8CBB3"
-                  strokeWidth="0.8"
-                  strokeOpacity="0.5"
+                  d="M3 6.6C22 3.8 48 7.4 74 4.8C86 3.2 93 5.4 97 4.0"
+                  stroke="#A8997C"
+                  strokeWidth="1.8"
+                  strokeOpacity="0.85"
                   strokeLinecap="round"
                 />
               </svg>

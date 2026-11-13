@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from '../router';
 import { sound } from '../audio/soundEngine';
 import { ThreeHeroNetwork } from '../effects/ThreeHeroNetwork';
@@ -13,6 +13,115 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
+
+interface FloatingAS65001CardProps {
+  children: React.ReactNode;
+}
+
+const FloatingAS65001Card: React.FC<FloatingAS65001CardProps> = ({ children }) => {
+  const cardRef = useRef<HTMLDivElement | null>(null);
+  const [sheenPos, setSheenPos] = useState({ x: 50, y: 50 });
+
+  useEffect(() => {
+    const el = cardRef.current;
+    if (!el) return;
+
+    let animId: number;
+    let targetX = 0;
+    let targetY = 0;
+    let targetRotX = 0;
+    let targetRotY = 0;
+    let currentX = 0;
+    let currentY = 0;
+    let currentRotX = 0;
+    let currentRotY = 0;
+    let time = 0;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const cardCenterX = rect.left + rect.width / 2;
+      const cardCenterY = rect.top + rect.height / 2;
+
+      const dx = e.clientX - cardCenterX;
+      const dy = e.clientY - cardCenterY;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      const maxProximity = 700;
+
+      if (dist < maxProximity) {
+        const proximity = Math.pow(1 - dist / maxProximity, 1.4);
+        // Magnetic pull toward cursor (moves toward mouse)
+        targetX = (dx / maxProximity) * 38 * proximity;
+        targetY = (dy / maxProximity) * 38 * proximity;
+
+        // 3D tilt facing cursor
+        targetRotY = (dx / maxProximity) * 12 * proximity;
+        targetRotX = -(dy / maxProximity) * 12 * proximity;
+
+        // Light sheen coordinates
+        const sheenX = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+        const sheenY = Math.max(0, Math.min(100, ((e.clientY - rect.top) / rect.height) * 100));
+        setSheenPos({ x: sheenX, y: sheenY });
+      } else {
+        targetX = 0;
+        targetY = 0;
+        targetRotX = 0;
+        targetRotY = 0;
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+
+    const animate = () => {
+      time += 0.024;
+      // Ambient floating levitation
+      const ambientFloatY = Math.sin(time) * 10;
+      const ambientFloatX = Math.cos(time * 0.7) * 4;
+      const ambientRotZ = Math.sin(time * 0.5) * 1.2;
+
+      // Smooth inertia interpolation (lerp)
+      currentX += (targetX - currentX) * 0.08;
+      currentY += (targetY - currentY) * 0.08;
+      currentRotX += (targetRotX - currentRotX) * 0.08;
+      currentRotY += (targetRotY - currentRotY) * 0.08;
+
+      const totalX = currentX + ambientFloatX;
+      const totalY = currentY + ambientFloatY;
+
+      if (el) {
+        el.style.transform = `perspective(1000px) translate3d(${totalX.toFixed(2)}px, ${totalY.toFixed(2)}px, 0px) rotateX(${currentRotX.toFixed(2)}deg) rotateY(${currentRotY.toFixed(2)}deg) rotateZ(${ambientRotZ.toFixed(2)}deg)`;
+      }
+
+      animId = requestAnimationFrame(animate);
+    };
+
+    animId = requestAnimationFrame(animate);
+
+    return () => {
+      cancelAnimationFrame(animId);
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
+
+  return (
+    <div
+      ref={cardRef}
+      className="hero-reveal rounded-3xl glass-panel-elevated p-6 sm:p-7 relative overflow-hidden border border-[#D8CBB3]/20 shadow-2xl transition-shadow duration-300 will-change-transform"
+      style={{
+        boxShadow: `0 28px 60px -15px rgba(0, 0, 0, 0.85), 0 0 35px -5px rgba(47, 107, 255, 0.35)`,
+      }}
+    >
+      {/* Dynamic Specular Sheen Gliding with Cursor */}
+      <div
+        className="absolute inset-0 pointer-events-none transition-opacity duration-300"
+        style={{
+          background: `radial-gradient(circle 320px at ${sheenPos.x}% ${sheenPos.y}%, rgba(47, 107, 255, 0.22), transparent 70%)`,
+        }}
+      />
+      {children}
+    </div>
+  );
+};
 
 export const HomePage: React.FC = () => {
   const { navigate } = useRouter();
@@ -43,7 +152,7 @@ export const HomePage: React.FC = () => {
   };
 
   return (
-    <div className="relative text-[#D8CBB3] bg-transparent overflow-x-hidden selection:bg-[#2F6BFF]/30 selection:text-white">
+    <div className="relative text-[#D8CBB3] bg-transparent overflow-x-clip selection:bg-[#2F6BFF]/30 selection:text-white">
       
       {/* ========================================================================= */}
       {/* SCENE 01 — OPENING CINEMATIC HERO EXPERIENCE (85-100vh) */}
@@ -108,10 +217,9 @@ export const HomePage: React.FC = () => {
 
             </div>
 
-            {/* Right Column: Signature Relay-Style Liquid Glass Router Node Graph */}
+            {/* Right Column: Signature Relay-Style Floating Liquid Glass Router Node Graph */}
             <div className="lg:col-span-5">
-              <div className="hero-reveal rounded-3xl glass-panel-elevated p-6 sm:p-7 relative overflow-hidden border border-[#D8CBB3]/20 shadow-2xl">
-                
+              <FloatingAS65001Card>
                 {/* Ambient Internal Glow */}
                 <div className="absolute top-0 right-0 w-64 h-64 bg-[#2F6BFF]/15 rounded-full blur-3xl pointer-events-none" />
 
@@ -194,8 +302,7 @@ export const HomePage: React.FC = () => {
                     <span className="text-[#A8997C]">410 ms</span>
                   </div>
                 </div>
-
-              </div>
+              </FloatingAS65001Card>
             </div>
 
           </div>

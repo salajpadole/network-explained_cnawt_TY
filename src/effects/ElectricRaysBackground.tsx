@@ -140,9 +140,33 @@ export const ElectricRaysBackground: React.FC = () => {
       };
     };
 
+    // Helper: De Casteljau subdivision to evaluate rushing wave [0, u]
+    const splitBezier = (
+      a: { x: number; y: number },
+      b: { x: number; y: number },
+      c: { x: number; y: number },
+      d: { x: number; y: number },
+      u: number
+    ) => {
+      const ab = { x: a.x + (b.x - a.x) * u, y: a.y + (b.y - a.y) * u };
+      const bc = { x: b.x + (c.x - b.x) * u, y: b.y + (c.y - b.y) * u };
+      const cd = { x: c.x + (d.x - c.x) * u, y: c.y + (d.y - c.y) * u };
+      const abc = { x: ab.x + (bc.x - ab.x) * u, y: ab.y + (bc.y - ab.y) * u };
+      const bcd = { x: bc.x + (cd.x - bc.x) * u, y: bc.y + (cd.y - bc.y) * u };
+      const abcd = { x: abc.x + (bcd.x - abc.x) * u, y: abc.y + (bcd.y - abc.y) * u };
+      return { p0: a, p1: ab, p2: abc, p3: abcd };
+    };
+
     let time = 0;
+    const introStartTime = performance.now();
+    const introDuration = 1800; // 1.8 seconds surging wave on page load / refresh
 
     const render = () => {
+      const now = performance.now();
+      const introElapsed = now - introStartTime;
+      const introRaw = Math.min(Math.max(introElapsed / introDuration, 0), 1);
+      const introProgress = 1 - Math.pow(1 - introRaw, 3); // cubic ease-out for swift rush
+
       time += 0.014;
       scrollY += (targetScrollY - scrollY) * 0.08;
       mouseX += (targetMouseX - mouseX) * 0.06;
@@ -155,10 +179,10 @@ export const ElectricRaysBackground: React.FC = () => {
       ctx.fillStyle = '#090A0C';
       ctx.fillRect(0, 0, width, height);
 
-      // 1. Subtle Technical Dot Grid (Matching Relay.app reference image)
+      // 1. Subtle Technical Dot Grid
       const dotSpacing = 32;
       const dotRadius = 0.9;
-      ctx.fillStyle = 'rgba(216, 203, 179, 0.06)';
+      ctx.fillStyle = `rgba(216, 203, 179, ${0.06 * Math.min(introRaw * 1.5, 1)})`;
       const startX = 0;
       const startY = 0;
       for (let x = startX; x < width; x += dotSpacing) {
@@ -173,41 +197,42 @@ export const ElectricRaysBackground: React.FC = () => {
       const scrollFactor = (scrollY * 0.0015);
       const scrollOffsetY = (scrollY * 0.35) % (height * 1.5);
 
-      // 2. Focal Apex / Radiant Convergence Point (Lower-left / mid-left area as in reference image)
+      // 2. Focal Apex / Radiant Convergence Point
       const focalOriginX = width * 0.34 + Math.sin(time * 0.3 + scrollFactor) * 45;
       const focalOriginY = height * 0.72 + Math.cos(time * 0.4 + scrollFactor) * 35 - (scrollY * 0.15) % 300;
 
-      // Draw Radiant Convergence Bloom Glow
+      // Draw Radiant Convergence Bloom Glow (expands dynamically during wave rush)
+      const bloomScale = 0.25 + 0.75 * introProgress;
       const focalGlow = ctx.createRadialGradient(
         focalOriginX,
         focalOriginY,
         0,
         focalOriginX,
         focalOriginY,
-        width * 0.42
+        width * 0.42 * bloomScale
       );
-      focalGlow.addColorStop(0, 'rgba(47, 107, 255, 0.45)');
-      focalGlow.addColorStop(0.2, 'rgba(0, 240, 255, 0.22)');
-      focalGlow.addColorStop(0.5, 'rgba(30, 60, 180, 0.10)');
+      focalGlow.addColorStop(0, `rgba(47, 107, 255, ${0.45 * introProgress})`);
+      focalGlow.addColorStop(0.2, `rgba(0, 240, 255, ${0.22 * introProgress})`);
+      focalGlow.addColorStop(0.5, `rgba(30, 60, 180, ${0.10 * introProgress})`);
       focalGlow.addColorStop(1, 'rgba(9, 10, 12, 0)');
 
       ctx.save();
       ctx.globalCompositeOperation = 'screen';
       ctx.fillStyle = focalGlow;
       ctx.beginPath();
-      ctx.arc(focalOriginX, focalOriginY, width * 0.42, 0, Math.PI * 2);
+      ctx.arc(focalOriginX, focalOriginY, width * 0.42 * bloomScale, 0, Math.PI * 2);
       ctx.fill();
       ctx.restore();
 
       // Secondary ambient pool top right
       const topGlow = ctx.createRadialGradient(width * 0.85, height * 0.2, 0, width * 0.85, height * 0.2, width * 0.35);
-      topGlow.addColorStop(0, 'rgba(47, 107, 255, 0.14)');
-      topGlow.addColorStop(0.5, 'rgba(216, 203, 179, 0.04)');
+      topGlow.addColorStop(0, `rgba(47, 107, 255, ${0.14 * introProgress})`);
+      topGlow.addColorStop(0.5, `rgba(216, 203, 179, ${0.04 * introProgress})`);
       topGlow.addColorStop(1, 'transparent');
       ctx.fillStyle = topGlow;
       ctx.fillRect(0, 0, width, height);
 
-      // 3. Render the Flowing Spline Rays
+      // 3. Render the Flowing Spline Rays (with Entrance Wave Rush)
       ctx.save();
       ctx.globalCompositeOperation = 'lighter'; // Electric light blending
 
@@ -220,29 +245,35 @@ export const ElectricRaysBackground: React.FC = () => {
 
       for (let i = 0; i < rays.length; i++) {
         const ray = rays[i];
+        
+        // Staggered wave calculation so each ray surges across in sequence
+        const rayStagger = (i / rays.length) * 0.35;
+        const rayRaw = Math.min(Math.max((introRaw - rayStagger) / 0.65, 0), 1);
+        const rayProgress = 1 - Math.pow(1 - rayRaw, 2.5); // Eased 0 to 1
+
+        if (rayProgress <= 0.005) {
+          continue; // Hasn't started surging yet
+        }
+
         const wave = Math.sin(time + ray.phase + scrollFactor * 2.5);
         const wave2 = Math.cos(time * 0.8 + ray.phase + scrollFactor * 1.8);
 
-        // Spline Control Points
-        // P0 starts around the lower-left or behind the hero text
+        // Full Spline Control Points
         const p0 = {
           x: -50 + Math.sin(ray.phase) * 60,
           y: height * 0.88 + ray.startYOffset + wave * 30 - scrollOffsetY * 0.3,
         };
 
-        // P1: Tight convergence near the bright hyperbolic apex
         const p1 = {
           x: focalOriginX + (Math.sin(ray.phase * 2) * 90) + wave2 * 35,
           y: focalOriginY + (Math.cos(ray.phase * 2) * 55) + wave * 25,
         };
 
-        // P2: Graceful arc curving toward top-right
         const p2 = {
           x: width * ray.cp2XRatio + wave * 65,
           y: height * ray.cp2YRatio + wave2 * 45 + ray.startYOffset * 0.5,
         };
 
-        // P3: Exiting gracefully off the right / top-right edge
         const p3 = {
           x: width + 80,
           y: height * 0.12 + ray.endYOffset + wave * 50 - scrollOffsetY * 0.2,
@@ -268,54 +299,76 @@ export const ElectricRaysBackground: React.FC = () => {
 
         evaluatedSplines.push({ p0, p1, p2, p3 });
 
+        // If in entrance phase, slice the curve so it rushes across the screen
+        const activeCurve = rayProgress < 1 ? splitBezier(p0, p1, p2, p3, rayProgress) : { p0, p1, p2, p3 };
+
         // Outer Neon Glow Pass
         ctx.beginPath();
-        ctx.moveTo(p0.x, p0.y);
-        ctx.bezierCurveTo(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
+        ctx.moveTo(activeCurve.p0.x, activeCurve.p0.y);
+        ctx.bezierCurveTo(activeCurve.p1.x, activeCurve.p1.y, activeCurve.p2.x, activeCurve.p2.y, activeCurve.p3.x, activeCurve.p3.y);
         ctx.strokeStyle = ray.glowColor;
         ctx.lineWidth = ray.width * 4.2;
-        ctx.globalAlpha = ray.alpha * 0.32;
+        ctx.globalAlpha = ray.alpha * 0.32 * Math.min(rayProgress * 2, 1);
         ctx.stroke();
 
         // Inner Bright Core Pass
         ctx.beginPath();
-        ctx.moveTo(p0.x, p0.y);
-        ctx.bezierCurveTo(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
+        ctx.moveTo(activeCurve.p0.x, activeCurve.p0.y);
+        ctx.bezierCurveTo(activeCurve.p1.x, activeCurve.p1.y, activeCurve.p2.x, activeCurve.p2.y, activeCurve.p3.x, activeCurve.p3.y);
         ctx.strokeStyle = ray.color;
         ctx.lineWidth = ray.width;
-        ctx.globalAlpha = ray.alpha * 0.9;
+        ctx.globalAlpha = ray.alpha * 0.9 * Math.min(rayProgress * 2, 1);
         ctx.stroke();
+
+        // Rushing leading spark at the wavefront tip
+        if (rayProgress < 0.99) {
+          const tip = activeCurve.p3;
+          ctx.beginPath();
+          ctx.arc(tip.x, tip.y, ray.width * 2.2, 0, Math.PI * 2);
+          ctx.fillStyle = '#FFFFFF';
+          ctx.globalAlpha = 0.95;
+          ctx.fill();
+
+          ctx.beginPath();
+          ctx.arc(tip.x, tip.y, ray.width * 5.5, 0, Math.PI * 2);
+          ctx.fillStyle = ray.glowColor;
+          ctx.globalAlpha = 0.65;
+          ctx.fill();
+        }
       }
 
-      // 4. Render Data Flow Particles along the Rays
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
-        p.t += p.speed;
-        if (p.t > 1) {
-          p.t = 0;
-          p.splineIdx = Math.floor(Math.random() * rays.length);
+      // 4. Render Data Flow Particles along the Rays (burst in as rays expand)
+      if (introRaw > 0.25) {
+        const particleIntro = Math.min((introRaw - 0.25) / 0.75, 1);
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          p.t += p.speed;
+          if (p.t > 1) {
+            p.t = 0;
+            p.splineIdx = Math.floor(Math.random() * rays.length);
+          }
+
+          const spline = evaluatedSplines[p.splineIdx];
+          if (!spline) continue;
+
+          const pos = getBezierPoint(spline.p0, spline.p1, spline.p2, spline.p3, p.t);
+          const pulse = 0.5 + 0.5 * Math.sin(time * 3 + p.pulsePhase);
+          const alpha = p.alpha * pulse * Math.sin(p.t * Math.PI) * particleIntro;
+
+          // Particle Core
+          ctx.beginPath();
+          ctx.arc(pos.x, pos.y, p.size, 0, Math.PI * 2);
+          ctx.fillStyle = '#FFFFFF';
+          ctx.globalAlpha = alpha;
+          ctx.fill();
+
+          // Particle Glow Halo
+          ctx.beginPath();
+          ctx.arc(pos.x, pos.y, p.size * 3.5, 0, Math.PI * 2);
+          ctx.fillStyle = '#2F6BFF';
+          ctx.globalAlpha = alpha * 0.6;
+          ctx.fill();
         }
-
-        const spline = evaluatedSplines[p.splineIdx];
-        if (!spline) continue;
-
-        const pos = getBezierPoint(spline.p0, spline.p1, spline.p2, spline.p3, p.t);
-        const pulse = 0.5 + 0.5 * Math.sin(time * 3 + p.pulsePhase);
-        const alpha = p.alpha * pulse * Math.sin(p.t * Math.PI); // Fade in & out at ends
-
-        // Particle Core
-        ctx.beginPath();
-        ctx.arc(pos.x, pos.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = '#FFFFFF';
-        ctx.globalAlpha = alpha;
-        ctx.fill();
-
-        // Particle Glow Halo
-        ctx.beginPath();
-        ctx.arc(pos.x, pos.y, p.size * 3.5, 0, Math.PI * 2);
-        ctx.fillStyle = '#2F6BFF';
-        ctx.globalAlpha = alpha * 0.6;
-        ctx.fill();
       }
 
       ctx.restore();
