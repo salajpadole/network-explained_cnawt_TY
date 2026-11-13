@@ -3,8 +3,8 @@ import { useRouter, RoutePath } from '../../router';
 import { sound } from '../../audio/soundEngine';
 import { Network, Volume2, VolumeX, Menu, X, Compass, BookOpen, Info } from 'lucide-react';
 import { ReadingProgressBar } from '../layout/ReadingProgressBar';
-import { LiquidMetalButton } from "@designcodeio/threeui";
-import "@designcodeio/threeui/style.css";
+import { LiquidMetalButton } from '../../effects/liquid-metal-button/LiquidMetalButton';
+import '../../effects/liquid-metal-button/styles.css';
 import { LiquidMetalAction, LiquidButton } from '../buttons/LiquidMetalAction';
 
 export const Navbar: React.FC = () => {

@@ -153,7 +153,7 @@ export const Colophon: React.FC = () => {
           </div>
           <div>
             <div className="text-[#D8CBB3]/50 uppercase tracking-wider text-[10px]">Liquid Metal Glass</div>
-            <div className="text-[#FAF7F2] mt-1">@designcodeio/threeui</div>
+            <div className="text-[#FAF7F2] mt-1">Raw WebGL2 Metal Shader</div>
             <div className="text-[#D8CBB3]/70">GLSL WebGL Shaders</div>
             <div className="text-[#D8CBB3]/70">Pure Web Audio API</div>
           </div>

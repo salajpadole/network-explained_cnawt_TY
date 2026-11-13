@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useRouter } from '../router';
 import { sound } from '../audio/soundEngine';
 import { BookOpen, Search, ArrowRight, Clock, Calendar, Bookmark, Filter, Compass } from 'lucide-react';
-import { LiquidMetalButton } from "@designcodeio/threeui";
-import "@designcodeio/threeui/style.css";
+import { LiquidMetalButton } from '../effects/liquid-metal-button/LiquidMetalButton';
+import '../effects/liquid-metal-button/styles.css';
 import { LiquidMetalAction, LiquidButton } from '../components/buttons/LiquidMetalAction';
 
 interface ArticleEntry {

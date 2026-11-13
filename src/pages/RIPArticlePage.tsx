@@ -14,8 +14,8 @@ import { CalloutBox } from '../components/editorial/CalloutBox';
 import { InteractiveQuiz } from '../components/interactive/InteractiveQuiz';
 import { GlossaryDrawer } from '../components/interactive/GlossaryDrawer';
 import { Colophon } from '../components/layout/Colophon';
-import { LiquidMetalButton } from "@designcodeio/threeui";
-import "@designcodeio/threeui/style.css";
+import { LiquidMetalButton } from '../effects/liquid-metal-button/LiquidMetalButton';
+import '../effects/liquid-metal-button/styles.css';
 import { LiquidMetalAction, LiquidButton } from '../components/buttons/LiquidMetalAction';
 
 import { 

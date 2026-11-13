@@ -2,8 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import { useRouter } from '../router';
 import { sound } from '../audio/soundEngine';
 import { ThreeHeroNetwork } from '../effects/ThreeHeroNetwork';
-import { LiquidMetalButton } from "@designcodeio/threeui";
-import "@designcodeio/threeui/style.css";
+import { LiquidMetalButton } from '../effects/liquid-metal-button/LiquidMetalButton';
+import '../effects/liquid-metal-button/styles.css';
 import { LiquidMetalAction, LiquidButton } from '../components/buttons/LiquidMetalAction';
 import { 
   ArrowRight, Compass, Network, BookOpen, 

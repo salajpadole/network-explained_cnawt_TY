@@ -1,5 +1,5 @@
 @import 'katex/dist/katex.min.css';
-@import '@designcodeio/threeui/style.css';
+@import './effects/liquid-metal-button/styles.css';
 @import './shaders/threeui.css';
 @tailwind base;
 @tailwind components;

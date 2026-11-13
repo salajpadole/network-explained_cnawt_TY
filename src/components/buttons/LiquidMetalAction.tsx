@@ -1,7 +1,6 @@
 import React from 'react';
-import { LiquidMetalButton } from '../../shaders/liquid-metal-button/LiquidMetalButton';
-import '../../shaders/threeui.css';
-import '@designcodeio/threeui/style.css';
+import { LiquidMetalButton } from '../../effects/liquid-metal-button/LiquidMetalButton';
+import '../../effects/liquid-metal-button/styles.css';
 import { sound } from '../../audio/soundEngine';
 
 export { LiquidMetalButton };

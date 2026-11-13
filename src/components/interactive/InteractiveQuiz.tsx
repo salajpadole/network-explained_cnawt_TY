@@ -3,8 +3,8 @@ import { QUIZ_QUESTIONS } from '../../data/publicationData';
 import { HelpCircle, CheckCircle2, XCircle, RotateCcw, Award, ChevronRight, BookOpen } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { sound } from '../../audio/soundEngine';
-import { LiquidMetalButton } from "@designcodeio/threeui";
-import "@designcodeio/threeui/style.css";
+import { LiquidMetalButton } from '../../effects/liquid-metal-button/LiquidMetalButton';
+import '../../effects/liquid-metal-button/styles.css';
 import { LiquidMetalAction, LiquidButton } from '../buttons/LiquidMetalAction';
 
 export const InteractiveQuiz: React.FC = () => {

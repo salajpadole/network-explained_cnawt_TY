@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Terminal, Copy, Check, Info, Code2 } from 'lucide-react';
 import { sound } from '../../audio/soundEngine';
-import { LiquidMetalButton } from "@designcodeio/threeui";
-import "@designcodeio/threeui/style.css";
+import { LiquidMetalButton } from '../../effects/liquid-metal-button/LiquidMetalButton';
+import '../../effects/liquid-metal-button/styles.css';
 import { LiquidMetalAction, LiquidButton } from '../buttons/LiquidMetalAction';
 
 interface ConfigSnippet {
