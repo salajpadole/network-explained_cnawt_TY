@@ -19,7 +19,8 @@ import { LiquidMetalAction, LiquidButton } from '../components/buttons/LiquidMet
 
 import { 
   BookOpen, Clock, Calendar, User, Share2, Check, ArrowUp, 
-  Terminal, ShieldCheck, ChevronRight, Binary, Cpu, Compass, Activity, ExternalLink
+  Terminal, ShieldCheck, ChevronRight, Binary, Cpu, Compass, Activity, ExternalLink,
+  PanelLeftClose, PanelLeftOpen
 } from 'lucide-react';
 
 const ARTICLE_SECTIONS = [
@@ -43,6 +44,7 @@ const ARTICLE_SECTIONS = [
 export const RIPArticlePage: React.FC = () => {
   const [activeSectionId, setActiveSectionId] = useState<string>('sec-01');
   const [copiedLink, setCopiedLink] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -92,7 +94,9 @@ export const RIPArticlePage: React.FC = () => {
       {/* ========================================================================= */}
       {/* ARTICLE HERO */}
       {/* ========================================================================= */}
-      <header className="max-w-5xl mx-auto px-6 sm:px-10 md:px-14 py-12 sm:py-16 rounded-3xl topbar-glass-card mb-12">
+      <header className={`w-full mx-auto px-6 sm:px-10 md:px-14 py-12 sm:py-16 rounded-3xl topbar-glass-card mb-8 transition-all duration-300 ${
+        sidebarOpen ? 'max-w-7xl' : 'max-w-[1680px]'
+      }`}>
         <div className="flex flex-wrap items-center gap-3 text-xs font-mono uppercase tracking-widest text-[#2F6BFF] mb-6 font-bold">
           <span className="px-2.5 py-1 rounded-full bg-[#2F6BFF]/20 border border-[#2F6BFF]/50 shadow-glow-electric text-[#FAF7F2]">
             ARTICLE 001
@@ -123,7 +127,19 @@ export const RIPArticlePage: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex items-center gap-4 text-[#D8CBB3]/80">
+          <div className="flex flex-wrap items-center gap-4 text-[#D8CBB3]/80">
+            <LiquidButton
+              variant="pill"
+              size="sm"
+              onClick={() => {
+                sound.playClick();
+                setSidebarOpen(!sidebarOpen);
+              }}
+              icon={sidebarOpen ? <PanelLeftClose className="w-3.5 h-3.5 text-[#2F6BFF]" /> : <PanelLeftOpen className="w-3.5 h-3.5 text-[#2F6BFF]" />}
+            >
+              {sidebarOpen ? 'Hide Chapters' : 'Show Chapters'}
+            </LiquidButton>
+            <span>•</span>
             <span className="flex items-center gap-1.5">
               <Calendar className="w-3.5 h-3.5" />
               <span>Nov 2026</span>
@@ -144,50 +160,83 @@ export const RIPArticlePage: React.FC = () => {
         </div>
       </header>
 
+      {/* Floating Toggle Button when Sidebar is closed */}
+      {!sidebarOpen && (
+        <button
+          onClick={() => {
+            sound.playClick();
+            setSidebarOpen(true);
+          }}
+          className="fixed left-5 top-28 z-40 px-4 py-2.5 rounded-full topbar-glass-card border border-[#2F6BFF]/50 text-[#D8CBB3] hover:text-[#FAF7F2] hover:border-[#2F6BFF] flex items-center gap-2 text-xs font-mono shadow-[0_0_24px_rgba(47,107,255,0.35)] transition-all hover:scale-105 group backdrop-blur-xl"
+          title="Open Chapters Menu"
+        >
+          <PanelLeftOpen className="w-4 h-4 text-[#2F6BFF] group-hover:rotate-6 transition-transform" />
+          <span className="font-semibold text-[#FAF7F2]">Chapters</span>
+        </button>
+      )}
+
       {/* ========================================================================= */}
-      {/* READING LAYOUT (Main Column: 680-780px + Sticky TOC) */}
+      {/* READING LAYOUT */}
       {/* ========================================================================= */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 md:px-12 mt-8 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+      <div className={`w-full mx-auto px-4 sm:px-8 md:px-12 mt-6 transition-all duration-300 ${
+        sidebarOpen 
+          ? 'max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-start' 
+          : 'max-w-[1680px] block'
+      }`}>
         
         {/* Sticky Table of Contents (Desktop Sidebar) */}
-        <aside className="hidden lg:block lg:col-span-3 sticky top-28 p-5 rounded-2xl topbar-glass-card space-y-4 max-h-[82vh] overflow-y-auto pr-3 font-mono text-xs">
-          <div className="text-[11px] uppercase tracking-widest text-[#D8CBB3]/60 pb-2 border-b border-[#D8CBB3]/15 flex items-center justify-between font-bold">
-            <span>Article Contents</span>
-            <span>15 Sections</span>
-          </div>
+        {sidebarOpen && (
+          <aside className="hidden lg:block lg:col-span-3 sticky top-28 p-5 rounded-2xl topbar-glass-card space-y-4 max-h-[82vh] overflow-y-auto pr-3 font-mono text-xs">
+            <div className="text-[11px] uppercase tracking-widest text-[#D8CBB3]/60 pb-2 border-b border-[#D8CBB3]/15 flex items-center justify-between font-bold">
+              <span>Article Contents</span>
+              <button
+                onClick={() => {
+                  sound.playClick();
+                  setSidebarOpen(false);
+                }}
+                className="px-2 py-0.5 rounded-md hover:bg-white/10 text-[#D8CBB3]/70 hover:text-white transition-colors flex items-center gap-1 text-[10px]"
+                title="Hide sidebar (Full-screen reading)"
+              >
+                <PanelLeftClose className="w-3.5 h-3.5 text-[#2F6BFF]" />
+                <span>Hide</span>
+              </button>
+            </div>
 
-          <nav className="space-y-1">
-            {ARTICLE_SECTIONS.map((sec) => {
-              const isActive = activeSectionId === sec.id;
-              return (
-                <button
-                  key={sec.id}
-                  onClick={() => scrollToSection(sec.id)}
-                  className={`w-full text-left py-1.5 px-3 rounded-lg transition-all flex items-center gap-2.5 ${
-                    isActive
-                      ? 'bg-[#2F6BFF]/20 text-[#FAF7F2] font-bold border-l-2 border-[#2F6BFF] shadow-glow-electric'
-                      : 'text-[#D8CBB3]/70 hover:text-[#FAF7F2] hover:bg-[#121210]'
-                  }`}
-                >
-                  <span className="text-[10px] text-[#D8CBB3]/40">{sec.num}</span>
-                  <span className="truncate">{sec.title}</span>
-                </button>
-              );
-            })}
-          </nav>
+            <nav className="space-y-1">
+              {ARTICLE_SECTIONS.map((sec) => {
+                const isActive = activeSectionId === sec.id;
+                return (
+                  <button
+                    key={sec.id}
+                    onClick={() => scrollToSection(sec.id)}
+                    className={`w-full text-left py-1.5 px-3 rounded-lg transition-all flex items-center gap-2.5 ${
+                      isActive
+                        ? 'bg-[#2F6BFF]/20 text-[#FAF7F2] font-bold border-l-2 border-[#2F6BFF] shadow-glow-electric'
+                        : 'text-[#D8CBB3]/70 hover:text-[#FAF7F2] hover:bg-[#121210]'
+                    }`}
+                  >
+                    <span className="text-[10px] text-[#D8CBB3]/40">{sec.num}</span>
+                    <span className="truncate">{sec.title}</span>
+                  </button>
+                );
+              })}
+            </nav>
 
-          <div className="pt-4 border-t border-[#D8CBB3]/15">
-            <LiquidMetalAction
-              text="Back to Top"
-              onClick={scrollToTop}
-              width={160}
-              height={46}
-            />
-          </div>
-        </aside>
+            <div className="pt-4 border-t border-[#D8CBB3]/15">
+              <LiquidMetalAction
+                text="Back to Top"
+                onClick={scrollToTop}
+                width={160}
+                height={46}
+              />
+            </div>
+          </aside>
+        )}
 
-        {/* Main Editorial Reading Column (Max-W 740px) */}
-        <article className="lg:col-span-9 max-w-[780px] w-full mx-auto text-[#D8CBB3] font-sans text-base sm:text-lg leading-relaxed space-y-10">
+        {/* Main Editorial Reading Column */}
+        <article className={`w-full text-[#D8CBB3] font-sans text-base sm:text-lg leading-relaxed space-y-10 ${
+          sidebarOpen ? 'lg:col-span-9' : 'w-full'
+        }`}>
           
           {/* ========================================================================= */}
           {/* 01 — INTRODUCTION */}
