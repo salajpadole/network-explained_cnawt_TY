@@ -7,7 +7,9 @@ import {
   Send, Activity, Server, Radio, AlertTriangle, Eye, Layers, Settings2 
 } from 'lucide-react';
 import { sound } from '../../audio/soundEngine';
-import { LiquidButton } from '../buttons/LiquidMetalAction';
+import { LiquidMetalButton } from "@designcodeio/threeui";
+import "@designcodeio/threeui/style.css";
+import { LiquidMetalAction, LiquidButton } from '../buttons/LiquidMetalAction';
 
 export const RipSimulator: React.FC = () => {
   // Preset selection
@@ -352,33 +354,27 @@ export const RipSimulator: React.FC = () => {
       <div className="mt-4 p-3 rounded-xl bg-[#121210] border border-[#D8CBB3]/20 flex flex-wrap items-center justify-between gap-3">
         
         {/* Playback Buttons */}
-        <div className="flex items-center gap-2">
-          <LiquidButton
-            size="sm"
-            isActive={isRunning}
+        <div className="flex flex-wrap items-center gap-3">
+          <LiquidMetalAction
+            text={isRunning ? 'Halt Sim' : 'Run Continuous'}
             onClick={() => setIsRunning(!isRunning)}
-            icon={isRunning ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
-          >
-            {isRunning ? 'Halt Simulation' : 'Run Continuous'}
-          </LiquidButton>
+            width={170}
+            height={48}
+          />
 
-          <LiquidButton
-            size="sm"
+          <LiquidMetalAction
+            text="Step Update"
             onClick={executeBellmanFordStep}
-            icon={<ChevronRight className="w-4 h-4 text-[#2F6BFF]" />}
-            title="Step 1 Bellman-Ford Iteration"
-          >
-            Step Update
-          </LiquidButton>
+            width={160}
+            height={48}
+          />
 
-          <LiquidButton
-            size="sm"
+          <LiquidMetalAction
+            text="Reset Topology"
             onClick={handleResetTopology}
-            icon={<RotateCcw className="w-4 h-4" />}
-            title="Reset Topology to Initial Convergence"
-          >
-            Reset
-          </LiquidButton>
+            width={170}
+            height={48}
+          />
         </div>
 
         {/* Safeguard Toggles */}
@@ -610,13 +606,12 @@ export const RipSimulator: React.FC = () => {
             </select>
           </div>
 
-          <LiquidButton
+          <LiquidMetalAction
+            text="Transmit Packet"
             onClick={handleInjectPacket}
-            size="sm"
-            icon={<Send className="w-3.5 h-3.5" />}
-          >
-            Transmit Layer-3 IP Packet
-          </LiquidButton>
+            width={180}
+            height={48}
+          />
         </div>
 
         {/* Packet Feedback Result */}

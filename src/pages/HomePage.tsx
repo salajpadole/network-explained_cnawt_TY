@@ -2,6 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import { useRouter } from '../router';
 import { sound } from '../audio/soundEngine';
 import { ThreeHeroNetwork } from '../effects/ThreeHeroNetwork';
+import { LiquidMetalButton } from "@designcodeio/threeui";
+import "@designcodeio/threeui/style.css";
 import { LiquidMetalAction, LiquidButton } from '../components/buttons/LiquidMetalAction';
 import { 
   ArrowRight, Compass, Network, FlaskConical, BookOpen, 
@@ -41,88 +43,173 @@ export const HomePage: React.FC = () => {
   };
 
   return (
-    <div className="relative text-[#D8CBB3] bg-[#1E1E1C] overflow-x-hidden selection:bg-[#2F6BFF]/30 selection:text-white">
+    <div className="relative text-[#D8CBB3] bg-transparent overflow-x-hidden selection:bg-[#2F6BFF]/30 selection:text-white">
       
       {/* ========================================================================= */}
       {/* SCENE 01 — OPENING CINEMATIC HERO EXPERIENCE (85-100vh) */}
       {/* ========================================================================= */}
-      <section className="relative min-h-[92vh] sm:min-h-screen flex flex-col justify-center px-4 sm:px-8 md:px-16 pt-24 pb-12 border-b border-[#D8CBB3]/10 overflow-hidden">
+      <section className="relative min-h-[92vh] sm:min-h-screen flex flex-col justify-center px-4 sm:px-8 md:px-16 pt-28 pb-16 border-b border-[#D8CBB3]/10 overflow-hidden">
         
-        {/* Three.js Canvas Network Engine in Sand & Electric Blue */}
-        <ThreeHeroNetwork />
+        {/* Subtle Local Hero Sparkles */}
+        <div className="absolute inset-0 pointer-events-none z-0" />
 
-        <div ref={heroTextRef} className="relative z-10 max-w-5xl mx-auto w-full">
+        <div ref={heroTextRef} className="relative z-10 max-w-7xl mx-auto w-full">
           
-          {/* Metadata pill */}
-          <div className="hero-reveal flex flex-wrap items-center gap-3 text-xs font-mono uppercase tracking-widest text-[#2F6BFF] mb-6">
-            <span className="px-3 py-1 rounded-full bg-[#181816]/90 border border-[#2F6BFF]/50 font-bold text-[#2F6BFF] shadow-glow-electric">
-              ROUTING PROTOCOLS / FEATURED ARTICLE 001
-            </span>
-            <span className="text-[#A8997C]">•</span>
-            <span className="text-[#D8CBB3]">STD 56 (RFC 2453)</span>
-            <span className="text-[#A8997C]">•</span>
-            <span className="text-[#F5EFE6] font-medium">PEER-REVIEWED MONOGRAPH</span>
-          </div>
-
-          {/* Main Editorial Headline */}
-          <h1 className="hero-reveal text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-serif font-normal text-[#F5EFE6] tracking-tight leading-[1.04]">
-            UNDERSTANDING THE LANGUAGE OF NETWORKS.
-          </h1>
-
-          {/* Supporting Text */}
-          <p className="hero-reveal mt-6 sm:mt-8 text-lg sm:text-2xl text-[#D8CBB3] font-serif italic max-w-2xl leading-relaxed">
-            Exploring the invisible systems, protocols and architecture that connect our digital world.
-          </p>
-
-          {/* Featured Article Callout with Liquid Metal Buttons */}
-          <div className="hero-reveal mt-10 p-6 sm:p-8 rounded-3xl glass-panel-elevated border border-[#D8CBB3]/20 max-w-2xl relative overflow-hidden">
-            <div className="text-[10px] font-mono uppercase tracking-widest text-[#2F6BFF] mb-1 font-bold">
-              Current Featured Monograph
-            </div>
-            <div className="text-2xl sm:text-3xl font-serif text-[#F5EFE6] font-medium">
-              RIP — The Routing Information Protocol
-            </div>
-            <p className="mt-2 text-xs sm:text-sm text-[#A8997C] font-sans leading-relaxed">
-              An exhaustive analysis of distributed Bellman-Ford computation, metric infinity, and convergence dynamics.
-            </p>
-
-            <div className="mt-6 flex flex-wrap items-center gap-4">
-              {/* Liquid Metal Shader Action Button from @designcodeio/threeui */}
-              <div className="flex items-center gap-2">
-                <LiquidMetalAction
-                  variant="play"
-                  rendering="colored"
-                  diameter={78}
-                  strokeWidth={2.8}
-                  text="Explore"
-                  onClick={() => handleNavigate('/articles/rip-routing-protocol')}
-                />
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+            
+            {/* Left Column: Editorial Headline & Actions */}
+            <div className="lg:col-span-7 space-y-6">
+              
+              {/* Metadata badge matching Relay's 'open beta / 240 apps connected' */}
+              <div className="hero-reveal flex flex-wrap items-center gap-2.5 text-xs font-mono uppercase tracking-widest text-[#2F6BFF]">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#121316]/90 border border-[#2F6BFF]/40 text-[#FAF7F2] font-bold shadow-glow-electric">
+                  <span className="w-2 h-2 rounded-full bg-[#2F6BFF] animate-pulse" />
+                  <span>STD 56 / 240 AS CONNECTED</span>
+                </div>
+                <span className="text-[#A8997C]">•</span>
+                <span className="text-[#D8CBB3] text-[11px]">PEER-REVIEWED MONOGRAPH</span>
               </div>
 
-              <LiquidButton
-                variant="primary"
-                size="md"
-                onClick={() => handleNavigate('/articles/rip-routing-protocol')}
-                icon={<ArrowRight className="w-4 h-4" />}
-              >
-                Read Full Publication
-              </LiquidButton>
+              {/* Main Headline */}
+              <h1 className="hero-reveal text-4xl sm:text-6xl md:text-7xl font-serif font-normal text-[#F5EFE6] tracking-tight leading-[1.04]">
+                The handoffs run themselves.
+              </h1>
 
-              <LiquidButton
-                variant="secondary"
-                size="md"
-                onClick={() => handleNavigate('/lab')}
-                icon={<FlaskConical className="w-4 h-4 text-[#2F6BFF]" />}
-              >
-                Launch Lab
-              </LiquidButton>
+              {/* Editorial Subtitle */}
+              <p className="hero-reveal text-base sm:text-xl text-[#D8CBB3] font-serif italic max-w-xl leading-relaxed">
+                Network Explained deconstructs how autonomous Bellman-Ford calculations and dynamic route poison reverse connect our digital world.
+              </p>
+
+              {/* Action Buttons: Primary Liquid Metal Pill + Secondary Liquid Glass Action */}
+              <div className="hero-reveal pt-4 flex flex-wrap items-center gap-4">
+                <LiquidMetalAction
+                  text="Read Monograph"
+                  onClick={() => handleNavigate('/articles/rip-routing-protocol')}
+                />
+
+                <LiquidButton
+                  variant="secondary"
+                  size="md"
+                  onClick={() => handleNavigate('/lab')}
+                  icon={<FlaskConical className="w-4 h-4 text-[#2F6BFF]" />}
+                >
+                  Interactive Lab
+                </LiquidButton>
+              </div>
+
+              {/* Verification Subtext matching Relay */}
+              <div className="hero-reveal text-xs font-mono text-[#A8997C] flex items-center gap-3 pt-2">
+                <span>RFC 2453 Track</span>
+                <span>•</span>
+                <span>15-Hop Metric Limit</span>
+                <span>•</span>
+                <span>Interactive Hardware Simulator</span>
+              </div>
+
             </div>
+
+            {/* Right Column: Signature Relay-Style Liquid Glass Router Node Graph */}
+            <div className="lg:col-span-5">
+              <div className="hero-reveal rounded-3xl glass-panel-elevated p-6 sm:p-7 relative overflow-hidden border border-[#D8CBB3]/20 shadow-2xl">
+                
+                {/* Ambient Internal Glow */}
+                <div className="absolute top-0 right-0 w-64 h-64 bg-[#2F6BFF]/15 rounded-full blur-3xl pointer-events-none" />
+
+                {/* Card Titlebar */}
+                <div className="flex items-center justify-between pb-4 border-b border-[#D8CBB3]/15 text-xs font-mono">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[#FAF7F2] font-bold">AS-65001 RIP Routing</span>
+                    <span className="text-[#D8CBB3]/40">|</span>
+                    <span className="text-[#D8CBB3]/60 text-[11px]">3 hops / 1 metric</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-[#2F6BFF] animate-ping" />
+                    <span className="text-[#2F6BFF] font-bold text-[10px] uppercase">running</span>
+                    <span className="px-1.5 py-0.5 rounded bg-[#101114] border border-[#2F6BFF]/30 text-[10px] text-[#FAF7F2] font-bold">100%</span>
+                  </div>
+                </div>
+
+                {/* Flow Graph Nodes */}
+                <div className="py-6 space-y-4">
+                  {/* Step 1 Node */}
+                  <div className="flex items-center justify-between p-3.5 rounded-xl bg-[#121316]/90 border border-[#D8CBB3]/20 hover:border-[#2F6BFF]/50 transition-colors">
+                    <div>
+                      <div className="text-[10px] font-mono text-[#2F6BFF] uppercase font-bold">Origin Node R1</div>
+                      <div className="text-xs font-mono text-[#FAF7F2] font-bold mt-0.5">192.168.1.0/24 subnet</div>
+                    </div>
+                    <span className="text-[10px] font-mono text-[#A8997C] bg-[#1E1F24] px-2 py-1 rounded">metric: 0</span>
+                  </div>
+
+                  {/* Connecting Vector Link */}
+                  <div className="flex items-center justify-center -my-1 text-[10px] font-mono text-[#2F6BFF]">
+                    <span className="w-0.5 h-3 bg-[#2F6BFF]/40 mr-2" />
+                    <span>UDP 520 Bellman-Ford Vector Broadcast</span>
+                    <span className="w-0.5 h-3 bg-[#2F6BFF]/40 ml-2" />
+                  </div>
+
+                  {/* Step 2 Node */}
+                  <div className="flex items-center justify-between p-3.5 rounded-xl bg-[#121316]/90 border border-[#2F6BFF]/40 shadow-glow-electric">
+                    <div>
+                      <div className="text-[10px] font-mono text-[#2F6BFF] uppercase font-bold">Relay Node R2 (Edge Gateway)</div>
+                      <div className="text-xs font-mono text-[#FAF7F2] font-bold mt-0.5">Next-Hop: 10.0.0.1</div>
+                    </div>
+                    <span className="text-[10px] font-mono text-[#2F6BFF] bg-[#2F6BFF]/20 px-2 py-1 rounded font-bold border border-[#2F6BFF]/40">metric: 1 hop</span>
+                  </div>
+
+                  {/* Step 3 Node */}
+                  <div className="flex items-center justify-between p-3.5 rounded-xl bg-[#121316]/90 border border-[#D8CBB3]/15">
+                    <div>
+                      <div className="text-[10px] font-mono text-[#A8997C] uppercase">Destination Core R3</div>
+                      <div className="text-xs font-mono text-[#D8CBB3] mt-0.5">172.16.0.0/16 Backbone</div>
+                    </div>
+                    <span className="text-[10px] font-mono text-[#A8997C] bg-[#1E1F24] px-2 py-1 rounded">converged</span>
+                  </div>
+                </div>
+
+                {/* Execution Log Footer matching Relay */}
+                <div className="pt-4 border-t border-[#D8CBB3]/15 font-mono text-[10px] space-y-2">
+                  <div className="text-[9px] uppercase tracking-wider text-[#A8997C] font-bold">Live Protocol Telemetry</div>
+                  <div className="flex items-center justify-between text-[#D8CBB3]">
+                    <div className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#2F6BFF]" />
+                      <span className="text-[#A8997C]">09:41:02</span>
+                      <span className="text-[#FAF7F2]">Periodic Vector Broadcast (UDP 520)</span>
+                    </div>
+                    <span className="text-[#A8997C]">129 ms</span>
+                  </div>
+                  <div className="flex items-center justify-between text-[#D8CBB3]">
+                    <div className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#2F6BFF]" />
+                      <span className="text-[#A8997C]">09:38:57</span>
+                      <span className="text-[#FAF7F2]">Bellman-Ford Relaxation (R1 → R2)</span>
+                    </div>
+                    <span className="text-[#A8997C]">2.1 ms</span>
+                  </div>
+                  <div className="flex items-center justify-between text-[#D8CBB3]">
+                    <div className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#D8CBB3]" />
+                      <span className="text-[#A8997C]">09:31:14</span>
+                      <span className="text-[#FAF7F2]">Split Horizon Poison Reverse Active</span>
+                    </div>
+                    <span className="text-[#A8997C]">410 ms</span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
           </div>
 
           {/* Subtle scroll cue */}
-          <div className="hero-reveal mt-12 flex items-center gap-3 text-xs font-mono text-[#A8997C] uppercase tracking-widest">
-            <span className="w-8 h-[1px] bg-[#D8CBB3]/30" />
-            <span>Scroll to Discover Publication</span>
+          <div className="hero-reveal mt-16 flex items-center justify-between text-xs font-mono text-[#A8997C] uppercase tracking-widest pt-6 border-t border-[#D8CBB3]/10">
+            <div className="flex items-center gap-3">
+              <span className="w-8 h-[1px] bg-[#D8CBB3]/30" />
+              <span>Scroll to Discover Technical Publication</span>
+            </div>
+            <div className="hidden sm:flex items-center gap-2 text-[#2F6BFF]">
+              <span>Lenis Smooth Stream</span>
+              <span>↓</span>
+            </div>
           </div>
 
         </div>
@@ -197,19 +284,18 @@ export const HomePage: React.FC = () => {
             <span className="text-xs font-mono uppercase tracking-widest text-[#2F6BFF] font-bold">Primary Monograph</span>
             <h2 className="text-2xl sm:text-3xl font-serif text-[#F5EFE6] mt-1">Featured Publication</h2>
           </div>
-          <LiquidButton
-            variant="pill"
+          <LiquidMetalAction
+            text="Browse Index"
             onClick={() => handleNavigate('/articles')}
-            icon={<ArrowRight className="w-3.5 h-3.5" />}
-          >
-            Browse Complete Index
-          </LiquidButton>
+            width={170}
+            height={50}
+          />
         </div>
 
         {/* Magazine Cover Composition */}
         <div 
           onClick={() => handleNavigate('/articles/rip-routing-protocol')}
-          className="group cursor-pointer rounded-3xl border border-[#D8CBB3]/20 hover:border-[#2F6BFF]/70 bg-gradient-to-b from-[#262624] to-[#181816] p-8 sm:p-12 transition-all duration-300 relative overflow-hidden shadow-2xl"
+          className="group cursor-pointer rounded-3xl border border-[#D8CBB3]/20 hover:border-[#2F6BFF]/70 glass-panel-elevated p-8 sm:p-12 transition-all duration-300 relative overflow-hidden shadow-2xl"
         >
           <div className="absolute top-0 right-0 w-96 h-96 bg-[#2F6BFF]/10 rounded-full blur-3xl pointer-events-none group-hover:bg-[#2F6BFF]/15 transition-all duration-500" />
 
@@ -235,13 +321,10 @@ export const HomePage: React.FC = () => {
               </p>
 
               <div className="pt-4 flex items-center gap-4">
-                <LiquidButton
-                  variant="primary"
+                <LiquidMetalAction
+                  text="Inspect Monograph"
                   onClick={() => handleNavigate('/articles/rip-routing-protocol')}
-                  icon={<ArrowRight className="w-4 h-4" />}
-                >
-                  Inspect Monograph (15 Chapters & Sandboxes)
-                </LiquidButton>
+                />
               </div>
             </div>
 
@@ -387,7 +470,7 @@ export const HomePage: React.FC = () => {
       {/* SCENE 05 — INTERACTIVE PREVIEW ("SEE HOW THE NETWORK THINKS") */}
       {/* ========================================================================= */}
       <section className="py-24 sm:py-32 px-4 sm:px-8 md:px-16 border-b border-[#D8CBB3]/10 max-w-6xl mx-auto">
-        <div className="rounded-3xl border border-[#D8CBB3]/25 bg-[#262624] p-8 sm:p-12 relative overflow-hidden shadow-2xl">
+        <div className="rounded-3xl border border-[#D8CBB3]/25 glass-panel-elevated p-8 sm:p-12 relative overflow-hidden shadow-2xl">
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
@@ -405,20 +488,16 @@ export const HomePage: React.FC = () => {
                 Our custom digital simulator models link failure injection, count-to-infinity route metric inflation, Split Horizon, and Layer-3 IP packet routing.
               </p>
               <div className="pt-4 flex items-center gap-4">
-                <LiquidButton
-                  variant="primary"
-                  size="lg"
+                <LiquidMetalAction
+                  text="Enter The Lab"
                   onClick={() => handleNavigate('/lab')}
-                  icon={<FlaskConical className="w-4 h-4 text-[#2F6BFF]" />}
-                >
-                  ENTER THE LAB
-                </LiquidButton>
+                />
               </div>
             </div>
 
             {/* Mini Animated Topology Preview Graphic */}
             <div className="lg:col-span-5 flex justify-center">
-              <div className="w-full max-w-xs p-6 rounded-2xl bg-[#1E1E1C] border border-[#D8CBB3]/20 text-center font-mono text-xs space-y-4 shadow-metal-plate">
+              <div className="w-full max-w-xs p-6 rounded-2xl glass-panel border border-[#D8CBB3]/20 text-center font-mono text-xs space-y-4 shadow-metal-plate">
                 <div className="text-[10px] uppercase tracking-wider text-[#A8997C]">Live Simulation Sandbox</div>
                 <div className="flex items-center justify-between px-2">
                   <div className="p-2.5 rounded-lg bg-[#262624] border border-[#2F6BFF]/40 text-[#2F6BFF] font-bold">R1</div>
@@ -456,19 +535,15 @@ export const HomePage: React.FC = () => {
         </p>
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-          <LiquidButton
-            variant="primary"
-            size="md"
+          <LiquidMetalAction
+            text="Read Monograph"
             onClick={() => handleNavigate('/articles/rip-routing-protocol')}
-            icon={<BookOpen className="w-4 h-4" />}
-          >
-            Read RIP Monograph
-          </LiquidButton>
+          />
           <LiquidButton
             variant="secondary"
             size="md"
             onClick={() => handleNavigate('/about')}
-            icon={<Compass className="w-4 h-4" />}
+            icon={<Compass className="w-4 h-4 text-[#2F6BFF]" />}
           >
             Colophon & References
           </LiquidButton>

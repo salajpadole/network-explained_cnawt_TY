@@ -15,7 +15,9 @@ import { RipSimulator } from '../components/simulator/RipSimulator';
 import { InteractiveQuiz } from '../components/interactive/InteractiveQuiz';
 import { GlossaryDrawer } from '../components/interactive/GlossaryDrawer';
 import { Colophon } from '../components/layout/Colophon';
-import { LiquidButton } from '../components/buttons/LiquidMetalAction';
+import { LiquidMetalButton } from "@designcodeio/threeui";
+import "@designcodeio/threeui/style.css";
+import { LiquidMetalAction, LiquidButton } from '../components/buttons/LiquidMetalAction';
 
 import { 
   BookOpen, Clock, Calendar, User, Share2, Check, ArrowUp, 
@@ -87,7 +89,7 @@ export const RIPArticlePage: React.FC = () => {
   };
 
   return (
-    <div className="relative text-[#D8CBB3] bg-[#1E1E1C] min-h-screen pt-28 sm:pt-36 pb-24">
+    <div className="relative text-[#D8CBB3] bg-transparent min-h-screen pt-28 sm:pt-36 pb-24">
       
       {/* ========================================================================= */}
       {/* ARTICLE HERO */}
@@ -134,13 +136,12 @@ export const RIPArticlePage: React.FC = () => {
               <span>24 min read</span>
             </span>
             <span>•</span>
-            <LiquidButton
-              size="sm"
+            <LiquidMetalAction
+              text={copiedLink ? 'Copied' : 'Share'}
               onClick={handleCopyLink}
-              icon={copiedLink ? <Check className="w-3.5 h-3.5 text-[#2F6BFF]" /> : <Share2 className="w-3.5 h-3.5" />}
-            >
-              {copiedLink ? 'Copied' : 'Share'}
-            </LiquidButton>
+              width={140}
+              height={44}
+            />
           </div>
         </div>
       </header>
@@ -178,13 +179,12 @@ export const RIPArticlePage: React.FC = () => {
           </nav>
 
           <div className="pt-4 border-t border-[#D8CBB3]/15">
-            <LiquidButton
-              size="sm"
+            <LiquidMetalAction
+              text="Back to Top"
               onClick={scrollToTop}
-              icon={<ArrowUp className="w-3.5 h-3.5" />}
-            >
-              Back to Top
-            </LiquidButton>
+              width={160}
+              height={46}
+            />
           </div>
         </aside>
 

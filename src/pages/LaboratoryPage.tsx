@@ -6,7 +6,9 @@ import {
   FlaskConical, Network, Compass, ShieldCheck, Activity, 
   HelpCircle, ChevronRight, RotateCcw, AlertTriangle, Layers, Info, CheckCircle2 
 } from 'lucide-react';
-import { LiquidButton } from '../components/buttons/LiquidMetalAction';
+import { LiquidMetalButton } from "@designcodeio/threeui";
+import "@designcodeio/threeui/style.css";
+import { LiquidMetalAction, LiquidButton } from '../components/buttons/LiquidMetalAction';
 
 export const LaboratoryPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'topology' | 'distance-vector' | 'hop-count' | 'failure'>('topology');
@@ -73,7 +75,7 @@ export const LaboratoryPage: React.FC = () => {
   };
 
   return (
-    <div className="relative text-[#D8CBB3] bg-[#1E1E1C] min-h-screen pt-28 sm:pt-36 pb-24 px-4 sm:px-8 md:px-16">
+    <div className="relative text-[#D8CBB3] bg-transparent min-h-screen pt-28 sm:pt-36 pb-24 px-4 sm:px-8 md:px-16">
       <div className="max-w-6xl mx-auto">
         
         {/* Masthead */}
@@ -142,13 +144,12 @@ export const LaboratoryPage: React.FC = () => {
                 <span className="text-xs font-mono uppercase text-[#2F6BFF] font-bold">Experience B</span>
                 <h3 className="text-2xl font-serif text-[#FAF7F2] mt-0.5">Distributed Vector Convergence Walkthrough</h3>
               </div>
-              <LiquidButton
+              <LiquidMetalAction
+                text={dvStep < 2 ? 'Next Stage' : 'Restart'}
                 onClick={handleNextDvStep}
-                size="sm"
-                icon={<ChevronRight className="w-4 h-4" />}
-              >
-                {dvStep < 2 ? 'Advance Next Exchange Stage' : 'Restart Walkthrough'}
-              </LiquidButton>
+                width={160}
+                height={50}
+              />
             </div>
 
             <div className="mt-6 p-4 rounded-xl bg-[#121210] border border-[#D8CBB3]/20 font-mono text-xs">

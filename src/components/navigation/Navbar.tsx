@@ -3,7 +3,9 @@ import { useRouter, RoutePath } from '../../router';
 import { sound } from '../../audio/soundEngine';
 import { Network, Volume2, VolumeX, Menu, X, Compass, FlaskConical, BookOpen, Info } from 'lucide-react';
 import { ReadingProgressBar } from '../layout/ReadingProgressBar';
-import { LiquidButton } from '../buttons/LiquidMetalAction';
+import { LiquidMetalButton } from "@designcodeio/threeui";
+import "@designcodeio/threeui/style.css";
+import { LiquidMetalAction, LiquidButton } from '../buttons/LiquidMetalAction';
 
 export const Navbar: React.FC = () => {
   const { currentPath, navigate } = useRouter();
@@ -90,16 +92,23 @@ export const Navbar: React.FC = () => {
 
         {/* Right Actions */}
         <div className="flex items-center gap-2 sm:gap-3">
+          {/* Status Badge matching Relay: '● all systems normal' */}
+          <div className="hidden xl:inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-mono bg-[#121316]/90 border border-[#2F6BFF]/30 text-[#D8CBB3] shadow-inner">
+            <span className="w-2 h-2 rounded-full bg-[#2F6BFF] animate-pulse shadow-glow-electric" />
+            <span className="text-[#FAF7F2] font-semibold">STD 56</span>
+            <span className="text-[#A8997C]">•</span>
+            <span className="text-[#D8CBB3]/80">all systems normal</span>
+          </div>
+
           {/* Quick Lab CTA with Liquid Metal Styling */}
           {currentPath !== '/lab' && (
-            <LiquidButton
-              variant="pill"
+            <LiquidMetalAction
+              text="Interactive Lab"
               onClick={() => handleNav('/lab')}
-              className="hidden lg:flex items-center gap-1.5 border-[#2F6BFF]/40 text-[#D8CBB3]"
-              icon={<span className="w-2 h-2 rounded-full bg-[#2F6BFF] animate-pulse" />}
-            >
-              Interactive Lab
-            </LiquidButton>
+              className="hidden lg:flex"
+              width={160}
+              height={46}
+            />
           )}
 
           {/* Audio Synthesizer Toggle */}

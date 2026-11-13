@@ -4,7 +4,7 @@ import { Info, Award, ShieldCheck, Terminal, Compass, Bookmark, ExternalLink } f
 
 export const AboutPage: React.FC = () => {
   return (
-    <div className="relative text-[#D8CBB3] bg-[#1E1E1C] min-h-screen pt-28 sm:pt-36 pb-12">
+    <div className="relative text-[#D8CBB3] bg-transparent min-h-screen pt-28 sm:pt-36 pb-12">
       <div className="max-w-5xl mx-auto px-4 sm:px-8 md:px-16 mb-16">
         
         {/* Header */}

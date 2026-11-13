@@ -6,6 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 // Router & Layout
 import { RouterProvider, useRouter } from './router';
 import { Navbar } from './components/navigation/Navbar';
+import { ElectricRaysBackground } from './effects/ElectricRaysBackground';
 
 // Page Views
 import { HomePage } from './pages/HomePage';
@@ -65,12 +66,15 @@ const AppContent: React.FC = () => {
   };
 
   return (
-    <div className="relative min-h-screen text-slate-100 bg-[#050811] overflow-x-hidden selection:bg-sky-500/30 selection:text-sky-200">
+    <div className="relative min-h-screen text-[#D8CBB3] bg-[#090A0C] overflow-x-hidden selection:bg-[#2F6BFF]/30 selection:text-white">
+      {/* Dynamic Flowing Electric Blue Rays & Dot Matrix (Lenis-driven) */}
+      <ElectricRaysBackground />
+
       {/* Global Navigation Bar */}
       <Navbar />
 
       {/* Dynamic View Component */}
-      <main id="main-content">
+      <main id="main-content" className="relative z-10">
         {renderCurrentPage()}
       </main>
     </div>

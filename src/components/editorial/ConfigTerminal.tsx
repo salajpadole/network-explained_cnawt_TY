@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Terminal, Copy, Check, Info, Code2 } from 'lucide-react';
 import { sound } from '../../audio/soundEngine';
-import { LiquidButton } from '../buttons/LiquidMetalAction';
+import { LiquidMetalButton } from "@designcodeio/threeui";
+import "@designcodeio/threeui/style.css";
+import { LiquidMetalAction, LiquidButton } from '../buttons/LiquidMetalAction';
 
 interface ConfigSnippet {
   vendor: string;
@@ -154,13 +156,12 @@ export const ConfigTerminal: React.FC = () => {
             </span>
           </div>
 
-          <LiquidButton
-            size="sm"
+          <LiquidMetalAction
+            text={copied ? 'Copied' : 'Copy Config'}
             onClick={handleCopy}
-            icon={copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-          >
-            {copied ? 'Copied' : 'Copy'}
-          </LiquidButton>
+            width={140}
+            height={42}
+          />
         </div>
 
         {/* Code Content */}

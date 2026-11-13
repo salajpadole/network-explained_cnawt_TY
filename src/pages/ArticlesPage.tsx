@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { useRouter } from '../router';
 import { sound } from '../audio/soundEngine';
 import { BookOpen, Search, ArrowRight, Clock, Calendar, Bookmark, Filter, Compass } from 'lucide-react';
-import { LiquidButton } from '../components/buttons/LiquidMetalAction';
+import { LiquidMetalButton } from "@designcodeio/threeui";
+import "@designcodeio/threeui/style.css";
+import { LiquidMetalAction, LiquidButton } from '../components/buttons/LiquidMetalAction';
 
 interface ArticleEntry {
   id: string;
@@ -93,7 +95,7 @@ export const ArticlesPage: React.FC = () => {
   };
 
   return (
-    <div className="relative text-[#D8CBB3] bg-[#1E1E1C] min-h-screen pt-28 sm:pt-36 pb-24 px-4 sm:px-8 md:px-16">
+    <div className="relative text-[#D8CBB3] bg-transparent min-h-screen pt-28 sm:pt-36 pb-24 px-4 sm:px-8 md:px-16">
       <div className="max-w-5xl mx-auto">
         
         {/* Header */}
@@ -151,7 +153,7 @@ export const ArticlesPage: React.FC = () => {
                 onClick={() => handleSelectArticle(art.slug, art.status)}
                 className={`p-6 sm:p-8 rounded-2xl border transition-all duration-300 ${
                   isPublished
-                    ? 'border-[#D8CBB3]/25 hover:border-[#2F6BFF] bg-[#262623]/80 hover:bg-[#2A2A26] cursor-pointer shadow-liquid-glass group'
+                    ? 'border-[#D8CBB3]/25 hover:border-[#2F6BFF] glass-panel-elevated cursor-pointer shadow-liquid-glass group'
                     : 'border-[#D8CBB3]/10 bg-[#121210]/50 opacity-60 cursor-not-allowed'
                 }`}
               >
@@ -198,12 +200,10 @@ export const ArticlesPage: React.FC = () => {
                   </div>
 
                   {isPublished ? (
-                    <LiquidButton
-                      size="sm"
-                      icon={<ArrowRight className="w-3.5 h-3.5" />}
-                    >
-                      Read Monograph
-                    </LiquidButton>
+                    <LiquidMetalAction
+                      text="Read Monograph"
+                      onClick={() => handleSelectArticle(art.slug, art.status)}
+                    />
                   ) : (
                     <span className="text-xs font-mono text-[#D8CBB3]/40 italic">
                       In Peer Review / Upcoming

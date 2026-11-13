@@ -3,7 +3,9 @@ import { QUIZ_QUESTIONS } from '../../data/publicationData';
 import { HelpCircle, CheckCircle2, XCircle, RotateCcw, Award, ChevronRight, BookOpen } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { sound } from '../../audio/soundEngine';
-import { LiquidButton } from '../buttons/LiquidMetalAction';
+import { LiquidMetalButton } from "@designcodeio/threeui";
+import "@designcodeio/threeui/style.css";
+import { LiquidMetalAction, LiquidButton } from '../buttons/LiquidMetalAction';
 
 export const InteractiveQuiz: React.FC = () => {
   const [currentIdx, setCurrentIdx] = useState<number>(0);
@@ -158,14 +160,13 @@ export const InteractiveQuiz: React.FC = () => {
               <p className="text-[#D8CBB3] leading-relaxed font-sans">
                 {question.explanation}
               </p>
-              <div className="mt-4 text-right">
-                <LiquidButton
-                  size="sm"
+              <div className="mt-4 flex justify-end">
+                <LiquidMetalAction
+                  text={currentIdx < total - 1 ? 'Next Question' : 'View Scorecard'}
                   onClick={handleNext}
-                  icon={<ChevronRight className="w-4 h-4" />}
-                >
-                  {currentIdx < total - 1 ? 'Next Question' : 'View Final Scorecard'}
-                </LiquidButton>
+                  width={180}
+                  height={48}
+                />
               </div>
             </div>
           )}
@@ -197,14 +198,13 @@ export const InteractiveQuiz: React.FC = () => {
             </div>
           </div>
 
-          <div className="pt-2">
-            <LiquidButton
-              size="md"
+          <div className="pt-2 flex justify-center">
+            <LiquidMetalAction
+              text="Retake Assessment"
               onClick={handleReset}
-              icon={<RotateCcw className="w-4 h-4" />}
-            >
-              Retake Assessment
-            </LiquidButton>
+              width={200}
+              height={50}
+            />
           </div>
         </div>
       )}
