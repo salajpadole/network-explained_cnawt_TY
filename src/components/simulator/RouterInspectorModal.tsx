@@ -2,6 +2,7 @@ import React from 'react';
 import { RouterNode, NetworkLink } from '../../types/network';
 import { X, Network, Cpu, ShieldCheck, Activity } from 'lucide-react';
 import { sound } from '../../audio/soundEngine';
+import { LiquidButton } from '../buttons/LiquidMetalAction';
 
 interface RouterInspectorProps {
   router: RouterNode | null;
@@ -15,25 +16,25 @@ export const RouterInspectorModal: React.FC<RouterInspectorProps> = ({ router, l
   const connectedLinks = links.filter((l) => l.source === router.id || l.target === router.id);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
       <div 
-        className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto glass-panel-elevated rounded-2xl p-6 border border-sky-500/30 text-slate-100"
+        className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto glass-panel-elevated rounded-2xl p-6 border border-[#D8CBB3]/30 text-[#D8CBB3] shadow-liquid-glass"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+        <div className="flex items-center justify-between pb-4 border-b border-[#D8CBB3]/15">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-sky-500/20 border border-sky-500/40 flex items-center justify-center text-sky-400 font-mono font-bold text-lg shadow-glow-cyan">
+            <div className="w-10 h-10 rounded-xl bg-[#2F6BFF]/20 border border-[#2F6BFF]/50 flex items-center justify-center text-[#2F6BFF] font-mono font-bold text-lg shadow-glow-electric">
               {router.label}
             </div>
             <div>
-              <div className="text-xs font-mono text-sky-400 uppercase tracking-widest">Router Hardware RIB Inspector</div>
-              <h3 className="text-xl font-bold font-mono text-white">{router.name}</h3>
+              <div className="text-xs font-mono text-[#2F6BFF] uppercase tracking-widest font-bold">Router Hardware RIB Inspector</div>
+              <h3 className="text-xl font-bold font-mono text-[#FAF7F2]">{router.name}</h3>
             </div>
           </div>
           <button
             onClick={() => { sound.playClick(); onClose(); }}
-            className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white"
+            className="p-2 rounded-lg bg-[#1E1E1C] hover:bg-[#2A2A26] border border-[#D8CBB3]/20 text-[#D8CBB3] hover:text-[#FAF7F2] transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
@@ -41,32 +42,32 @@ export const RouterInspectorModal: React.FC<RouterInspectorProps> = ({ router, l
 
         {/* Status badges */}
         <div className="mt-4 flex flex-wrap gap-2 text-xs font-mono">
-          <span className="px-2.5 py-1 rounded bg-emerald-950/60 border border-emerald-800 text-emerald-400 flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="px-2.5 py-1 rounded bg-[#2F6BFF]/20 border border-[#2F6BFF]/40 text-[#FAF7F2] flex items-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-[#2F6BFF] animate-pulse" />
             Daemon: ripd ACTIVE
           </span>
-          <span className="px-2.5 py-1 rounded bg-slate-900 border border-slate-800 text-slate-300">
+          <span className="px-2.5 py-1 rounded bg-[#121210] border border-[#D8CBB3]/20 text-[#D8CBB3]">
             Port: UDP 520
           </span>
-          <span className="px-2.5 py-1 rounded bg-slate-900 border border-slate-800 text-slate-300">
+          <span className="px-2.5 py-1 rounded bg-[#121210] border border-[#D8CBB3]/20 text-[#D8CBB3]">
             Multicast: 224.0.0.9
           </span>
-          <span className="px-2.5 py-1 rounded bg-sky-950/60 border border-sky-800 text-sky-300">
+          <span className="px-2.5 py-1 rounded bg-[#121210] border border-[#D8CBB3]/20 text-[#D8CBB3]">
             Next Periodic Jitter: {router.updateJitterRemaining}s
           </span>
         </div>
 
         {/* Live Routing Table */}
         <div className="mt-6">
-          <h4 className="text-xs font-mono uppercase text-slate-400 tracking-wider mb-2 flex items-center gap-1.5">
-            <Activity className="w-3.5 h-3.5 text-sky-400" />
+          <h4 className="text-xs font-mono uppercase text-[#D8CBB3]/70 tracking-wider mb-2 flex items-center gap-1.5 font-bold">
+            <Activity className="w-3.5 h-3.5 text-[#2F6BFF]" />
             <span>Active Routing Information Base (RIB)</span>
           </h4>
 
-          <div className="overflow-x-auto rounded-xl border border-slate-800 bg-slate-950/90">
+          <div className="overflow-x-auto rounded-xl border border-[#D8CBB3]/20 bg-[#121210]">
             <table className="w-full text-left text-xs font-mono">
               <thead>
-                <tr className="border-b border-slate-800 text-slate-400 text-[10px] uppercase bg-slate-900/60">
+                <tr className="border-b border-[#D8CBB3]/15 text-[#D8CBB3]/60 text-[10px] uppercase bg-[#1E1E1C]">
                   <th className="py-2.5 px-3">Destination Subnet</th>
                   <th className="py-2.5 px-3">Next Hop</th>
                   <th className="py-2.5 px-3">Hop Metric</th>
@@ -74,33 +75,33 @@ export const RouterInspectorModal: React.FC<RouterInspectorProps> = ({ router, l
                   <th className="py-2.5 px-3">Route Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60">
+              <tbody className="divide-y divide-[#D8CBB3]/10">
                 {router.routingTable.map((route, idx) => {
                   const isInfinity = route.metric >= 16;
                   return (
-                    <tr key={idx} className="hover:bg-slate-900/40">
-                      <td className="py-2.5 px-3 font-semibold text-white">
+                    <tr key={idx} className="hover:bg-[#1E1E1C]/60 transition-colors">
+                      <td className="py-2.5 px-3 font-semibold text-[#FAF7F2]">
                         <div>{route.destination}</div>
-                        <div className="text-[10px] text-slate-500 font-sans">{route.networkName}</div>
+                        <div className="text-[10px] text-[#D8CBB3]/60 font-sans">{route.networkName}</div>
                       </td>
-                      <td className="py-2.5 px-3 text-sky-300">
+                      <td className="py-2.5 px-3 text-[#2F6BFF] font-bold">
                         {route.nextHop}
                       </td>
                       <td className="py-2.5 px-3">
                         {isInfinity ? (
-                          <span className="px-2 py-0.5 rounded bg-rose-950 text-rose-400 border border-rose-800 font-bold">
+                          <span className="px-2 py-0.5 rounded bg-rose-950/80 text-rose-300 border border-rose-700 font-bold">
                             16 (INFINITY)
                           </span>
                         ) : (
-                          <span className="text-emerald-400 font-bold">{route.metric}</span>
+                          <span className="text-[#FAF7F2] font-bold">{route.metric}</span>
                         )}
                       </td>
-                      <td className="py-2.5 px-3 text-slate-400">
+                      <td className="py-2.5 px-3 text-[#D8CBB3]/80">
                         {route.learnedViaInterface}
                       </td>
                       <td className="py-2.5 px-3">
                         <span className={`text-[10px] uppercase font-bold ${
-                          isInfinity ? 'text-rose-400' : 'text-emerald-400'
+                          isInfinity ? 'text-rose-400' : 'text-[#2F6BFF]'
                         }`}>
                           {route.status}
                         </span>
@@ -115,18 +116,18 @@ export const RouterInspectorModal: React.FC<RouterInspectorProps> = ({ router, l
 
         {/* Physical Interfaces */}
         <div className="mt-6">
-          <h4 className="text-xs font-mono uppercase text-slate-400 tracking-wider mb-2">
+          <h4 className="text-xs font-mono uppercase text-[#D8CBB3]/70 tracking-wider mb-2 font-bold">
             Physical Network Interfaces:
           </h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-mono">
             {router.interfaces.map((intf, idx) => (
-              <div key={idx} className="p-2.5 rounded-lg bg-slate-900/70 border border-slate-800 flex items-center justify-between">
+              <div key={idx} className="p-2.5 rounded-lg bg-[#121210] border border-[#D8CBB3]/20 flex items-center justify-between">
                 <div>
-                  <div className="font-bold text-slate-200">{intf.name}</div>
-                  <div className="text-[11px] text-slate-400">{intf.ip}</div>
+                  <div className="font-bold text-[#FAF7F2]">{intf.name}</div>
+                  <div className="text-[11px] text-[#D8CBB3]/60">{intf.ip}</div>
                 </div>
                 <span className={`text-[10px] px-2 py-0.5 rounded font-bold ${
-                  intf.isUp ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' : 'bg-rose-950 text-rose-400 border border-rose-800'
+                  intf.isUp ? 'bg-[#2F6BFF]/20 text-[#FAF7F2] border border-[#2F6BFF]/50' : 'bg-rose-950/80 text-rose-300 border border-rose-700'
                 }`}>
                   {intf.isUp ? 'UP' : 'DOWN'}
                 </span>
@@ -135,13 +136,13 @@ export const RouterInspectorModal: React.FC<RouterInspectorProps> = ({ router, l
           </div>
         </div>
 
-        <div className="mt-6 pt-4 border-t border-slate-800 text-right">
-          <button
-            onClick={() => { sound.playClick(); onClose(); }}
-            className="px-4 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-mono text-white transition-colors"
+        <div className="mt-6 pt-4 border-t border-[#D8CBB3]/15 text-right">
+          <LiquidButton
+            size="sm"
+            onClick={onClose}
           >
-            Close Inspector
-          </button>
+            Dismiss Inspector
+          </LiquidButton>
         </div>
       </div>
     </div>

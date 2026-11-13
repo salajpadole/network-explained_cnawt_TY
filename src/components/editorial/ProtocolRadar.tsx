@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { PROTOCOL_COMPARISONS } from '../../data/publicationData';
 import { Network, HelpCircle, Check, ArrowRight, BarChart3, Compass } from 'lucide-react';
 import { sound } from '../../audio/soundEngine';
+import { LiquidButton } from '../buttons/LiquidMetalAction';
 
 export const ProtocolRadar: React.FC = () => {
   const [wizardStep, setWizardStep] = useState<number>(0);
@@ -56,20 +57,20 @@ export const ProtocolRadar: React.FC = () => {
   }
 
   return (
-    <div className="my-12 p-6 sm:p-8 rounded-2xl glass-panel-elevated border border-sky-500/30">
+    <div className="my-12 p-6 sm:p-8 rounded-2xl glass-panel-elevated border border-[#D8CBB3]/25 shadow-liquid-glass">
       
       {/* Title */}
-      <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-slate-800">
+      <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-[#D8CBB3]/15">
         <div>
-          <div className="flex items-center gap-2 text-xs font-mono uppercase text-sky-400">
+          <div className="flex items-center gap-2 text-xs font-mono uppercase text-[#2F6BFF] font-bold">
             <Compass className="w-4 h-4" />
             <span>Comparative Architectural Analysis</span>
           </div>
-          <h3 className="text-xl sm:text-2xl font-serif text-white mt-1">
+          <h3 className="text-xl sm:text-2xl font-serif text-[#FAF7F2] mt-1">
             The Protocol Crucible: RIP vs. OSPF vs. EIGRP vs. BGP
           </h3>
         </div>
-        <span className="text-xs font-mono px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-slate-400">
+        <span className="text-xs font-mono px-3 py-1 rounded-full bg-[#121210] border border-[#D8CBB3]/20 text-[#D8CBB3]">
           Interior & Exterior Gateway Protocols
         </span>
       </div>
@@ -78,22 +79,22 @@ export const ProtocolRadar: React.FC = () => {
       <div className="mt-6 overflow-x-auto">
         <table className="w-full text-left text-xs font-mono border-collapse">
           <thead>
-            <tr className="border-b border-slate-800 text-[10px] uppercase text-slate-400">
+            <tr className="border-b border-[#D8CBB3]/20 text-[10px] uppercase text-[#D8CBB3]/70">
               <th className="py-3 px-3">Protocol Dimension</th>
-              <th className="py-3 px-3 text-sky-400">RIPv2</th>
-              <th className="py-3 px-3 text-emerald-400">OSPFv2</th>
-              <th className="py-3 px-3 text-amber-400">EIGRP</th>
-              <th className="py-3 px-3 text-purple-400">BGPv4</th>
+              <th className="py-3 px-3 text-[#2F6BFF] font-bold">RIPv2</th>
+              <th className="py-3 px-3 text-[#FAF7F2]">OSPFv2</th>
+              <th className="py-3 px-3 text-[#D8CBB3]">EIGRP</th>
+              <th className="py-3 px-3 text-[#D8CBB3]/80">BGPv4</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-800/60 text-slate-300">
+          <tbody className="divide-y divide-[#D8CBB3]/10 text-[#D8CBB3]">
             {PROTOCOL_COMPARISONS.map((row, idx) => (
-              <tr key={idx} className="hover:bg-slate-900/40 transition-colors">
-                <td className="py-2.5 px-3 font-semibold text-slate-200">{row.feature}</td>
-                <td className="py-2.5 px-3 text-sky-200">{row.ripv2}</td>
-                <td className="py-2.5 px-3 text-emerald-200">{row.ospfv2}</td>
-                <td className="py-2.5 px-3 text-amber-200">{row.eigrp}</td>
-                <td className="py-2.5 px-3 text-purple-200">{row.bgpv4}</td>
+              <tr key={idx} className="hover:bg-[#121210]/60 transition-colors">
+                <td className="py-2.5 px-3 font-semibold text-[#FAF7F2]">{row.feature}</td>
+                <td className="py-2.5 px-3 text-[#2F6BFF] font-semibold">{row.ripv2}</td>
+                <td className="py-2.5 px-3 text-[#FAF7F2]">{row.ospfv2}</td>
+                <td className="py-2.5 px-3 text-[#D8CBB3]">{row.eigrp}</td>
+                <td className="py-2.5 px-3 text-[#D8CBB3]/80">{row.bgpv4}</td>
               </tr>
             ))}
           </tbody>
@@ -101,43 +102,43 @@ export const ProtocolRadar: React.FC = () => {
       </div>
 
       {/* Interactive Protocol Selector Wizard */}
-      <div className="mt-10 p-6 rounded-xl bg-slate-950 border border-slate-800">
-        <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+      <div className="mt-10 p-6 rounded-xl bg-[#121210] border border-[#D8CBB3]/20">
+        <div className="flex items-center justify-between pb-4 border-b border-[#D8CBB3]/15">
           <div className="flex items-center gap-2">
-            <HelpCircle className="w-4 h-4 text-sky-400" />
-            <h4 className="text-sm font-bold font-mono text-white">Interactive Architectural Selection Engine</h4>
+            <HelpCircle className="w-4 h-4 text-[#2F6BFF]" />
+            <h4 className="text-sm font-bold font-mono text-[#FAF7F2]">Interactive Architectural Selection Engine</h4>
           </div>
-          <span className="text-xs font-mono text-slate-500">
+          <span className="text-xs font-mono text-[#D8CBB3]/60">
             Step {Math.min(wizardStep + 1, 3)} of 3
           </span>
         </div>
 
         {wizardStep === 0 && (
           <div className="py-6 space-y-4">
-            <p className="text-sm text-slate-300 font-sans">
+            <p className="text-sm text-[#D8CBB3] font-sans">
               1. What is the maximum physical hop diameter of your network topology?
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <button
                 onClick={() => handleSelectOption('diameter', 'small')}
-                className="p-4 rounded-xl border border-slate-800 hover:border-sky-500 bg-slate-900/60 text-left font-mono text-xs transition-all hover:bg-slate-800"
+                className="p-4 rounded-xl border border-[#D8CBB3]/20 hover:border-[#2F6BFF] bg-[#1E1E1C] text-left font-mono text-xs transition-all hover:bg-[#2A2A26] group"
               >
-                <div className="font-bold text-sky-300">Small Campus / Lab</div>
-                <div className="text-slate-400 text-[11px] mt-1">Under 15 router hops end-to-end.</div>
+                <div className="font-bold text-[#2F6BFF]">Small Campus / Lab</div>
+                <div className="text-[#D8CBB3]/70 text-[11px] mt-1">Under 15 router hops end-to-end.</div>
               </button>
               <button
                 onClick={() => handleSelectOption('diameter', 'medium')}
-                className="p-4 rounded-xl border border-slate-800 hover:border-emerald-500 bg-slate-900/60 text-left font-mono text-xs transition-all hover:bg-slate-800"
+                className="p-4 rounded-xl border border-[#D8CBB3]/20 hover:border-[#2F6BFF] bg-[#1E1E1C] text-left font-mono text-xs transition-all hover:bg-[#2A2A26] group"
               >
-                <div className="font-bold text-emerald-300">Medium Enterprise</div>
-                <div className="text-slate-400 text-[11px] mt-1">15 to 100 hops across diverse WAN links.</div>
+                <div className="font-bold text-[#FAF7F2]">Medium Enterprise</div>
+                <div className="text-[#D8CBB3]/70 text-[11px] mt-1">15 to 100 hops across diverse WAN links.</div>
               </button>
               <button
                 onClick={() => handleSelectOption('diameter', 'large')}
-                className="p-4 rounded-xl border border-slate-800 hover:border-purple-500 bg-slate-900/60 text-left font-mono text-xs transition-all hover:bg-slate-800"
+                className="p-4 rounded-xl border border-[#D8CBB3]/20 hover:border-[#2F6BFF] bg-[#1E1E1C] text-left font-mono text-xs transition-all hover:bg-[#2A2A26] group"
               >
-                <div className="font-bold text-purple-300">Global Carrier / ISP</div>
-                <div className="text-slate-400 text-[11px] mt-1">Inter-autonomous system transit (&gt;100 hops).</div>
+                <div className="font-bold text-[#D8CBB3]">Global Carrier / ISP</div>
+                <div className="text-[#D8CBB3]/70 text-[11px] mt-1">Inter-autonomous system transit (&gt;100 hops).</div>
               </button>
             </div>
           </div>
@@ -145,30 +146,30 @@ export const ProtocolRadar: React.FC = () => {
 
         {wizardStep === 1 && (
           <div className="py-6 space-y-4">
-            <p className="text-sm text-slate-300 font-sans">
+            <p className="text-sm text-[#D8CBB3] font-sans">
               2. What is your primary design metric priority?
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <button
                 onClick={() => handleSelectOption('priority', 'simplicity')}
-                className="p-4 rounded-xl border border-slate-800 hover:border-sky-500 bg-slate-900/60 text-left font-mono text-xs transition-all hover:bg-slate-800"
+                className="p-4 rounded-xl border border-[#D8CBB3]/20 hover:border-[#2F6BFF] bg-[#1E1E1C] text-left font-mono text-xs transition-all hover:bg-[#2A2A26]"
               >
-                <div className="font-bold text-sky-300">Zero Complexity</div>
-                <div className="text-slate-400 text-[11px] mt-1">Plug-and-play, minimal CPU, tiny RAM footprint.</div>
+                <div className="font-bold text-[#2F6BFF]">Zero Complexity</div>
+                <div className="text-[#D8CBB3]/70 text-[11px] mt-1">Plug-and-play, minimal CPU, tiny RAM footprint.</div>
               </button>
               <button
                 onClick={() => handleSelectOption('priority', 'speed')}
-                className="p-4 rounded-xl border border-slate-800 hover:border-amber-500 bg-slate-900/60 text-left font-mono text-xs transition-all hover:bg-slate-800"
+                className="p-4 rounded-xl border border-[#D8CBB3]/20 hover:border-[#2F6BFF] bg-[#1E1E1C] text-left font-mono text-xs transition-all hover:bg-[#2A2A26]"
               >
-                <div className="font-bold text-amber-300">Sub-second Convergence</div>
-                <div className="text-slate-400 text-[11px] mt-1">Instant failover without routing blackholes.</div>
+                <div className="font-bold text-[#FAF7F2]">Sub-second Convergence</div>
+                <div className="text-[#D8CBB3]/70 text-[11px] mt-1">Instant failover without routing blackholes.</div>
               </button>
               <button
                 onClick={() => handleSelectOption('priority', 'bandwidth')}
-                className="p-4 rounded-xl border border-slate-800 hover:border-emerald-500 bg-slate-900/60 text-left font-mono text-xs transition-all hover:bg-slate-800"
+                className="p-4 rounded-xl border border-[#D8CBB3]/20 hover:border-[#2F6BFF] bg-[#1E1E1C] text-left font-mono text-xs transition-all hover:bg-[#2A2A26]"
               >
-                <div className="font-bold text-emerald-300">Bandwidth-Aware Routing</div>
-                <div className="text-slate-400 text-[11px] mt-1">Must avoid routing over slow 56k backup links.</div>
+                <div className="font-bold text-[#D8CBB3]">Bandwidth-Aware Routing</div>
+                <div className="text-[#D8CBB3]/70 text-[11px] mt-1">Must avoid routing over slow 56k backup links.</div>
               </button>
             </div>
           </div>
@@ -176,23 +177,23 @@ export const ProtocolRadar: React.FC = () => {
 
         {wizardStep === 2 && (
           <div className="py-6 space-y-4">
-            <p className="text-sm text-slate-300 font-sans">
+            <p className="text-sm text-[#D8CBB3] font-sans">
               3. Is routing confined within your private organization, or crossing public AS boundaries?
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <button
                 onClick={() => handleSelectOption('scope', 'private')}
-                className="p-4 rounded-xl border border-slate-800 hover:border-sky-500 bg-slate-900/60 text-left font-mono text-xs transition-all hover:bg-slate-800"
+                className="p-4 rounded-xl border border-[#D8CBB3]/20 hover:border-[#2F6BFF] bg-[#1E1E1C] text-left font-mono text-xs transition-all hover:bg-[#2A2A26]"
               >
-                <div className="font-bold text-sky-300">Internal IGP Domain Only</div>
-                <div className="text-slate-400 text-[11px] mt-1">Single organization, private IP addressing.</div>
+                <div className="font-bold text-[#2F6BFF]">Internal IGP Domain Only</div>
+                <div className="text-[#D8CBB3]/70 text-[11px] mt-1">Single organization, private IP addressing.</div>
               </button>
               <button
                 onClick={() => handleSelectOption('scope', 'internet')}
-                className="p-4 rounded-xl border border-slate-800 hover:border-purple-500 bg-slate-900/60 text-left font-mono text-xs transition-all hover:bg-slate-800"
+                className="p-4 rounded-xl border border-[#D8CBB3]/20 hover:border-[#2F6BFF] bg-[#1E1E1C] text-left font-mono text-xs transition-all hover:bg-[#2A2A26]"
               >
-                <div className="font-bold text-purple-300">Public Internet Edge / Peering</div>
-                <div className="text-slate-400 text-[11px] mt-1">Border connection to multiple upstream ISPs.</div>
+                <div className="font-bold text-[#FAF7F2]">Public Internet Edge / Peering</div>
+                <div className="text-[#D8CBB3]/70 text-[11px] mt-1">Border connection to multiple upstream ISPs.</div>
               </button>
             </div>
           </div>
@@ -200,35 +201,37 @@ export const ProtocolRadar: React.FC = () => {
 
         {wizardStep >= 3 && (
           <div className="py-6 space-y-4 animate-fadeIn">
-            <div className="p-5 rounded-xl bg-sky-950/40 border border-sky-500/40">
+            <div className="p-5 rounded-xl bg-[#1E1E1C] border border-[#2F6BFF]/40 shadow-glow-electric">
               <div className="flex items-center justify-between">
                 <div>
-                  <span className="text-[10px] font-mono uppercase text-sky-400 tracking-wider">
+                  <span className="text-[10px] font-mono uppercase text-[#2F6BFF] tracking-wider font-bold">
                     Architectural Recommendation
                   </span>
-                  <h4 className="text-xl font-bold font-mono text-white mt-0.5">
+                  <h4 className="text-xl font-bold font-mono text-[#FAF7F2] mt-0.5">
                     {recommendation.protocol}
                   </h4>
                 </div>
-                <span className="text-xs font-mono px-3 py-1 rounded bg-slate-900 border border-slate-700 text-slate-300">
+                <span className="text-xs font-mono px-3 py-1 rounded bg-[#121210] border border-[#D8CBB3]/20 text-[#D8CBB3]">
                   AD: {recommendation.ad}
                 </span>
               </div>
-              <p className="mt-3 text-sm text-slate-300 leading-relaxed font-sans">
+              <p className="mt-3 text-sm text-[#D8CBB3] leading-relaxed font-sans">
                 {recommendation.reason}
               </p>
-              <div className="mt-3 text-xs font-mono text-amber-300/90 bg-amber-950/30 p-2.5 rounded border border-amber-900/50">
-                <strong>Trade-off Alert:</strong> {recommendation.tradeoff}
+              <div className="mt-3 text-xs font-mono text-[#D8CBB3] bg-[#121210] p-3 rounded-lg border border-[#D8CBB3]/20">
+                <strong className="text-[#2F6BFF]">Trade-off Alert:</strong> {recommendation.tradeoff}
               </div>
             </div>
 
-            <button
-              onClick={resetWizard}
-              className="text-xs font-mono text-sky-400 hover:underline flex items-center gap-1"
-            >
-              <span>Restart Assessment</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
+            <div className="pt-2">
+              <LiquidButton
+                size="sm"
+                onClick={resetWizard}
+                icon={<ArrowRight className="w-3.5 h-3.5" />}
+              >
+                Restart Assessment
+              </LiquidButton>
+            </div>
           </div>
         )}
 

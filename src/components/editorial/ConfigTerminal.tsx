@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Terminal, Copy, Check, Info, Code2 } from 'lucide-react';
 import { sound } from '../../audio/soundEngine';
+import { LiquidButton } from '../buttons/LiquidMetalAction';
 
 interface ConfigSnippet {
   vendor: string;
@@ -98,81 +99,72 @@ export const ConfigTerminal: React.FC = () => {
   };
 
   return (
-    <div className="my-12 p-6 sm:p-8 rounded-2xl glass-panel-elevated border border-sky-500/30">
+    <div className="my-12 p-6 sm:p-8 rounded-2xl glass-panel-elevated border border-[#D8CBB3]/25 shadow-liquid-glass">
       
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-slate-800">
+      <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-[#D8CBB3]/15">
         <div>
-          <div className="flex items-center gap-2 text-xs font-mono uppercase text-sky-400">
+          <div className="flex items-center gap-2 text-xs font-mono uppercase text-[#2F6BFF] font-bold">
             <Terminal className="w-4 h-4" />
             <span>Industrial Configuration Artifacts</span>
           </div>
-          <h3 className="text-xl sm:text-2xl font-serif text-white mt-1">
+          <h3 className="text-xl sm:text-2xl font-serif text-[#FAF7F2] mt-1">
             Production Router Deployments
           </h3>
         </div>
 
         {/* Platform Switcher */}
-        <div className="flex items-center gap-1 p-1 bg-slate-900 rounded-lg border border-slate-800 text-xs font-mono">
-          <button
-            onClick={() => { sound.playClick(); setActivePlatform('cisco'); }}
-            className={`px-3 py-1.5 rounded transition-all ${
-              activePlatform === 'cisco'
-                ? 'bg-sky-500/20 text-sky-300 font-bold border border-sky-500/30 shadow-glow-cyan'
-                : 'text-slate-400 hover:text-white'
-            }`}
+        <div className="flex flex-wrap items-center gap-1.5 p-1 bg-[#121210] rounded-xl border border-[#D8CBB3]/20 text-xs font-mono">
+          <LiquidButton
+            variant="pill"
+            isActive={activePlatform === 'cisco'}
+            onClick={() => setActivePlatform('cisco')}
           >
             Cisco IOS
-          </button>
-          <button
-            onClick={() => { sound.playClick(); setActivePlatform('juniper'); }}
-            className={`px-3 py-1.5 rounded transition-all ${
-              activePlatform === 'juniper'
-                ? 'bg-sky-500/20 text-sky-300 font-bold border border-sky-500/30 shadow-glow-cyan'
-                : 'text-slate-400 hover:text-white'
-            }`}
+          </LiquidButton>
+          <LiquidButton
+            variant="pill"
+            isActive={activePlatform === 'juniper'}
+            onClick={() => setActivePlatform('juniper')}
           >
             Juniper Junos
-          </button>
-          <button
-            onClick={() => { sound.playClick(); setActivePlatform('linuxFrr'); }}
-            className={`px-3 py-1.5 rounded transition-all ${
-              activePlatform === 'linuxFrr'
-                ? 'bg-sky-500/20 text-sky-300 font-bold border border-sky-500/30 shadow-glow-cyan'
-                : 'text-slate-400 hover:text-white'
-            }`}
+          </LiquidButton>
+          <LiquidButton
+            variant="pill"
+            isActive={activePlatform === 'linuxFrr'}
+            onClick={() => setActivePlatform('linuxFrr')}
           >
             Linux FRRouting
-          </button>
+          </LiquidButton>
         </div>
       </div>
 
       {/* Terminal Window */}
-      <div className="mt-6 rounded-xl bg-slate-950 border border-slate-800 overflow-hidden shadow-2xl">
+      <div className="mt-6 rounded-xl bg-[#121210] border border-[#D8CBB3]/25 overflow-hidden shadow-2xl">
         {/* Terminal Titlebar */}
-        <div className="px-4 py-2.5 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between">
+        <div className="px-4 py-2.5 bg-[#1E1E1C] border-b border-[#D8CBB3]/15 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="flex gap-1.5">
               <span className="w-2.5 h-2.5 rounded-full bg-rose-500/70" />
               <span className="w-2.5 h-2.5 rounded-full bg-amber-500/70" />
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/70" />
             </div>
-            <span className="ml-2 font-mono text-xs text-slate-400 truncate">
+            <span className="ml-2 font-mono text-xs text-[#D8CBB3]/80 truncate">
               {activeConfig.filename}
             </span>
           </div>
 
-          <button
+          <LiquidButton
+            size="sm"
             onClick={handleCopy}
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-xs font-mono text-slate-300 transition-colors"
+            icon={copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
           >
-            {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-            <span>{copied ? 'Copied' : 'Copy'}</span>
-          </button>
+            {copied ? 'Copied' : 'Copy'}
+          </LiquidButton>
         </div>
 
         {/* Code Content */}
-        <div className="p-4 sm:p-6 overflow-x-auto font-mono text-xs sm:text-sm leading-relaxed text-slate-200">
+        <div className="p-4 sm:p-6 overflow-x-auto font-mono text-xs sm:text-sm leading-relaxed text-[#FAF7F2]">
           <pre>
             {activeConfig.code.split('\n').map((line, idx) => {
               const lineNum = idx + 1;
@@ -183,15 +175,15 @@ export const ConfigTerminal: React.FC = () => {
                   onMouseEnter={() => annotation && setHoveredAnnotation(annotation.explanation)}
                   onMouseLeave={() => setHoveredAnnotation(null)}
                   className={`flex items-start gap-4 px-2 py-0.5 rounded transition-colors ${
-                    annotation ? 'hover:bg-sky-950/40 cursor-help' : ''
+                    annotation ? 'hover:bg-[#2F6BFF]/20 cursor-help' : ''
                   }`}
                 >
-                  <span className="text-slate-600 select-none w-6 text-right shrink-0">{lineNum}</span>
-                  <span className={`flex-1 ${line.startsWith('!') || line.startsWith('#') ? 'text-slate-500 italic' : line.startsWith(' ') ? 'text-sky-200' : 'text-white font-semibold'}`}>
+                  <span className="text-[#D8CBB3]/40 select-none w-6 text-right shrink-0">{lineNum}</span>
+                  <span className={`flex-1 ${line.startsWith('!') || line.startsWith('#') ? 'text-[#D8CBB3]/50 italic' : line.startsWith(' ') ? 'text-[#D8CBB3]' : 'text-[#FAF7F2] font-semibold'}`}>
                     {line}
                   </span>
                   {annotation && (
-                    <span className="text-[10px] px-1.5 py-0.2 rounded bg-sky-950 border border-sky-800/80 text-sky-400 select-none">
+                    <span className="text-[10px] px-1.5 py-0.2 rounded bg-[#2F6BFF]/20 border border-[#2F6BFF]/40 text-[#2F6BFF] select-none font-bold">
                       Note
                     </span>
                   )}
@@ -202,9 +194,9 @@ export const ConfigTerminal: React.FC = () => {
         </div>
 
         {/* Interactive Annotation Status Bar */}
-        <div className="px-4 py-3 bg-slate-900 border-t border-slate-800 text-xs font-mono flex items-center gap-2">
-          <Info className="w-4 h-4 text-sky-400 shrink-0" />
-          <span className="text-slate-300">
+        <div className="px-4 py-3 bg-[#1E1E1C] border-t border-[#D8CBB3]/15 text-xs font-mono flex items-center gap-2">
+          <Info className="w-4 h-4 text-[#2F6BFF] shrink-0" />
+          <span className="text-[#D8CBB3]">
             {hoveredAnnotation || 'Hover over annotated lines above to inspect vendor command semantics.'}
           </span>
         </div>

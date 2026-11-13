@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { AlertCircle, Shield, ArrowRight, RotateCcw, ChevronRight, Zap } from 'lucide-react';
 import { sound } from '../../audio/soundEngine';
+import { LiquidButton } from '../buttons/LiquidMetalAction';
 
 export const LoopMechanicsVisualizer: React.FC = () => {
   const [splitHorizonEnabled, setSplitHorizonEnabled] = useState<boolean>(false);
@@ -99,23 +100,23 @@ export const LoopMechanicsVisualizer: React.FC = () => {
   }
 
   return (
-    <div className="my-12 p-6 sm:p-8 rounded-2xl glass-panel-elevated border border-rose-500/30">
+    <div className="my-12 p-6 sm:p-8 rounded-2xl glass-panel-elevated border border-[#D8CBB3]/25 shadow-liquid-glass">
       
       {/* Title */}
-      <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-slate-800">
+      <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-[#D8CBB3]/15">
         <div>
-          <div className="flex items-center gap-2 text-xs font-mono uppercase text-rose-400">
+          <div className="flex items-center gap-2 text-xs font-mono uppercase text-rose-400 font-bold">
             <AlertCircle className="w-4 h-4" />
             <span>Pathological Failure Case Study</span>
           </div>
-          <h3 className="text-xl sm:text-2xl font-serif text-white mt-1">
+          <h3 className="text-xl sm:text-2xl font-serif text-[#FAF7F2] mt-1">
             The Count-to-Infinity Phenomenon & Safeguards
           </h3>
         </div>
 
         {/* Safeguard switches */}
         <div className="flex flex-wrap items-center gap-3 text-xs font-mono">
-          <label className="flex items-center gap-2 cursor-pointer p-2 rounded-lg bg-slate-900 border border-slate-800 hover:border-slate-700">
+          <label className="flex items-center gap-2 cursor-pointer p-2 rounded-full bg-[#121210] border border-[#D8CBB3]/20 hover:border-[#2F6BFF] transition-colors">
             <input
               type="checkbox"
               checked={splitHorizonEnabled}
@@ -124,14 +125,14 @@ export const LoopMechanicsVisualizer: React.FC = () => {
                 setSplitHorizonEnabled(e.target.checked);
                 setCurrentStep(0);
               }}
-              className="accent-emerald-500 w-4 h-4 rounded"
+              className="accent-[#2F6BFF] w-4 h-4 rounded"
             />
-            <span className={splitHorizonEnabled ? "text-emerald-400 font-bold" : "text-slate-400"}>
+            <span className={splitHorizonEnabled ? "text-[#FAF7F2] font-bold" : "text-[#D8CBB3]/70"}>
               Split Horizon
             </span>
           </label>
 
-          <label className="flex items-center gap-2 cursor-pointer p-2 rounded-lg bg-slate-900 border border-slate-800 hover:border-slate-700">
+          <label className="flex items-center gap-2 cursor-pointer p-2 rounded-full bg-[#121210] border border-[#D8CBB3]/20 hover:border-[#2F6BFF] transition-colors">
             <input
               type="checkbox"
               checked={poisonReverseEnabled}
@@ -140,9 +141,9 @@ export const LoopMechanicsVisualizer: React.FC = () => {
                 setPoisonReverseEnabled(e.target.checked);
                 setCurrentStep(0);
               }}
-              className="accent-sky-500 w-4 h-4 rounded"
+              className="accent-[#2F6BFF] w-4 h-4 rounded"
             />
-            <span className={poisonReverseEnabled ? "text-sky-400 font-bold" : "text-slate-400"}>
+            <span className={poisonReverseEnabled ? "text-[#FAF7F2] font-bold" : "text-[#D8CBB3]/70"}>
               Poison Reverse
             </span>
           </label>
@@ -150,81 +151,81 @@ export const LoopMechanicsVisualizer: React.FC = () => {
       </div>
 
       {/* Network Topology Schematic */}
-      <div className="my-8 p-6 bg-slate-950/80 rounded-xl border border-slate-800 flex flex-col items-center">
+      <div className="my-8 p-6 bg-[#121210] rounded-xl border border-[#D8CBB3]/20 flex flex-col items-center">
         <div className="w-full max-w-xl flex items-center justify-between relative py-6">
           
           {/* Router A */}
           <div className={`p-4 rounded-xl border flex flex-col items-center transition-all ${
-            loopActive ? 'border-rose-500/80 bg-rose-950/30 shadow-glow-rose' : 'border-sky-500/60 bg-sky-950/30'
+            loopActive ? 'border-rose-500/80 bg-rose-950/40 shadow-glow-rose' : 'border-[#2F6BFF]/60 bg-[#1E1E1C]'
           }`}>
-            <span className="text-xs font-mono text-sky-400 font-bold">Router A</span>
-            <div className="mt-2 text-[11px] font-mono text-slate-300">
-              <div>Metric: <strong className={metricA === 16 ? "text-rose-400" : "text-white"}>{metricA}</strong></div>
-              <div>Next: <span className="text-slate-400">{nextHopA}</span></div>
+            <span className="text-xs font-mono text-[#2F6BFF] font-bold">Router A</span>
+            <div className="mt-2 text-[11px] font-mono text-[#D8CBB3]">
+              <div>Metric: <strong className={metricA === 16 ? "text-rose-400" : "text-[#FAF7F2]"}>{metricA}</strong></div>
+              <div>Next: <span className="text-[#D8CBB3]/60">{nextHopA}</span></div>
             </div>
           </div>
 
           {/* Link A-B */}
           <div className="flex-1 px-4 flex flex-col items-center">
-            <div className={`w-full h-1 relative ${loopActive ? 'bg-rose-500 animate-pulse' : 'bg-slate-700'}`}>
+            <div className={`w-full h-1 relative ${loopActive ? 'bg-rose-500 animate-pulse' : 'bg-[#2F6BFF]'}`}>
               {loopActive && (
-                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 text-[10px] font-mono text-rose-400 bg-black px-1 rounded border border-rose-800 animate-bounce">
+                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 text-[10px] font-mono text-rose-300 bg-rose-950 px-2 py-0.5 rounded border border-rose-600 animate-bounce font-bold">
                   LOOP ACTIVE
                 </div>
               )}
             </div>
-            <span className="text-[10px] font-mono text-slate-500 mt-2">1 Hop Transit</span>
+            <span className="text-[10px] font-mono text-[#D8CBB3]/60 mt-2">1 Hop Transit</span>
           </div>
 
           {/* Router B */}
           <div className={`p-4 rounded-xl border flex flex-col items-center transition-all ${
-            loopActive ? 'border-rose-500/80 bg-rose-950/30 shadow-glow-rose' : 'border-sky-500/60 bg-sky-950/30'
+            loopActive ? 'border-rose-500/80 bg-rose-950/40 shadow-glow-rose' : 'border-[#2F6BFF]/60 bg-[#1E1E1C]'
           }`}>
-            <span className="text-xs font-mono text-sky-400 font-bold">Router B</span>
-            <div className="mt-2 text-[11px] font-mono text-slate-300">
-              <div>Metric: <strong className={metricB === 16 ? "text-rose-400" : "text-white"}>{metricB}</strong></div>
-              <div>Next: <span className="text-slate-400">{nextHopB}</span></div>
+            <span className="text-xs font-mono text-[#2F6BFF] font-bold">Router B</span>
+            <div className="mt-2 text-[11px] font-mono text-[#D8CBB3]">
+              <div>Metric: <strong className={metricB === 16 ? "text-rose-400" : "text-[#FAF7F2]"}>{metricB}</strong></div>
+              <div>Next: <span className="text-[#D8CBB3]/60">{nextHopB}</span></div>
             </div>
           </div>
 
           {/* Link B-X (The Failing Link) */}
           <div className="flex-1 px-4 flex flex-col items-center">
-            <div className={`w-full h-1 border-t-2 ${currentStep === 0 ? 'border-emerald-500' : 'border-dashed border-rose-500'}`} />
-            <span className={`text-[10px] font-mono mt-2 ${currentStep === 0 ? 'text-emerald-400' : 'text-rose-400 font-bold'}`}>
+            <div className={`w-full h-1 border-t-2 ${currentStep === 0 ? 'border-[#2F6BFF]' : 'border-dashed border-rose-500'}`} />
+            <span className={`text-[10px] font-mono mt-2 ${currentStep === 0 ? 'text-[#2F6BFF] font-bold' : 'text-rose-400 font-bold'}`}>
               {currentStep === 0 ? 'Connected' : 'SEVERED (DOWN)'}
             </span>
           </div>
 
           {/* Subnet X */}
-          <div className={`p-4 rounded-xl border text-center ${currentStep === 0 ? 'border-emerald-500/40 bg-emerald-950/30 text-emerald-300' : 'border-slate-800 bg-slate-900/40 text-slate-500'}`}>
+          <div className={`p-4 rounded-xl border text-center ${currentStep === 0 ? 'border-[#D8CBB3]/40 bg-[#1E1E1C] text-[#FAF7F2]' : 'border-[#D8CBB3]/10 bg-[#121210] text-[#D8CBB3]/40'}`}>
             <span className="text-xs font-mono font-bold">Subnet X</span>
             <div className="text-[10px] font-mono mt-1">192.168.10.0/24</div>
           </div>
         </div>
 
         {/* Narrative Box */}
-        <div className="mt-4 w-full p-4 rounded-lg bg-slate-900 border border-slate-800 text-xs sm:text-sm text-slate-200 font-mono leading-relaxed">
-          <span className="text-sky-400 font-bold mr-2">[Step {currentStep}]:</span>
+        <div className="mt-4 w-full p-4 rounded-lg bg-[#1E1E1C] border border-[#D8CBB3]/15 text-xs sm:text-sm text-[#FAF7F2] font-mono leading-relaxed">
+          <span className="text-[#2F6BFF] font-bold mr-2">[Step {currentStep}]:</span>
           {narrative}
         </div>
 
         {/* Step Controls */}
         <div className="mt-6 flex items-center gap-3">
-          <button
+          <LiquidButton
             onClick={nextStep}
             disabled={(!splitHorizonEnabled && !poisonReverseEnabled && currentStep >= 8) || ((splitHorizonEnabled || poisonReverseEnabled) && currentStep >= 1)}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-rose-600 hover:bg-rose-500 disabled:opacity-50 text-white font-mono text-xs font-semibold shadow-glow-rose transition-all"
+            icon={<ChevronRight className="w-4 h-4" />}
+            size="sm"
           >
-            <span>Advance Failure Step</span>
-            <ChevronRight className="w-4 h-4" />
-          </button>
-          <button
+            Advance Failure Step
+          </LiquidButton>
+          <LiquidButton
+            size="sm"
             onClick={resetSimulation}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 font-mono text-xs transition-all"
+            icon={<RotateCcw className="w-3.5 h-3.5" />}
           >
-            <RotateCcw className="w-3.5 h-3.5" />
-            <span>Reset State</span>
-          </button>
+            Reset State
+          </LiquidButton>
         </div>
       </div>
     </div>

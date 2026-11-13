@@ -6,6 +6,7 @@ import {
   FlaskConical, Network, Compass, ShieldCheck, Activity, 
   HelpCircle, ChevronRight, RotateCcw, AlertTriangle, Layers, Info, CheckCircle2 
 } from 'lucide-react';
+import { LiquidButton } from '../components/buttons/LiquidMetalAction';
 
 export const LaboratoryPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'topology' | 'distance-vector' | 'hop-count' | 'failure'>('topology');
@@ -72,70 +73,58 @@ export const LaboratoryPage: React.FC = () => {
   };
 
   return (
-    <div className="relative text-slate-100 bg-[#050811] min-h-screen pt-28 sm:pt-36 pb-24 px-4 sm:px-8 md:px-16">
+    <div className="relative text-[#D8CBB3] bg-[#1E1E1C] min-h-screen pt-28 sm:pt-36 pb-24 px-4 sm:px-8 md:px-16">
       <div className="max-w-6xl mx-auto">
         
         {/* Masthead */}
-        <div className="pb-8 border-b border-slate-800">
-          <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-emerald-400 mb-2">
+        <div className="pb-8 border-b border-[#D8CBB3]/15">
+          <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#2F6BFF] mb-2 font-bold">
             <FlaskConical className="w-4 h-4" />
             <span>Digital Networking Laboratory</span>
           </div>
-          <h1 className="text-4xl sm:text-6xl font-serif text-white tracking-tight">
+          <h1 className="text-4xl sm:text-6xl font-serif text-[#FAF7F2] tracking-tight">
             Interactive Protocol Laboratory
           </h1>
-          <p className="mt-4 text-base sm:text-xl text-slate-400 font-serif italic max-w-3xl leading-relaxed">
+          <p className="mt-4 text-base sm:text-xl text-[#D8CBB3]/80 font-serif italic max-w-3xl leading-relaxed">
             Deterministic educational simulations modeling distributed distance-vector learning, hop metric boundaries, link faults, and loop-prevention physics.
           </p>
 
-          <div className="mt-4 p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs font-mono text-slate-400 flex items-center gap-2">
-            <Info className="w-4 h-4 text-sky-400 shrink-0" />
+          <div className="mt-4 p-3.5 rounded-xl bg-[#121210] border border-[#D8CBB3]/20 text-xs font-mono text-[#D8CBB3]/75 flex items-center gap-2.5">
+            <Info className="w-4 h-4 text-[#2F6BFF] shrink-0" />
             <span><strong>Educational Model Notice:</strong> These interactive instruments execute accurate Bellman-Ford calculations and state machines for didactic exploration, not a production kernel daemon.</span>
           </div>
         </div>
 
         {/* Experiment Navigation Tabs */}
-        <div className="py-6 border-b border-slate-800 flex flex-wrap gap-2 text-xs font-mono">
-          <button
-            onClick={() => { sound.playClick(); setActiveTab('topology'); }}
-            className={`px-4 py-2 rounded-xl border transition-all ${
-              activeTab === 'topology'
-                ? 'bg-sky-500/20 text-sky-300 font-bold border-sky-500/40 shadow-glow-cyan'
-                : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white'
-            }`}
+        <div className="py-6 border-b border-[#D8CBB3]/15 flex flex-wrap gap-2.5 text-xs font-mono">
+          <LiquidButton
+            variant="pill"
+            isActive={activeTab === 'topology'}
+            onClick={() => setActiveTab('topology')}
           >
             Exp A: Network Topology Simulator
-          </button>
-          <button
-            onClick={() => { sound.playClick(); setActiveTab('distance-vector'); }}
-            className={`px-4 py-2 rounded-xl border transition-all ${
-              activeTab === 'distance-vector'
-                ? 'bg-emerald-500/20 text-emerald-300 font-bold border-emerald-500/40 shadow-glow-emerald'
-                : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white'
-            }`}
+          </LiquidButton>
+          <LiquidButton
+            variant="pill"
+            isActive={activeTab === 'distance-vector'}
+            onClick={() => setActiveTab('distance-vector')}
           >
             Exp B: Distance-Vector Learning
-          </button>
-          <button
-            onClick={() => { sound.playClick(); setActiveTab('hop-count'); }}
-            className={`px-4 py-2 rounded-xl border transition-all ${
-              activeTab === 'hop-count'
-                ? 'bg-amber-500/20 text-amber-300 font-bold border-amber-500/40 shadow-glow-amber'
-                : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white'
-            }`}
+          </LiquidButton>
+          <LiquidButton
+            variant="pill"
+            isActive={activeTab === 'hop-count'}
+            onClick={() => setActiveTab('hop-count')}
           >
             Exp C: 15-Hop Frontier Explorer
-          </button>
-          <button
-            onClick={() => { sound.playClick(); setActiveTab('failure'); }}
-            className={`px-4 py-2 rounded-xl border transition-all ${
-              activeTab === 'failure'
-                ? 'bg-rose-500/20 text-rose-300 font-bold border-rose-500/40 shadow-glow-rose'
-                : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white'
-            }`}
+          </LiquidButton>
+          <LiquidButton
+            variant="pill"
+            isActive={activeTab === 'failure'}
+            onClick={() => setActiveTab('failure')}
           >
             Exp E: Convergence Latency
-          </button>
+          </LiquidButton>
         </div>
 
         {/* EXPERIMENT A & D: TOPOLOGY SIMULATOR & ROUTING TABLE INSPECTOR */}
@@ -147,42 +136,42 @@ export const LaboratoryPage: React.FC = () => {
 
         {/* EXPERIMENT B: DISTANCE-VECTOR STEP LEARNING */}
         {activeTab === 'distance-vector' && (
-          <div className="mt-8 p-6 sm:p-8 rounded-2xl glass-panel-elevated border border-emerald-500/30">
-            <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-800">
+          <div className="mt-8 p-6 sm:p-8 rounded-2xl glass-panel-elevated border border-[#D8CBB3]/20 shadow-liquid-glass">
+            <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-[#D8CBB3]/15">
               <div>
-                <span className="text-xs font-mono uppercase text-emerald-400">Experience B</span>
-                <h3 className="text-2xl font-serif text-white mt-0.5">Distributed Vector Convergence Walkthrough</h3>
+                <span className="text-xs font-mono uppercase text-[#2F6BFF] font-bold">Experience B</span>
+                <h3 className="text-2xl font-serif text-[#FAF7F2] mt-0.5">Distributed Vector Convergence Walkthrough</h3>
               </div>
-              <button
+              <LiquidButton
                 onClick={handleNextDvStep}
-                className="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-mono text-xs font-bold transition-all flex items-center gap-1.5 shadow-glow-emerald"
+                size="sm"
+                icon={<ChevronRight className="w-4 h-4" />}
               >
-                <span>{dvStep < 2 ? 'Advance Next Exchange Stage' : 'Restart Walkthrough'}</span>
-                <ChevronRight className="w-4 h-4" />
-              </button>
+                {dvStep < 2 ? 'Advance Next Exchange Stage' : 'Restart Walkthrough'}
+              </LiquidButton>
             </div>
 
-            <div className="mt-6 p-4 rounded-xl bg-slate-950 border border-slate-800 font-mono text-xs">
-              <span className="text-emerald-400 font-bold block text-sm">{dvStages[dvStep].title}</span>
-              <p className="text-slate-300 mt-1 font-sans text-sm">{dvStages[dvStep].desc}</p>
+            <div className="mt-6 p-4 rounded-xl bg-[#121210] border border-[#D8CBB3]/20 font-mono text-xs">
+              <span className="text-[#2F6BFF] font-bold block text-sm">{dvStages[dvStep].title}</span>
+              <p className="text-[#D8CBB3] mt-1 font-sans text-sm">{dvStages[dvStep].desc}</p>
             </div>
 
             {/* 3 Routers Routing Tables Comparison */}
             <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
               
               {/* Router 1 */}
-              <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
-                <div className="flex items-center justify-between text-xs font-mono font-bold text-sky-400 pb-2 border-b border-slate-800">
+              <div className="p-4 rounded-xl bg-[#1E1E1C] border border-[#D8CBB3]/20 shadow-sm">
+                <div className="flex items-center justify-between text-xs font-mono font-bold text-[#2F6BFF] pb-2 border-b border-[#D8CBB3]/15">
                   <span>Router R1 RIB</span>
-                  <span>10.0.1.1</span>
+                  <span className="text-[#D8CBB3]/60 font-normal">10.0.1.1</span>
                 </div>
                 <div className="mt-3 space-y-2 text-xs font-mono">
                   {dvStages[dvStep].r1Table.map((row, i) => (
-                    <div key={i} className="p-2 rounded bg-slate-950 border border-slate-800/80">
-                      <div className="text-slate-300">{row.dest}</div>
-                      <div className="text-[11px] text-slate-500 flex justify-between mt-1">
+                    <div key={i} className="p-2.5 rounded-lg bg-[#121210] border border-[#D8CBB3]/15">
+                      <div className="text-[#FAF7F2] font-medium">{row.dest}</div>
+                      <div className="text-[11px] text-[#D8CBB3]/70 flex justify-between mt-1.5">
                         <span>Hop: {row.next}</span>
-                        <strong className="text-emerald-400">{row.metric} hop</strong>
+                        <strong className="text-[#2F6BFF]">{row.metric} hop</strong>
                       </div>
                     </div>
                   ))}
@@ -190,18 +179,18 @@ export const LaboratoryPage: React.FC = () => {
               </div>
 
               {/* Router 2 */}
-              <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
-                <div className="flex items-center justify-between text-xs font-mono font-bold text-sky-400 pb-2 border-b border-slate-800">
+              <div className="p-4 rounded-xl bg-[#1E1E1C] border border-[#D8CBB3]/20 shadow-sm">
+                <div className="flex items-center justify-between text-xs font-mono font-bold text-[#2F6BFF] pb-2 border-b border-[#D8CBB3]/15">
                   <span>Router R2 RIB</span>
-                  <span>10.0.2.1</span>
+                  <span className="text-[#D8CBB3]/60 font-normal">10.0.2.1</span>
                 </div>
                 <div className="mt-3 space-y-2 text-xs font-mono">
                   {dvStages[dvStep].r2Table.map((row, i) => (
-                    <div key={i} className="p-2 rounded bg-slate-950 border border-slate-800/80">
-                      <div className="text-slate-300">{row.dest}</div>
-                      <div className="text-[11px] text-slate-500 flex justify-between mt-1">
+                    <div key={i} className="p-2.5 rounded-lg bg-[#121210] border border-[#D8CBB3]/15">
+                      <div className="text-[#FAF7F2] font-medium">{row.dest}</div>
+                      <div className="text-[11px] text-[#D8CBB3]/70 flex justify-between mt-1.5">
                         <span>Hop: {row.next}</span>
-                        <strong className="text-emerald-400">{row.metric} hop</strong>
+                        <strong className="text-[#2F6BFF]">{row.metric} hop</strong>
                       </div>
                     </div>
                   ))}
@@ -209,18 +198,18 @@ export const LaboratoryPage: React.FC = () => {
               </div>
 
               {/* Router 3 */}
-              <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
-                <div className="flex items-center justify-between text-xs font-mono font-bold text-sky-400 pb-2 border-b border-slate-800">
+              <div className="p-4 rounded-xl bg-[#1E1E1C] border border-[#D8CBB3]/20 shadow-sm">
+                <div className="flex items-center justify-between text-xs font-mono font-bold text-[#2F6BFF] pb-2 border-b border-[#D8CBB3]/15">
                   <span>Router R3 RIB</span>
-                  <span>192.168.10.1</span>
+                  <span className="text-[#D8CBB3]/60 font-normal">192.168.10.1</span>
                 </div>
                 <div className="mt-3 space-y-2 text-xs font-mono">
                   {dvStages[dvStep].r3Table.map((row, i) => (
-                    <div key={i} className="p-2 rounded bg-slate-950 border border-slate-800/80">
-                      <div className="text-slate-300">{row.dest}</div>
-                      <div className="text-[11px] text-slate-500 flex justify-between mt-1">
+                    <div key={i} className="p-2.5 rounded-lg bg-[#121210] border border-[#D8CBB3]/15">
+                      <div className="text-[#FAF7F2] font-medium">{row.dest}</div>
+                      <div className="text-[11px] text-[#D8CBB3]/70 flex justify-between mt-1.5">
                         <span>Hop: {row.next}</span>
-                        <strong className="text-emerald-400">{row.metric} hop</strong>
+                        <strong className="text-[#2F6BFF]">{row.metric} hop</strong>
                       </div>
                     </div>
                   ))}
@@ -233,19 +222,19 @@ export const LaboratoryPage: React.FC = () => {
 
         {/* EXPERIMENT C: HOP-COUNT EXPLORER */}
         {activeTab === 'hop-count' && (
-          <div className="mt-8 p-6 sm:p-8 rounded-2xl glass-panel-elevated border border-amber-500/30">
-            <div className="pb-4 border-b border-slate-800">
-              <span className="text-xs font-mono uppercase text-amber-400">Experience C</span>
-              <h3 className="text-2xl font-serif text-white mt-0.5">The 15-Hop Frontier & Metric Infinity</h3>
-              <p className="text-slate-400 text-xs sm:text-sm mt-1 font-sans">
+          <div className="mt-8 p-6 sm:p-8 rounded-2xl glass-panel-elevated border border-[#D8CBB3]/20 shadow-liquid-glass">
+            <div className="pb-4 border-b border-[#D8CBB3]/15">
+              <span className="text-xs font-mono uppercase text-[#2F6BFF] font-bold">Experience C</span>
+              <h3 className="text-2xl font-serif text-[#FAF7F2] mt-0.5">The 15-Hop Frontier & Metric Infinity</h3>
+              <p className="text-[#D8CBB3]/80 text-xs sm:text-sm mt-1 font-sans">
                 Drag the slider to test RIP reachability boundaries. Watch the route transition from active valid forwarding to mathematical infinity (16).
               </p>
             </div>
 
             <div className="mt-8 space-y-4">
               <div className="flex items-center justify-between text-xs font-mono">
-                <span className="text-slate-400">Tested Network Metric:</span>
-                <span className={`text-xl font-bold ${explorerHops === 16 ? 'text-rose-400' : 'text-emerald-400'}`}>
+                <span className="text-[#D8CBB3]/80">Tested Network Metric:</span>
+                <span className={`text-xl font-bold ${explorerHops === 16 ? 'text-rose-400' : 'text-[#2F6BFF]'}`}>
                   {explorerHops} {explorerHops === 16 ? 'HOPS (INFINITY)' : 'HOPS'}
                 </span>
               </div>
@@ -256,31 +245,33 @@ export const LaboratoryPage: React.FC = () => {
                 max={16}
                 value={explorerHops}
                 onChange={(e) => { sound.playClick(); setExplorerHops(Number(e.target.value)); }}
-                className="w-full h-3 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-400"
+                className="w-full h-2.5 bg-[#121210] border border-[#D8CBB3]/25 rounded-lg appearance-none cursor-pointer accent-[#2F6BFF]"
               />
 
-              <div className="flex justify-between text-[11px] font-mono text-slate-500">
+              <div className="flex justify-between text-[11px] font-mono text-[#D8CBB3]/60">
                 <span>1 Hop (Direct)</span>
                 <span>8 Hops (Campus)</span>
-                <span className="text-emerald-400 font-bold">15 Hops (Max Bound)</span>
+                <span className="text-[#2F6BFF] font-bold">15 Hops (Max Bound)</span>
                 <span className="text-rose-400 font-bold">16 (Infinity)</span>
               </div>
             </div>
 
             {/* Visual Route Chain */}
-            <div className="mt-8 p-6 rounded-2xl bg-slate-950 border border-slate-800">
-              <div className="text-xs font-mono text-slate-400 mb-3">Path Topology Representation:</div>
+            <div className="mt-8 p-6 rounded-2xl bg-[#121210] border border-[#D8CBB3]/20">
+              <div className="text-xs font-mono text-[#D8CBB3]/75 mb-3">Path Topology Representation:</div>
               <div className="flex items-center gap-1 overflow-x-auto py-2">
-                <div className="px-3 py-1.5 rounded-lg bg-sky-950 border border-sky-800 text-xs font-mono font-bold text-sky-300 shrink-0">
+                <div className="px-3 py-1.5 rounded-lg bg-[#2F6BFF]/20 border border-[#2F6BFF]/60 text-xs font-mono font-bold text-[#FAF7F2] shrink-0">
                   Source (R0)
                 </div>
                 {Array.from({ length: explorerHops }).map((_, idx) => (
                   <React.Fragment key={idx}>
-                    <span className={`w-4 h-0.5 shrink-0 ${explorerHops === 16 ? 'bg-rose-500' : 'bg-emerald-500'}`} />
-                    <div className={`px-2 py-1 rounded text-[10px] font-mono shrink-0 ${
+                    <span className={`w-4 h-0.5 shrink-0 ${explorerHops === 16 ? 'bg-rose-500' : 'bg-[#2F6BFF]'}`} />
+                    <div className={`px-2.5 py-1 rounded text-[10px] font-mono shrink-0 ${
                       idx === explorerHops - 1
-                        ? explorerHops === 16 ? 'bg-rose-950 border border-rose-800 text-rose-300 font-bold' : 'bg-emerald-950 border border-emerald-800 text-emerald-300 font-bold'
-                        : 'bg-slate-900 border border-slate-800 text-slate-400'
+                        ? explorerHops === 16 
+                          ? 'bg-rose-950/80 border border-rose-600 text-rose-300 font-bold' 
+                          : 'bg-[#2F6BFF]/25 border border-[#2F6BFF] text-[#FAF7F2] font-bold'
+                        : 'bg-[#1E1E1C] border border-[#D8CBB3]/25 text-[#D8CBB3]'
                     }`}>
                       {idx === explorerHops - 1 ? 'Target LAN' : `R${idx + 1}`}
                     </div>
@@ -290,17 +281,17 @@ export const LaboratoryPage: React.FC = () => {
 
               <div className={`mt-6 p-4 rounded-xl border text-xs sm:text-sm font-sans leading-relaxed ${
                 explorerHops === 16
-                  ? 'bg-rose-950/40 border-rose-800 text-rose-300'
-                  : 'bg-emerald-950/40 border-emerald-800 text-emerald-300'
+                  ? 'bg-rose-950/30 border-rose-800 text-rose-300'
+                  : 'bg-[#2F6BFF]/10 border-[#2F6BFF]/30 text-[#D8CBB3]'
               }`}>
                 {explorerHops === 16 ? (
                   <div>
-                    <strong className="font-mono block mb-1">ROUTE UNREACHABLE (POISONED):</strong>
+                    <strong className="font-mono block mb-1 text-rose-400">ROUTE UNREACHABLE (POISONED):</strong>
                     Metric 16 is explicitly reserved as mathematical infinity ($\infty$) in RFC 1058 and RFC 2453. The destination is purged from packet forwarding and advertised as unreachable to prevent infinite looping.
                   </div>
                 ) : (
                   <div>
-                    <strong className="font-mono block mb-1">ROUTE ACTIVE & FORWARDABLE:</strong>
+                    <strong className="font-mono block mb-1 text-[#2F6BFF]">ROUTE ACTIVE & FORWARDABLE:</strong>
                     Path length of {explorerHops} hops is well within the 15-hop diameter threshold. Packets will forward normally with administrative distance 120.
                   </div>
                 )}

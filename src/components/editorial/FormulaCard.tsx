@@ -62,29 +62,29 @@ export const FormulaCard: React.FC = () => {
   };
 
   return (
-    <div className="my-10 p-6 sm:p-8 rounded-2xl glass-panel-elevated border border-sky-500/30">
-      <div className="flex flex-wrap items-center justify-between gap-3 pb-6 border-b border-slate-800">
+    <div className="my-10 p-6 sm:p-8 rounded-2xl glass-panel-elevated border border-[#D8CBB3]/25 shadow-liquid-glass">
+      <div className="flex flex-wrap items-center justify-between gap-3 pb-6 border-b border-[#D8CBB3]/15">
         <div>
-          <div className="flex items-center gap-2 text-xs font-mono uppercase text-sky-400">
+          <div className="flex items-center gap-2 text-xs font-mono uppercase text-[#2F6BFF] font-bold">
             <Cpu className="w-4 h-4" />
             <span>Theoretical Foundation (1956 - 1958)</span>
           </div>
-          <h3 className="text-xl sm:text-2xl font-serif text-white mt-1">
+          <h3 className="text-xl sm:text-2xl font-serif text-[#FAF7F2] mt-1">
             The Bellman-Ford Optimality Equation
           </h3>
         </div>
-        <span className="text-xs font-mono px-3 py-1 rounded-full bg-sky-950/80 border border-sky-700/40 text-sky-300">
+        <span className="text-xs font-mono px-3 py-1 rounded-full bg-[#121210] border border-[#D8CBB3]/20 text-[#D8CBB3]">
           Dynamic Programming Formulation
         </span>
       </div>
 
       {/* Rendered Math Formula */}
-      <div className="py-8 px-4 bg-slate-950/70 rounded-xl my-6 border border-slate-800/80 flex flex-col items-center justify-center overflow-x-auto">
+      <div className="py-8 px-4 bg-[#121210] rounded-xl my-6 border border-[#D8CBB3]/20 flex flex-col items-center justify-center overflow-x-auto">
         <div 
-          className="text-2xl sm:text-3xl md:text-4xl select-none"
+          className="text-2xl sm:text-3xl md:text-4xl select-none text-[#FAF7F2]"
           dangerouslySetInnerHTML={{ __html: formulaHtml }} 
         />
-        <div className="text-xs font-mono text-slate-500 mt-2 text-center">
+        <div className="text-xs font-mono text-[#D8CBB3]/60 mt-2 text-center">
           Click any component term below to inspect its physical meaning in router firmware
         </div>
       </div>
@@ -99,15 +99,15 @@ export const FormulaCard: React.FC = () => {
               onClick={() => handleSelectToken(item)}
               className={`p-3 rounded-xl border text-left transition-all ${
                 isSelected
-                  ? 'border-sky-400 bg-sky-950/40 shadow-glow-cyan text-white'
-                  : 'border-slate-800 bg-slate-900/40 hover:border-slate-700 text-slate-400 hover:text-slate-200'
+                  ? 'border-[#2F6BFF] bg-[#2F6BFF]/20 shadow-glow-electric text-[#FAF7F2]'
+                  : 'border-[#D8CBB3]/20 bg-[#121210] hover:border-[#2F6BFF] text-[#D8CBB3]/70 hover:text-[#FAF7F2]'
               }`}
             >
-              <div className="font-mono text-xs text-sky-400 font-bold flex items-center justify-between">
+              <div className="font-mono text-xs text-[#2F6BFF] font-bold flex items-center justify-between">
                 <span>{item.token}</span>
-                {isSelected && <CheckCircle2 className="w-3.5 h-3.5 text-sky-400" />}
+                {isSelected && <CheckCircle2 className="w-3.5 h-3.5 text-[#2F6BFF]" />}
               </div>
-              <div className="text-xs font-medium mt-1 truncate text-slate-300">
+              <div className="text-xs font-medium mt-1 truncate text-[#FAF7F2]">
                 {item.name}
               </div>
             </button>
@@ -116,24 +116,24 @@ export const FormulaCard: React.FC = () => {
       </div>
 
       {/* Selected Token Deep Dive */}
-      <div className="mt-6 p-5 rounded-xl bg-slate-900/60 border border-slate-800 text-sm">
+      <div className="mt-6 p-5 rounded-xl bg-[#121210] border border-[#D8CBB3]/20 text-sm">
         <div className="flex items-start gap-3">
-          <div className="p-2 rounded-lg bg-sky-500/10 border border-sky-500/20 text-sky-400 shrink-0 mt-0.5">
+          <div className="p-2 rounded-lg bg-[#2F6BFF]/15 border border-[#2F6BFF]/30 text-[#2F6BFF] shrink-0 mt-0.5">
             <Info className="w-4 h-4" />
           </div>
           <div className="space-y-2">
             <div>
-              <span className="font-mono font-bold text-sky-300 mr-2">{selectedToken.name}:</span>
-              <span className="text-slate-300">{selectedToken.description}</span>
+              <span className="font-mono font-bold text-[#2F6BFF] mr-2">{selectedToken.name}:</span>
+              <span className="text-[#D8CBB3]">{selectedToken.description}</span>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2 text-xs font-mono">
-              <div className="p-2.5 rounded bg-slate-950/80 border border-slate-800">
-                <span className="text-slate-500 block mb-1 uppercase tracking-wider text-[10px]">Physical Router Implementation:</span>
-                <span className="text-slate-300">{selectedToken.physicalRole}</span>
+              <div className="p-2.5 rounded bg-[#1E1E1C] border border-[#D8CBB3]/15">
+                <span className="text-[#D8CBB3]/50 block mb-1 uppercase tracking-wider text-[10px]">Physical Router Implementation:</span>
+                <span className="text-[#FAF7F2]">{selectedToken.physicalRole}</span>
               </div>
-              <div className="p-2.5 rounded bg-slate-950/80 border border-slate-800">
-                <span className="text-emerald-400 block mb-1 uppercase tracking-wider text-[10px]">RIP Protocol Behavior:</span>
-                <span className="text-emerald-200">{selectedToken.ripContext}</span>
+              <div className="p-2.5 rounded bg-[#1E1E1C] border border-[#D8CBB3]/15">
+                <span className="text-[#2F6BFF] block mb-1 uppercase tracking-wider text-[10px] font-bold">RIP Protocol Behavior:</span>
+                <span className="text-[#D8CBB3]">{selectedToken.ripContext}</span>
               </div>
             </div>
           </div>

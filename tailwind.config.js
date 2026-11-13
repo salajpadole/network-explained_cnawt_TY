@@ -8,34 +8,40 @@ export default {
   theme: {
     extend: {
       colors: {
-        monograph: {
-          950: '#06080D',
-          900: '#0B0F17',
-          850: '#101622',
-          800: '#161E2E',
-          750: '#1D273B',
-          700: '#26334B',
-          600: '#3D4F6F',
-          500: '#5E7399',
-          400: '#8FA2C2',
-          300: '#CBD5E1',
-          200: '#E2E8F0',
-          100: '#F1F5F9',
-          50: '#F8FAFC',
+        charcoal: {
+          950: '#121210',
+          900: '#181816',
+          850: '#1E1E1C', // Primary Charcoal
+          800: '#252522',
+          750: '#2D2D29',
+          700: '#383833',
+          600: '#4A4A44',
+          500: '#66665D',
+          400: '#8A8A80',
+          300: '#B0B0A6',
+          200: '#D6D6CF',
+          100: '#EDEDE8',
         },
-        ink: {
-          primary: '#F8FAFC',
-          muted: '#94A3B8',
-          faint: '#475569',
-          border: '#1E293B',
-          subtle: '#0F172A',
+        sand: {
+          50: '#FAF7F2',
+          100: '#F5EFE6',
+          200: '#E8DFCE',
+          300: '#D8CBB3', // Primary Sand
+          400: '#C5B69B',
+          500: '#A8997C',
+          600: '#87785C',
+          700: '#695C45',
+          800: '#4F4432',
+          900: '#383023',
         },
-        phosphor: {
-          cyan: '#38BDF8',
-          emerald: '#10B981',
-          amber: '#F59E0B',
-          rose: '#F43F5E',
-          violet: '#8B5CF6',
+        electric: {
+          300: '#759DFF',
+          400: '#5284FF',
+          500: '#2F6BFF', // Primary Electric Blue
+          600: '#1C53E6',
+          700: '#123EB5',
+          800: '#0C2C85',
+          900: '#071B54',
         }
       },
       fontFamily: {
@@ -45,16 +51,14 @@ export default {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
       },
       boxShadow: {
-        'glow-cyan': '0 0 35px -5px rgba(56, 189, 248, 0.3)',
-        'glow-emerald': '0 0 35px -5px rgba(16, 185, 129, 0.3)',
-        'glow-amber': '0 0 35px -5px rgba(245, 158, 11, 0.3)',
-        'glow-rose': '0 0 35px -5px rgba(244, 63, 94, 0.3)',
-        'subtle': '0 10px 30px -10px rgba(0, 0, 0, 0.5)',
-        'elevated': '0 20px 40px -15px rgba(0, 0, 0, 0.7)',
+        'glow-electric': '0 0 35px -5px rgba(47, 107, 255, 0.45)',
+        'glow-sand': '0 0 35px -5px rgba(216, 203, 179, 0.3)',
+        'liquid-glass': 'inset 0 1px 1px rgba(255, 255, 255, 0.25), inset 0 -1px 2px rgba(0, 0, 0, 0.5), 0 8px 24px -4px rgba(0, 0, 0, 0.6), 0 0 20px rgba(47, 107, 255, 0.25)',
+        'metal-plate': 'inset 0 1px 0 rgba(216, 203, 179, 0.3), inset 0 -1px 0 rgba(0, 0, 0, 0.8), 0 4px 16px rgba(0, 0, 0, 0.5)',
       },
       backgroundImage: {
-        'grid-pattern': "radial-gradient(rgba(56, 189, 248, 0.08) 1px, transparent 1px)",
-        'dot-matrix': "radial-gradient(rgba(148, 163, 184, 0.12) 1px, transparent 1px)",
+        'grid-pattern': "radial-gradient(rgba(216, 203, 179, 0.12) 1px, transparent 1px)",
+        'dot-matrix': "radial-gradient(rgba(47, 107, 255, 0.18) 1px, transparent 1px)",
       }
     },
   },

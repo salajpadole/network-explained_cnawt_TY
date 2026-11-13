@@ -3,6 +3,7 @@ import { useRouter, RoutePath } from '../../router';
 import { sound } from '../../audio/soundEngine';
 import { Network, Volume2, VolumeX, Menu, X, Compass, FlaskConical, BookOpen, Info } from 'lucide-react';
 import { ReadingProgressBar } from '../layout/ReadingProgressBar';
+import { LiquidButton } from '../buttons/LiquidMetalAction';
 
 export const Navbar: React.FC = () => {
   const { currentPath, navigate } = useRouter();
@@ -42,7 +43,7 @@ export const Navbar: React.FC = () => {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-[#050811]/90 backdrop-blur-md border-b border-slate-800/80 shadow-subtle py-3'
+          ? 'bg-[#1E1E1C]/92 backdrop-blur-md border-b border-[#D8CBB3]/15 shadow-2xl py-3'
           : 'bg-transparent border-b border-transparent py-4 sm:py-5'
       }`}
     >
@@ -53,53 +54,52 @@ export const Navbar: React.FC = () => {
           onClick={() => handleNav('/')}
           className="flex items-center gap-3 group text-left focus:outline-none"
         >
-          <div className="w-8 h-8 rounded-lg bg-sky-500/10 border border-sky-500/30 flex items-center justify-center text-sky-400 group-hover:border-sky-400 transition-colors shadow-glow-cyan">
+          <div className="w-8 h-8 rounded-lg bg-[#2F6BFF]/15 border border-[#2F6BFF]/40 flex items-center justify-center text-[#2F6BFF] group-hover:border-[#2F6BFF] transition-colors shadow-glow-electric">
             <Network className="w-4 h-4" />
           </div>
           <div>
-            <div className="text-base sm:text-lg font-bold tracking-tight text-white flex items-center gap-1.5">
-              <span className="font-display uppercase tracking-widest text-xs sm:text-sm font-black">NETWORK</span>
-              <span className="font-serif italic font-normal text-sky-400">EXPLAINED</span>
+            <div className="text-base sm:text-lg font-bold tracking-tight text-[#D8CBB3] flex items-center gap-1.5">
+              <span className="font-display uppercase tracking-widest text-xs sm:text-sm font-black text-[#F5EFE6]">NETWORK</span>
+              <span className="font-serif italic font-normal text-[#2F6BFF]">EXPLAINED</span>
             </div>
-            <div className="hidden sm:block text-[9px] uppercase font-mono tracking-widest text-slate-500">
+            <div className="hidden sm:block text-[9px] uppercase font-mono tracking-widest text-[#A8997C]">
               Interactive Technical Monograph
             </div>
           </div>
         </button>
 
         {/* Desktop Navigation Links */}
-        <div className="hidden md:flex items-center gap-1 bg-slate-950/70 p-1 rounded-full border border-slate-800/80 text-xs font-mono">
+        <div className="hidden md:flex items-center gap-1 bg-[#181816]/90 p-1.5 rounded-full border border-[#D8CBB3]/20 text-xs font-mono">
           {navLinks.map((item) => {
             const isActive = currentPath === item.path || (item.path === '/articles' && currentPath.startsWith('/articles'));
             const Icon = item.icon;
             return (
-              <button
+              <LiquidButton
                 key={item.path}
+                variant="pill"
+                isActive={isActive}
                 onClick={() => handleNav(item.path)}
-                className={`flex items-center gap-2 px-4 py-1.5 rounded-full transition-all duration-200 ${
-                  isActive
-                    ? 'bg-sky-500/20 text-sky-300 font-semibold border border-sky-500/40 shadow-glow-cyan'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/60'
-                }`}
+                className="px-4 py-1.5 text-xs font-mono"
+                icon={<Icon className={`w-3.5 h-3.5 ${isActive ? 'text-white' : 'text-[#2F6BFF]'}`} />}
               >
-                <Icon className="w-3.5 h-3.5" />
-                <span>{item.label}</span>
-              </button>
+                {item.label}
+              </LiquidButton>
             );
           })}
         </div>
 
         {/* Right Actions */}
         <div className="flex items-center gap-2 sm:gap-3">
-          {/* Quick Lab CTA */}
+          {/* Quick Lab CTA with Liquid Metal Styling */}
           {currentPath !== '/lab' && (
-            <button
+            <LiquidButton
+              variant="pill"
               onClick={() => handleNav('/lab')}
-              className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono font-medium bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 transition-all"
+              className="hidden lg:flex items-center gap-1.5 border-[#2F6BFF]/40 text-[#D8CBB3]"
+              icon={<span className="w-2 h-2 rounded-full bg-[#2F6BFF] animate-pulse" />}
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Interactive Lab</span>
-            </button>
+              Interactive Lab
+            </LiquidButton>
           )}
 
           {/* Audio Synthesizer Toggle */}
@@ -108,8 +108,8 @@ export const Navbar: React.FC = () => {
             title={isMuted ? "Enable Synthetic Audio Feedback" : "Mute Sound Synthesizer"}
             className={`p-2 rounded-lg border transition-all ${
               !isMuted
-                ? 'border-sky-500/50 bg-sky-500/20 text-sky-300 shadow-glow-cyan'
-                : 'border-slate-800 bg-slate-900/60 text-slate-400 hover:text-slate-200 hover:border-slate-700'
+                ? 'border-[#2F6BFF] bg-[#2F6BFF]/25 text-[#2F6BFF] shadow-glow-electric'
+                : 'border-[#D8CBB3]/20 bg-[#181816]/80 text-[#A8997C] hover:text-[#D8CBB3] hover:border-[#D8CBB3]/40'
             }`}
           >
             {!isMuted ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
@@ -118,7 +118,7 @@ export const Navbar: React.FC = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-lg border border-slate-800 bg-slate-900 text-slate-300 hover:text-white"
+            className="md:hidden p-2 rounded-lg border border-[#D8CBB3]/20 bg-[#181816] text-[#D8CBB3]"
             aria-label="Toggle Navigation Menu"
           >
             {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
@@ -132,7 +132,7 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-slate-800 bg-[#050811]/95 backdrop-blur-xl px-4 py-4 space-y-2 text-sm font-mono animate-fadeIn">
+        <div className="md:hidden border-b border-[#D8CBB3]/20 bg-[#1E1E1C]/98 backdrop-blur-xl px-4 py-4 space-y-2 text-sm font-mono animate-fadeIn">
           {navLinks.map((item) => {
             const isActive = currentPath === item.path;
             const Icon = item.icon;
@@ -140,13 +140,13 @@ export const Navbar: React.FC = () => {
               <button
                 key={item.path}
                 onClick={() => handleNav(item.path)}
-                className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl border text-left ${
+                className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl border text-left transition-all ${
                   isActive
-                    ? 'border-sky-500/50 bg-sky-950/40 text-sky-300 font-bold'
-                    : 'border-slate-800/80 bg-slate-900/40 text-slate-300 hover:text-white'
+                    ? 'border-[#2F6BFF] bg-[#2F6BFF]/20 text-white font-bold'
+                    : 'border-[#D8CBB3]/15 bg-[#181816]/70 text-[#D8CBB3]'
                 }`}
               >
-                <Icon className="w-4 h-4 text-sky-400" />
+                <Icon className="w-4 h-4 text-[#2F6BFF]" />
                 <span>{item.label}</span>
               </button>
             );

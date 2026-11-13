@@ -46,16 +46,16 @@ export const ThreeHeroNetwork: React.FC = () => {
       return;
     }
 
-    // 2. Network Nodes
-    const nodeCount = 45;
+    // 2. Network Nodes in Sand (#D8CBB3) with subtle specular shine
+    const nodeCount = 50;
     const nodePositions: THREE.Vector3[] = [];
     const nodeVelocities: THREE.Vector3[] = [];
 
-    const nodeGeometry = new THREE.SphereGeometry(0.55, 12, 12);
+    const nodeGeometry = new THREE.SphereGeometry(0.58, 12, 12);
     const nodeMaterial = new THREE.MeshBasicMaterial({
-      color: 0x38bdf8,
+      color: 0xD8CBB3, // Sand
       transparent: true,
-      opacity: 0.75
+      opacity: 0.82
     });
 
     const nodesInstanced = new THREE.InstancedMesh(nodeGeometry, nodeMaterial, nodeCount);
@@ -70,8 +70,8 @@ export const ThreeHeroNetwork: React.FC = () => {
       nodePositions.push(pos);
       nodeVelocities.push(
         new THREE.Vector3(
-          (Math.random() - 0.5) * 0.04,
-          (Math.random() - 0.5) * 0.04,
+          (Math.random() - 0.5) * 0.035,
+          (Math.random() - 0.5) * 0.035,
           (Math.random() - 0.5) * 0.02
         )
       );
@@ -82,26 +82,30 @@ export const ThreeHeroNetwork: React.FC = () => {
     nodesInstanced.instanceMatrix.needsUpdate = true;
     scene.add(nodesInstanced);
 
-    // 3. Dynamic Lines Buffer
-    const maxLines = 120;
-    const linePositions = new Float32Array(maxLines * 6); // 2 vertices * 3 coords
+    // 3. Dynamic Lines Buffer in Electric Blue (#2F6BFF)
+    const maxLines = 130;
+    const linePositions = new Float32Array(maxLines * 6);
     const lineGeometry = new THREE.BufferGeometry();
     lineGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
 
     const lineMaterial = new THREE.LineBasicMaterial({
-      color: 0x22d3ee,
+      color: 0x2F6BFF, // Electric Blue
       transparent: true,
-      opacity: 0.18,
+      opacity: 0.22,
       linewidth: 1
     });
 
     const lineSegments = new THREE.LineSegments(lineGeometry, lineMaterial);
     scene.add(lineSegments);
 
-    // 4. Moving Packets along links
-    const packetCount = 18;
-    const packetGeometry = new THREE.SphereGeometry(0.35, 8, 8);
-    const packetMaterial = new THREE.MeshBasicMaterial({ color: 0x10b981, transparent: true, opacity: 0.9 });
+    // 4. Moving Packets in vibrant Electric Blue & Sand
+    const packetCount = 20;
+    const packetGeometry = new THREE.SphereGeometry(0.42, 8, 8);
+    const packetMaterial = new THREE.MeshBasicMaterial({
+      color: 0x2F6BFF, // Electric Blue packet pulse
+      transparent: true,
+      opacity: 0.95
+    });
     const packetMeshes: THREE.Mesh[] = [];
     const packetData: { sourceIndex: number; targetIndex: number; progress: number; speed: number }[] = [];
 
@@ -113,7 +117,7 @@ export const ThreeHeroNetwork: React.FC = () => {
         sourceIndex: Math.floor(Math.random() * nodeCount),
         targetIndex: (Math.floor(Math.random() * (nodeCount - 1)) + 1) % nodeCount,
         progress: Math.random(),
-        speed: 0.004 + Math.random() * 0.007
+        speed: 0.004 + Math.random() * 0.006
       });
     }
 
@@ -140,7 +144,7 @@ export const ThreeHeroNetwork: React.FC = () => {
     };
     window.addEventListener('resize', handleResize);
 
-    // 7. Visibility Change handler (pause when tab hidden)
+    // 7. Visibility Change handler
     let isTabVisible = true;
     const handleVisibilityChange = () => {
       isTabVisible = !document.hidden;
@@ -185,7 +189,7 @@ export const ThreeHeroNetwork: React.FC = () => {
           const p2 = nodePositions[j];
           const distSq = p1.distanceToSquared(p2);
 
-          if (distSq < 320) { // proximity threshold
+          if (distSq < 340) {
             const ptr = lineIndex * 6;
             positions[ptr] = p1.x;
             positions[ptr + 1] = p1.y;
@@ -226,7 +230,6 @@ export const ThreeHeroNetwork: React.FC = () => {
 
     animate();
 
-    // Cleanup resources on unmount
     return () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener('mousemove', handleMouseMove);
@@ -255,7 +258,7 @@ export const ThreeHeroNetwork: React.FC = () => {
       aria-hidden="true"
     >
       {hasWebGLFallback && (
-        <div className="absolute inset-0 bg-gradient-to-b from-sky-950/20 via-transparent to-[#050811] opacity-60" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#2F6BFF]/10 via-transparent to-[#1E1E1C] opacity-60" />
       )}
     </div>
   );

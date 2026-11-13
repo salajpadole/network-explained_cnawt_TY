@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useRouter } from '../router';
 import { sound } from '../audio/soundEngine';
 import { BookOpen, Search, ArrowRight, Clock, Calendar, Bookmark, Filter, Compass } from 'lucide-react';
+import { LiquidButton } from '../components/buttons/LiquidMetalAction';
 
 interface ArticleEntry {
   id: string;
@@ -92,57 +93,51 @@ export const ArticlesPage: React.FC = () => {
   };
 
   return (
-    <div className="relative text-slate-100 bg-[#050811] min-h-screen pt-28 sm:pt-36 pb-24 px-4 sm:px-8 md:px-16">
+    <div className="relative text-[#D8CBB3] bg-[#1E1E1C] min-h-screen pt-28 sm:pt-36 pb-24 px-4 sm:px-8 md:px-16">
       <div className="max-w-5xl mx-auto">
         
         {/* Header */}
-        <div className="pb-12 border-b border-slate-800">
-          <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-sky-400 mb-2">
+        <div className="pb-12 border-b border-[#D8CBB3]/15">
+          <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#2F6BFF] mb-2 font-bold">
             <BookOpen className="w-4 h-4" />
             <span>Editorial Archives & Catalog</span>
           </div>
-          <h1 className="text-4xl sm:text-6xl font-serif text-white tracking-tight">
+          <h1 className="text-4xl sm:text-6xl font-serif text-[#FAF7F2] tracking-tight">
             Technical Monographs
           </h1>
-          <p className="mt-4 text-base sm:text-xl text-slate-400 font-serif italic max-w-2xl leading-relaxed">
+          <p className="mt-4 text-base sm:text-xl text-[#D8CBB3]/80 font-serif italic max-w-2xl leading-relaxed">
             Curated long-form investigations into computer network protocols, distributed algorithms, and internet infrastructure.
           </p>
         </div>
 
         {/* Filter & Search Bar */}
-        <div className="py-8 border-b border-slate-900 flex flex-col sm:flex-row gap-4 items-center justify-between">
+        <div className="py-8 border-b border-[#D8CBB3]/15 flex flex-col sm:flex-row gap-4 items-center justify-between">
           <div className="relative w-full sm:w-80">
-            <Search className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 transform -translate-y-1/2" />
+            <Search className="w-4 h-4 text-[#D8CBB3]/50 absolute left-3.5 top-1/2 transform -translate-y-1/2" />
             <input
               type="text"
               placeholder="Search by topic, keyword, RFC..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs sm:text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-sky-500 font-mono"
+              className="w-full pl-10 pr-4 py-2 bg-[#121210] border border-[#D8CBB3]/25 rounded-xl text-xs sm:text-sm text-[#FAF7F2] placeholder-[#D8CBB3]/40 focus:outline-none focus:border-[#2F6BFF] font-mono shadow-inner transition-colors"
             />
           </div>
 
           <div className="flex items-center gap-2 text-xs font-mono w-full sm:w-auto">
-            <button
-              onClick={() => { sound.playClick(); setActiveFilter('all'); }}
-              className={`px-3 py-1.5 rounded-lg border transition-all ${
-                activeFilter === 'all'
-                  ? 'bg-sky-500/20 text-sky-300 font-bold border-sky-500/40 shadow-glow-cyan'
-                  : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white'
-              }`}
+            <LiquidButton
+              variant="pill"
+              isActive={activeFilter === 'all'}
+              onClick={() => setActiveFilter('all')}
             >
               All Monographs ({ARTICLES.length})
-            </button>
-            <button
-              onClick={() => { sound.playClick(); setActiveFilter('published'); }}
-              className={`px-3 py-1.5 rounded-lg border transition-all ${
-                activeFilter === 'published'
-                  ? 'bg-emerald-500/20 text-emerald-300 font-bold border-emerald-500/40 shadow-glow-emerald'
-                  : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white'
-              }`}
+            </LiquidButton>
+            <LiquidButton
+              variant="pill"
+              isActive={activeFilter === 'published'}
+              onClick={() => setActiveFilter('published')}
             >
               Published Only (1)
-            </button>
+            </LiquidButton>
           </div>
         </div>
 
@@ -156,59 +151,61 @@ export const ArticlesPage: React.FC = () => {
                 onClick={() => handleSelectArticle(art.slug, art.status)}
                 className={`p-6 sm:p-8 rounded-2xl border transition-all duration-300 ${
                   isPublished
-                    ? 'border-slate-800 hover:border-sky-500/50 bg-slate-950/70 hover:bg-slate-900/40 cursor-pointer shadow-subtle group'
-                    : 'border-slate-900 bg-slate-950/30 opacity-70 cursor-not-allowed'
+                    ? 'border-[#D8CBB3]/25 hover:border-[#2F6BFF] bg-[#262623]/80 hover:bg-[#2A2A26] cursor-pointer shadow-liquid-glass group'
+                    : 'border-[#D8CBB3]/10 bg-[#121210]/50 opacity-60 cursor-not-allowed'
                 }`}
               >
-                <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-slate-500 mb-3">
+                <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-[#D8CBB3]/60 mb-3">
                   <div className="flex items-center gap-2">
-                    <span className="font-bold text-sky-400">ARTICLE {art.number}</span>
+                    <span className="font-bold text-[#2F6BFF]">ARTICLE {art.number}</span>
                     <span>•</span>
-                    <span className="text-slate-400">{art.category}</span>
+                    <span className="text-[#D8CBB3]/80">{art.category}</span>
                   </div>
 
                   <div className="flex items-center gap-3">
-                    <span className="flex items-center gap-1">
+                    <span className="flex items-center gap-1 text-[#D8CBB3]/70">
                       <Clock className="w-3.5 h-3.5" />
                       <span>{art.readTime}</span>
                     </span>
-                    <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
-                      isPublished ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' : 'bg-slate-900 text-slate-500 border border-slate-800'
+                    <span className={`px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${
+                      isPublished ? 'bg-[#2F6BFF]/20 text-[#2F6BFF] border border-[#2F6BFF]/50 shadow-glow-electric' : 'bg-[#1E1E1C] text-[#D8CBB3]/50 border border-[#D8CBB3]/20'
                     }`}>
                       {art.status}
                     </span>
                   </div>
                 </div>
 
-                <h2 className={`text-2xl sm:text-3xl font-serif text-white transition-colors ${isPublished ? 'group-hover:text-sky-300' : ''}`}>
+                <h2 className={`text-2xl sm:text-3xl font-serif text-[#FAF7F2] transition-colors ${isPublished ? 'group-hover:text-[#D8CBB3]' : ''}`}>
                   {art.title}
                 </h2>
 
-                <p className="mt-2 text-sm sm:text-base text-slate-300 font-serif italic">
+                <p className="mt-2 text-sm sm:text-base text-[#D8CBB3] font-serif italic">
                   {art.subtitle}
                 </p>
 
-                <p className="mt-3 text-xs sm:text-sm text-slate-400 font-sans leading-relaxed">
+                <p className="mt-3 text-xs sm:text-sm text-[#D8CBB3]/80 font-sans leading-relaxed">
                   {art.abstract}
                 </p>
 
                 {/* Tags and CTA */}
-                <div className="mt-6 pt-4 border-t border-slate-900 flex flex-wrap items-center justify-between gap-4">
+                <div className="mt-6 pt-4 border-t border-[#D8CBB3]/15 flex flex-wrap items-center justify-between gap-4">
                   <div className="flex flex-wrap gap-1.5">
                     {art.tags.map((tag, idx) => (
-                      <span key={idx} className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-900/80 text-slate-400 border border-slate-800/80">
+                      <span key={idx} className="text-[10px] font-mono px-2.5 py-1 rounded-full bg-[#1E1E1C] text-[#D8CBB3]/80 border border-[#D8CBB3]/20">
                         #{tag}
                       </span>
                     ))}
                   </div>
 
                   {isPublished ? (
-                    <span className="text-xs font-mono font-bold text-sky-400 group-hover:text-sky-300 flex items-center gap-1.5 transition-colors">
-                      <span>Read Publication</span>
-                      <ArrowRight className="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform" />
-                    </span>
+                    <LiquidButton
+                      size="sm"
+                      icon={<ArrowRight className="w-3.5 h-3.5" />}
+                    >
+                      Read Monograph
+                    </LiquidButton>
                   ) : (
-                    <span className="text-xs font-mono text-slate-500 italic">
+                    <span className="text-xs font-mono text-[#D8CBB3]/40 italic">
                       In Peer Review / Upcoming
                     </span>
                   )}

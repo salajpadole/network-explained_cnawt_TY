@@ -3,6 +3,7 @@ import { QUIZ_QUESTIONS } from '../../data/publicationData';
 import { HelpCircle, CheckCircle2, XCircle, RotateCcw, Award, ChevronRight, BookOpen } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { sound } from '../../audio/soundEngine';
+import { LiquidButton } from '../buttons/LiquidMetalAction';
 
 export const InteractiveQuiz: React.FC = () => {
   const [currentIdx, setCurrentIdx] = useState<number>(0);
@@ -34,7 +35,6 @@ export const InteractiveQuiz: React.FC = () => {
       setShowExplanation(false);
     } else {
       setQuizFinished(true);
-      // Trigger celebratory confetti
       confetti({
         particleCount: 80,
         spread: 70,
@@ -61,23 +61,23 @@ export const InteractiveQuiz: React.FC = () => {
   const percentage = Math.round((correctCount / total) * 100);
 
   return (
-    <div id="mastery-quiz" className="my-14 rounded-2xl glass-panel-elevated border border-sky-500/30 p-6 sm:p-8 scroll-mt-20">
+    <div id="mastery-quiz" className="my-14 rounded-2xl glass-panel-elevated border border-[#D8CBB3]/25 p-6 sm:p-8 scroll-mt-20 shadow-liquid-glass">
       
       {/* Quiz Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-slate-800">
+      <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-[#D8CBB3]/15">
         <div>
-          <div className="flex items-center gap-2 text-xs font-mono uppercase text-sky-400">
+          <div className="flex items-center gap-2 text-xs font-mono uppercase text-[#2F6BFF] font-bold">
             <Award className="w-4 h-4" />
             <span>Academic Rigor Assessment</span>
           </div>
-          <h3 className="text-xl sm:text-2xl font-serif text-white mt-1">
+          <h3 className="text-xl sm:text-2xl font-serif text-[#FAF7F2] mt-1">
             RIP & Distance-Vector Mastery Examination
           </h3>
         </div>
 
         {!quizFinished && (
-          <div className="text-xs font-mono px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-slate-300">
-            Question <strong className="text-sky-400">{currentIdx + 1}</strong> of {total}
+          <div className="text-xs font-mono px-3 py-1.5 rounded-full bg-[#121210] border border-[#D8CBB3]/20 text-[#D8CBB3]">
+            Question <strong className="text-[#2F6BFF]">{currentIdx + 1}</strong> of {total}
           </div>
         )}
       </div>
@@ -86,25 +86,25 @@ export const InteractiveQuiz: React.FC = () => {
         <div className="mt-8">
           
           {/* Progress bar */}
-          <div className="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden mb-6">
+          <div className="w-full bg-[#121210] h-2 rounded-full overflow-hidden mb-6 border border-[#D8CBB3]/15">
             <div 
-              className="bg-gradient-to-r from-sky-500 to-emerald-400 h-full transition-all duration-300"
+              className="bg-gradient-to-r from-[#2F6BFF] to-[#D8CBB3] h-full transition-all duration-300 shadow-glow-electric"
               style={{ width: `${((currentIdx + 1) / total) * 100}%` }}
             />
           </div>
 
           {/* Context pill */}
           <div className="flex items-center gap-2 mb-3">
-            <span className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded bg-sky-950 text-sky-400 border border-sky-800">
+            <span className="text-[10px] font-mono uppercase tracking-wider px-2.5 py-0.5 rounded bg-[#2F6BFF]/20 text-[#2F6BFF] border border-[#2F6BFF]/40 font-bold">
               {question.context || 'Routing Theory'}
             </span>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-900 text-slate-400">
+            <span className="text-[10px] font-mono px-2.5 py-0.5 rounded bg-[#121210] text-[#D8CBB3]/80 border border-[#D8CBB3]/20">
               Tier: {question.difficulty}
             </span>
           </div>
 
           {/* Question text */}
-          <h4 className="text-lg sm:text-xl font-serif text-slate-100 leading-snug">
+          <h4 className="text-lg sm:text-xl font-serif text-[#FAF7F2] leading-snug">
             {question.question}
           </h4>
 
@@ -112,15 +112,15 @@ export const InteractiveQuiz: React.FC = () => {
           <div className="mt-6 space-y-3">
             {question.options.map((opt) => {
               const isSelected = selectedAnswers[question.id] === opt.id;
-              let btnStyle = 'border-slate-800 bg-slate-900/60 hover:border-slate-700 text-slate-300';
+              let btnStyle = 'border-[#D8CBB3]/20 bg-[#121210] hover:border-[#2F6BFF] text-[#D8CBB3]';
 
               if (showExplanation) {
                 if (opt.isCorrect) {
-                  btnStyle = 'border-emerald-500 bg-emerald-950/40 text-emerald-200 shadow-glow-emerald';
+                  btnStyle = 'border-[#2F6BFF] bg-[#2F6BFF]/20 text-[#FAF7F2] shadow-glow-electric';
                 } else if (isSelected && !opt.isCorrect) {
                   btnStyle = 'border-rose-500 bg-rose-950/40 text-rose-200';
                 } else {
-                  btnStyle = 'border-slate-800/40 bg-slate-950/40 text-slate-500 opacity-60';
+                  btnStyle = 'border-[#D8CBB3]/10 bg-[#121210]/40 text-[#D8CBB3]/40 opacity-50';
                 }
               }
 
@@ -131,12 +131,12 @@ export const InteractiveQuiz: React.FC = () => {
                   disabled={showExplanation}
                   className={`w-full p-4 rounded-xl border text-left text-xs sm:text-sm font-sans flex items-start gap-3 transition-all ${btnStyle}`}
                 >
-                  <span className="w-6 h-6 rounded-lg bg-slate-800/80 font-mono text-xs flex items-center justify-center shrink-0 uppercase font-bold text-slate-400">
+                  <span className="w-6 h-6 rounded-lg bg-[#1E1E1C] font-mono text-xs flex items-center justify-center shrink-0 uppercase font-bold text-[#D8CBB3] border border-[#D8CBB3]/20">
                     {opt.id}
                   </span>
                   <span className="flex-1 leading-relaxed mt-0.5">{opt.text}</span>
                   {showExplanation && opt.isCorrect && (
-                    <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
+                    <CheckCircle2 className="w-5 h-5 text-[#2F6BFF] shrink-0 mt-0.5" />
                   )}
                   {showExplanation && isSelected && !opt.isCorrect && (
                     <XCircle className="w-5 h-5 text-rose-400 shrink-0 mt-0.5" />
@@ -148,24 +148,24 @@ export const InteractiveQuiz: React.FC = () => {
 
           {/* Explanation Box */}
           {showExplanation && (
-            <div className="mt-6 p-5 rounded-xl bg-slate-950 border border-sky-500/30 text-xs sm:text-sm animate-fadeIn">
-              <div className="flex items-center justify-between pb-2 mb-2 border-b border-slate-800 font-mono text-xs">
-                <span className="text-sky-400 font-bold">Standard Track Explanation:</span>
+            <div className="mt-6 p-5 rounded-xl bg-[#121210] border border-[#2F6BFF]/40 text-xs sm:text-sm animate-fadeIn shadow-lg">
+              <div className="flex items-center justify-between pb-2 mb-2 border-b border-[#D8CBB3]/15 font-mono text-xs">
+                <span className="text-[#2F6BFF] font-bold">Standard Track Explanation:</span>
                 {question.rfcAnchor && (
-                  <span className="text-slate-400">{question.rfcAnchor}</span>
+                  <span className="text-[#D8CBB3]/60">{question.rfcAnchor}</span>
                 )}
               </div>
-              <p className="text-slate-300 leading-relaxed font-sans">
+              <p className="text-[#D8CBB3] leading-relaxed font-sans">
                 {question.explanation}
               </p>
               <div className="mt-4 text-right">
-                <button
+                <LiquidButton
+                  size="sm"
                   onClick={handleNext}
-                  className="px-4 py-2 rounded-lg bg-sky-500 hover:bg-sky-400 text-slate-950 font-mono text-xs font-bold transition-all shadow-glow-cyan inline-flex items-center gap-1.5"
+                  icon={<ChevronRight className="w-4 h-4" />}
                 >
-                  <span>{currentIdx < total - 1 ? 'Next Question' : 'View Final Scorecard'}</span>
-                  <ChevronRight className="w-4 h-4" />
-                </button>
+                  {currentIdx < total - 1 ? 'Next Question' : 'View Final Scorecard'}
+                </LiquidButton>
               </div>
             </div>
           )}
@@ -174,36 +174,38 @@ export const InteractiveQuiz: React.FC = () => {
       ) : (
         /* Quiz Completed Results */
         <div className="mt-8 py-8 text-center space-y-6 animate-fadeIn">
-          <div className="inline-flex p-4 rounded-full bg-sky-500/10 border border-sky-500/30 text-sky-400">
+          <div className="inline-flex p-4 rounded-full bg-[#2F6BFF]/10 border border-[#2F6BFF]/30 text-[#2F6BFF] shadow-glow-electric">
             <Award className="w-12 h-12" />
           </div>
 
           <div>
-            <h4 className="text-2xl sm:text-3xl font-serif text-white">Examination Concluded</h4>
-            <p className="text-slate-400 font-serif italic text-sm mt-1">
+            <h4 className="text-2xl sm:text-3xl font-serif text-[#FAF7F2]">Examination Concluded</h4>
+            <p className="text-[#D8CBB3]/80 font-serif italic text-sm mt-1">
               Evaluated against RFC 1058 & RFC 2453 protocol specifications.
             </p>
           </div>
 
-          <div className="max-w-xs mx-auto p-6 rounded-2xl bg-slate-950 border border-slate-800">
-            <div className="text-4xl font-bold font-mono text-white">
+          <div className="max-w-xs mx-auto p-6 rounded-2xl bg-[#121210] border border-[#D8CBB3]/25 shadow-inner">
+            <div className="text-4xl font-bold font-mono text-[#FAF7F2]">
               {percentage}%
             </div>
-            <div className="text-xs font-mono text-slate-400 mt-1">
+            <div className="text-xs font-mono text-[#D8CBB3]/70 mt-1">
               {correctCount} of {total} Questions Answered Correctly
             </div>
-            <div className="mt-4 pt-4 border-t border-slate-800 text-xs font-mono text-emerald-400">
+            <div className="mt-4 pt-4 border-t border-[#D8CBB3]/15 text-xs font-mono text-[#2F6BFF] font-bold">
               {percentage >= 80 ? 'Mastery Achieved (Grade: Distinction)' : percentage >= 50 ? 'Proficient (Grade: Pass)' : 'Review Core Chapters'}
             </div>
           </div>
 
-          <button
-            onClick={handleReset}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-mono text-xs transition-colors"
-          >
-            <RotateCcw className="w-4 h-4" />
-            <span>Retake Assessment</span>
-          </button>
+          <div className="pt-2">
+            <LiquidButton
+              size="md"
+              onClick={handleReset}
+              icon={<RotateCcw className="w-4 h-4" />}
+            >
+              Retake Assessment
+            </LiquidButton>
+          </div>
         </div>
       )}
 

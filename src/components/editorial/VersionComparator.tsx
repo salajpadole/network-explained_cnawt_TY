@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { GitCompare, CheckCircle2, XCircle, ArrowRight } from 'lucide-react';
 import { sound } from '../../audio/soundEngine';
+import { LiquidButton } from '../buttons/LiquidMetalAction';
 
 interface VersionRow {
   feature: string;
@@ -77,46 +78,50 @@ export const VersionComparator: React.FC = () => {
   const [activeVersion, setActiveVersion] = useState<'all' | 'v1' | 'v2' | 'vng'>('all');
 
   return (
-    <div className="my-12 p-6 sm:p-8 rounded-2xl glass-panel-elevated border border-sky-500/30">
+    <div className="my-12 p-6 sm:p-8 rounded-2xl glass-panel-elevated border border-[#D8CBB3]/25 shadow-liquid-glass">
       
       {/* Title */}
-      <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-slate-800">
+      <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-[#D8CBB3]/15">
         <div>
-          <div className="flex items-center gap-2 text-xs font-mono uppercase text-sky-400">
+          <div className="flex items-center gap-2 text-xs font-mono uppercase text-[#2F6BFF] font-bold">
             <GitCompare className="w-4 h-4" />
             <span>Evolutionary Triad</span>
           </div>
-          <h3 className="text-xl sm:text-2xl font-serif text-white mt-1">
+          <h3 className="text-xl sm:text-2xl font-serif text-[#FAF7F2] mt-1">
             RIPv1 vs. RIPv2 vs. RIPng Architectural Matrix
           </h3>
         </div>
 
         {/* Filters */}
-        <div className="flex items-center gap-1 p-1 bg-slate-900 rounded-lg border border-slate-800 text-xs font-mono">
-          <button
-            onClick={() => { sound.playClick(); setActiveVersion('all'); }}
-            className={`px-3 py-1 rounded transition-colors ${activeVersion === 'all' ? 'bg-sky-500/20 text-sky-300 font-bold' : 'text-slate-400 hover:text-white'}`}
+        <div className="flex flex-wrap items-center gap-1.5 p-1 bg-[#121210] rounded-xl border border-[#D8CBB3]/20 text-xs font-mono">
+          <LiquidButton
+            variant="pill"
+            isActive={activeVersion === 'all'}
+            onClick={() => setActiveVersion('all')}
           >
             All Versions
-          </button>
-          <button
-            onClick={() => { sound.playClick(); setActiveVersion('v1'); }}
-            className={`px-3 py-1 rounded transition-colors ${activeVersion === 'v1' ? 'bg-sky-500/20 text-sky-300 font-bold' : 'text-slate-400 hover:text-white'}`}
+          </LiquidButton>
+          <LiquidButton
+            variant="pill"
+            isActive={activeVersion === 'v1'}
+            onClick={() => setActiveVersion('v1')}
           >
             RIPv1 Focus
-          </button>
-          <button
-            onClick={() => { sound.playClick(); setActiveVersion('v2'); }}
-            className={`px-3 py-1 rounded transition-colors ${activeVersion === 'v2' ? 'bg-sky-500/20 text-sky-300 font-bold' : 'text-slate-400 hover:text-white'}`}
+          </LiquidButton>
+          <LiquidButton
+            variant="pill"
+            isActive={activeVersion === 'v2'}
+            onClick={() => setActiveVersion('v2')}
           >
             RIPv2 Standard
-          </button>
-          <button
-            onClick={() => { sound.playClick(); setActiveVersion('vng'); }}
-            className={`px-3 py-1 rounded transition-colors ${activeVersion === 'vng' ? 'bg-sky-500/20 text-sky-300 font-bold' : 'text-slate-400 hover:text-white'}`}
+          </LiquidButton>
+          <LiquidButton
+            variant="pill"
+            isActive={activeVersion === 'vng'}
+            onClick={() => setActiveVersion('vng')}
           >
             RIPng (IPv6)
-          </button>
+          </LiquidButton>
         </div>
       </div>
 
@@ -124,39 +129,39 @@ export const VersionComparator: React.FC = () => {
       <div className="mt-6 overflow-x-auto">
         <table className="w-full text-left text-xs sm:text-sm font-mono border-collapse">
           <thead>
-            <tr className="border-b border-slate-800 text-slate-400 text-[11px] uppercase tracking-wider">
+            <tr className="border-b border-[#D8CBB3]/20 text-[#D8CBB3]/70 text-[11px] uppercase tracking-wider">
               <th className="py-3 px-4">Architectural Feature</th>
-              {(activeVersion === 'all' || activeVersion === 'v1') && <th className="py-3 px-4 text-amber-400">RIPv1 (RFC 1058)</th>}
-              {(activeVersion === 'all' || activeVersion === 'v2') && <th className="py-3 px-4 text-sky-400">RIPv2 (RFC 2453)</th>}
-              {(activeVersion === 'all' || activeVersion === 'vng') && <th className="py-3 px-4 text-emerald-400">RIPng (RFC 2080)</th>}
-              <th className="py-3 px-4 text-slate-500">Engineering Rationale</th>
+              {(activeVersion === 'all' || activeVersion === 'v1') && <th className="py-3 px-4 text-[#D8CBB3]">RIPv1 (RFC 1058)</th>}
+              {(activeVersion === 'all' || activeVersion === 'v2') && <th className="py-3 px-4 text-[#2F6BFF] font-bold">RIPv2 (RFC 2453)</th>}
+              {(activeVersion === 'all' || activeVersion === 'vng') && <th className="py-3 px-4 text-[#FAF7F2]">RIPng (RFC 2080)</th>}
+              <th className="py-3 px-4 text-[#D8CBB3]/60">Engineering Rationale</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-800/60">
+          <tbody className="divide-y divide-[#D8CBB3]/10">
             {COMPARISON_ROWS.map((row, idx) => (
               <tr 
                 key={idx}
-                className={`hover:bg-slate-900/50 transition-colors ${row.highlight ? 'bg-sky-950/10' : ''}`}
+                className={`hover:bg-[#121210]/60 transition-colors ${row.highlight ? 'bg-[#2F6BFF]/10' : ''}`}
               >
-                <td className="py-3 px-4 font-semibold text-slate-200">
+                <td className="py-3 px-4 font-semibold text-[#FAF7F2]">
                   {row.feature}
                 </td>
                 {(activeVersion === 'all' || activeVersion === 'v1') && (
-                  <td className="py-3 px-4 text-slate-300">
+                  <td className="py-3 px-4 text-[#D8CBB3]">
                     {row.v1}
                   </td>
                 )}
                 {(activeVersion === 'all' || activeVersion === 'v2') && (
-                  <td className="py-3 px-4 text-sky-200 font-medium">
+                  <td className="py-3 px-4 text-[#2F6BFF] font-bold">
                     {row.v2}
                   </td>
                 )}
                 {(activeVersion === 'all' || activeVersion === 'vng') && (
-                  <td className="py-3 px-4 text-emerald-200 font-medium">
+                  <td className="py-3 px-4 text-[#FAF7F2] font-medium">
                     {row.vng}
                   </td>
                 )}
-                <td className="py-3 px-4 text-xs font-sans text-slate-400 italic">
+                <td className="py-3 px-4 text-xs font-sans text-[#D8CBB3]/80 italic">
                   {row.notes}
                 </td>
               </tr>

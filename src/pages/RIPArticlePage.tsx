@@ -15,6 +15,7 @@ import { RipSimulator } from '../components/simulator/RipSimulator';
 import { InteractiveQuiz } from '../components/interactive/InteractiveQuiz';
 import { GlossaryDrawer } from '../components/interactive/GlossaryDrawer';
 import { Colophon } from '../components/layout/Colophon';
+import { LiquidButton } from '../components/buttons/LiquidMetalAction';
 
 import { 
   BookOpen, Clock, Calendar, User, Share2, Check, ArrowUp, 
@@ -86,64 +87,63 @@ export const RIPArticlePage: React.FC = () => {
   };
 
   return (
-    <div className="relative text-slate-100 bg-[#050811] min-h-screen pt-28 sm:pt-36 pb-24">
+    <div className="relative text-[#D8CBB3] bg-[#1E1E1C] min-h-screen pt-28 sm:pt-36 pb-24">
       
       {/* ========================================================================= */}
       {/* ARTICLE HERO */}
       {/* ========================================================================= */}
-      <header className="max-w-5xl mx-auto px-4 sm:px-8 md:px-16 pb-16 border-b border-slate-800">
-        <div className="flex flex-wrap items-center gap-3 text-xs font-mono uppercase tracking-widest text-sky-400 mb-6">
-          <span className="px-2.5 py-1 rounded bg-sky-950/80 border border-sky-800/80 font-bold shadow-glow-cyan">
+      <header className="max-w-5xl mx-auto px-4 sm:px-8 md:px-16 pb-16 border-b border-[#D8CBB3]/15">
+        <div className="flex flex-wrap items-center gap-3 text-xs font-mono uppercase tracking-widest text-[#2F6BFF] mb-6 font-bold">
+          <span className="px-2.5 py-1 rounded-full bg-[#2F6BFF]/20 border border-[#2F6BFF]/50 shadow-glow-electric text-[#FAF7F2]">
             ARTICLE 001
           </span>
-          <span className="text-slate-600">•</span>
-          <span className="text-slate-400">ROUTING PROTOCOLS</span>
-          <span className="text-slate-600">•</span>
-          <span className="text-emerald-400 font-semibold">PEER-REVIEWED MONOGRAPH</span>
+          <span className="text-[#D8CBB3]/40">•</span>
+          <span className="text-[#D8CBB3]/80">ROUTING PROTOCOLS</span>
+          <span className="text-[#D8CBB3]/40">•</span>
+          <span className="text-[#2F6BFF] font-semibold">PEER-REVIEWED MONOGRAPH</span>
         </div>
 
-        <h1 className="text-4xl sm:text-6xl md:text-7xl font-serif font-normal text-white tracking-tight leading-[1.08]">
+        <h1 className="text-4xl sm:text-6xl md:text-7xl font-serif font-normal text-[#FAF7F2] tracking-tight leading-[1.08]">
           RIP: The Routing Information Protocol
         </h1>
 
-        <p className="mt-6 text-xl sm:text-2xl md:text-3xl text-slate-300 font-serif italic max-w-3xl leading-relaxed">
+        <p className="mt-6 text-xl sm:text-2xl md:text-3xl text-[#D8CBB3] font-serif italic max-w-3xl leading-relaxed">
           Understanding how routers exchange information, calculate routes and make decisions across interconnected networks.
         </p>
 
         {/* Metadata & Author Bar */}
-        <div className="mt-8 pt-6 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-slate-400">
+        <div className="mt-8 pt-6 border-t border-[#D8CBB3]/15 flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-[#D8CBB3]/70">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-sky-500/10 border border-sky-500/30 flex items-center justify-center font-bold text-sky-400">
+            <div className="w-10 h-10 rounded-xl bg-[#2F6BFF]/15 border border-[#2F6BFF]/40 flex items-center justify-center font-bold text-[#2F6BFF]">
               SP
             </div>
             <div>
-              <div className="text-slate-200 font-bold">Salaj Padole</div>
-              <div className="text-slate-500">CNAWT Tutorial Track • PRN: 12412336 • Roll: 43</div>
+              <div className="text-[#FAF7F2] font-bold">Salaj Padole</div>
+              <div className="text-[#D8CBB3]/50">CNAWT Tutorial Track • PRN: 12412336 • Roll: 43</div>
             </div>
           </div>
 
-          <div className="flex items-center gap-4 text-slate-400">
+          <div className="flex items-center gap-4 text-[#D8CBB3]/80">
             <span className="flex items-center gap-1.5">
               <Calendar className="w-3.5 h-3.5" />
               <span>Nov 2026</span>
             </span>
             <span>•</span>
-            <span className="flex items-center gap-1.5 text-slate-200 font-bold">
-              <Clock className="w-3.5 h-3.5 text-sky-400" />
+            <span className="flex items-center gap-1.5 text-[#FAF7F2] font-bold">
+              <Clock className="w-3.5 h-3.5 text-[#2F6BFF]" />
               <span>24 min read</span>
             </span>
             <span>•</span>
-            <button
+            <LiquidButton
+              size="sm"
               onClick={handleCopyLink}
-              className="flex items-center gap-1 text-sky-400 hover:text-sky-300 transition-colors"
+              icon={copiedLink ? <Check className="w-3.5 h-3.5 text-[#2F6BFF]" /> : <Share2 className="w-3.5 h-3.5" />}
             >
-              {copiedLink ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Share2 className="w-3.5 h-3.5" />}
-              <span>{copiedLink ? 'Copied' : 'Share'}</span>
-            </button>
+              {copiedLink ? 'Copied' : 'Share'}
+            </LiquidButton>
           </div>
         </div>
       </header>
-
 
       {/* ========================================================================= */}
       {/* READING LAYOUT (Main Column: 680-780px + Sticky TOC) */}
@@ -152,7 +152,7 @@ export const RIPArticlePage: React.FC = () => {
         
         {/* Sticky Table of Contents (Desktop Sidebar) */}
         <aside className="hidden lg:block lg:col-span-3 sticky top-28 space-y-4 max-h-[82vh] overflow-y-auto pr-3 font-mono text-xs">
-          <div className="text-[11px] uppercase tracking-widest text-slate-500 pb-2 border-b border-slate-800 flex items-center justify-between">
+          <div className="text-[11px] uppercase tracking-widest text-[#D8CBB3]/60 pb-2 border-b border-[#D8CBB3]/15 flex items-center justify-between font-bold">
             <span>Article Contents</span>
             <span>15 Sections</span>
           </div>
@@ -166,37 +166,37 @@ export const RIPArticlePage: React.FC = () => {
                   onClick={() => scrollToSection(sec.id)}
                   className={`w-full text-left py-1.5 px-3 rounded-lg transition-all flex items-center gap-2.5 ${
                     isActive
-                      ? 'bg-sky-500/15 text-sky-300 font-bold border-l-2 border-sky-400'
-                      : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/60'
+                      ? 'bg-[#2F6BFF]/20 text-[#FAF7F2] font-bold border-l-2 border-[#2F6BFF] shadow-glow-electric'
+                      : 'text-[#D8CBB3]/70 hover:text-[#FAF7F2] hover:bg-[#121210]'
                   }`}
                 >
-                  <span className="text-[10px] text-slate-500">{sec.num}</span>
+                  <span className="text-[10px] text-[#D8CBB3]/40">{sec.num}</span>
                   <span className="truncate">{sec.title}</span>
                 </button>
               );
             })}
           </nav>
 
-          <div className="pt-4 border-t border-slate-800">
-            <button
+          <div className="pt-4 border-t border-[#D8CBB3]/15">
+            <LiquidButton
+              size="sm"
               onClick={scrollToTop}
-              className="text-[11px] text-slate-500 hover:text-sky-400 flex items-center gap-1.5 transition-colors"
+              icon={<ArrowUp className="w-3.5 h-3.5" />}
             >
-              <ArrowUp className="w-3.5 h-3.5" />
-              <span>Back to Top</span>
-            </button>
+              Back to Top
+            </LiquidButton>
           </div>
         </aside>
 
         {/* Main Editorial Reading Column (Max-W 740px) */}
-        <article className="lg:col-span-9 max-w-[740px] mx-auto text-slate-300 font-sans text-base sm:text-lg leading-relaxed space-y-16">
+        <article className="lg:col-span-9 max-w-[740px] mx-auto text-[#D8CBB3] font-sans text-base sm:text-lg leading-relaxed space-y-16">
           
           {/* ========================================================================= */}
           {/* 01 — INTRODUCTION */}
           {/* ========================================================================= */}
           <section id="sec-01" className="scroll-mt-24 space-y-6">
-            <div className="text-xs font-mono uppercase tracking-widest text-sky-400">01 / Foundation</div>
-            <h2 className="text-3xl sm:text-4xl font-serif text-white tracking-tight">Introduction</h2>
+            <div className="text-xs font-mono uppercase tracking-widest text-[#2F6BFF] font-bold">01 / Foundation</div>
+            <h2 className="text-3xl sm:text-4xl font-serif text-[#FAF7F2] tracking-tight">Introduction</h2>
             <p>
               In the modern digital landscape, the global Internet appears as a seamless, unitary fabric. When a user requests a web resource, transmits telemetry data, or initiates an encrypted session, the underlying physical infrastructure is utterly concealed.
             </p>
@@ -212,29 +212,29 @@ export const RIPArticlePage: React.FC = () => {
           {/* 02 — UNDERSTANDING NETWORK ROUTING */}
           {/* ========================================================================= */}
           <section id="sec-02" className="scroll-mt-24 space-y-6">
-            <div className="text-xs font-mono uppercase tracking-widest text-sky-400">02 / Architecture</div>
-            <h2 className="text-3xl sm:text-4xl font-serif text-white tracking-tight">Understanding Network Routing</h2>
+            <div className="text-xs font-mono uppercase tracking-widest text-[#2F6BFF] font-bold">02 / Architecture</div>
+            <h2 className="text-3xl sm:text-4xl font-serif text-[#FAF7F2] tracking-tight">Understanding Network Routing</h2>
             <p>
               At Layer 3 of the OSI reference model, a <strong>router</strong> operates as a specialized computer with multiple physical network interfaces. Its primary task is simple yet profound: examine the 32-bit destination IP address in the header of each incoming packet and look up the appropriate <em>egress interface</em> in its local <strong>Routing Table</strong>.
             </p>
             
             {/* Custom Diagram: Next-hop decision */}
-            <div className="my-8 p-6 rounded-2xl bg-slate-950 border border-slate-800 not-prose font-mono text-xs">
-              <div className="text-slate-400 uppercase text-[10px] tracking-wider mb-3">Diagram: Layer-3 Forwarding Anatomy</div>
+            <div className="my-8 p-6 rounded-2xl bg-[#121210] border border-[#D8CBB3]/20 not-prose font-mono text-xs shadow-liquid-glass">
+              <div className="text-[#D8CBB3]/60 uppercase text-[10px] tracking-wider mb-3 font-bold">Diagram: Layer-3 Forwarding Anatomy</div>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center items-center">
-                <div className="p-4 rounded-xl bg-slate-900 border border-slate-800">
-                  <div className="text-emerald-400 font-bold text-sm">Ingress IP Packet</div>
-                  <div className="text-slate-400 text-[10px] mt-1">Dst: 192.168.10.42</div>
+                <div className="p-4 rounded-xl bg-[#1E1E1C] border border-[#D8CBB3]/20">
+                  <div className="text-[#2F6BFF] font-bold text-sm">Ingress IP Packet</div>
+                  <div className="text-[#D8CBB3]/60 text-[10px] mt-1">Dst: 192.168.10.42</div>
                 </div>
                 <div className="flex flex-col items-center">
-                  <span className="text-sky-400 font-bold">RIB Lookup</span>
-                  <span className="text-[10px] text-slate-500 mt-1">Longest Prefix Match</span>
-                  <span className="w-full h-0.5 bg-sky-500 my-2" />
-                  <span className="text-emerald-400 text-[10px]">Next-Hop: 10.0.12.2</span>
+                  <span className="text-[#FAF7F2] font-bold">RIB Lookup</span>
+                  <span className="text-[10px] text-[#D8CBB3]/60 mt-1">Longest Prefix Match</span>
+                  <span className="w-full h-0.5 bg-[#2F6BFF] my-2" />
+                  <span className="text-[#2F6BFF] text-[10px] font-bold">Next-Hop: 10.0.12.2</span>
                 </div>
-                <div className="p-4 rounded-xl bg-slate-900 border border-slate-800">
-                  <div className="text-sky-400 font-bold text-sm">Egress Interface</div>
-                  <div className="text-slate-400 text-[10px] mt-1">Port Gi0/1 → Router R2</div>
+                <div className="p-4 rounded-xl bg-[#1E1E1C] border border-[#D8CBB3]/20">
+                  <div className="text-[#FAF7F2] font-bold text-sm">Egress Interface</div>
+                  <div className="text-[#D8CBB3]/60 text-[10px] mt-1">Port Gi0/1 → Router R2</div>
                 </div>
               </div>
             </div>
@@ -256,8 +256,8 @@ export const RIPArticlePage: React.FC = () => {
           {/* 03 — WHAT IS RIP? */}
           {/* ========================================================================= */}
           <section id="sec-03" className="scroll-mt-24 space-y-6">
-            <div className="text-xs font-mono uppercase tracking-widest text-sky-400">03 / Protocol Definition</div>
-            <h2 className="text-3xl sm:text-4xl font-serif text-white tracking-tight">What is RIP?</h2>
+            <div className="text-xs font-mono uppercase tracking-widest text-[#2F6BFF] font-bold">03 / Protocol Definition</div>
+            <h2 className="text-3xl sm:text-4xl font-serif text-[#FAF7F2] tracking-tight">What is RIP?</h2>
             <p>
               The <strong>Routing Information Protocol (RIP)</strong> is one of the oldest and most historically consequential dynamic routing protocols in computer networking. First formalized by Chuck Hedrick in June 1988 under <strong>RFC 1058</strong>, RIP originated in Xerox PARC’s Gateway Information Protocol (GWINFO) and became deeply entrenched throughout the 1980s as the default routing daemon (<code>routed</code>) bundled with 4.3BSD Unix.
             </p>
@@ -265,15 +265,15 @@ export const RIPArticlePage: React.FC = () => {
               Within modern network taxonomy, RIP is categorized as:
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 not-prose my-6 font-mono text-xs">
-              <div className="p-4 rounded-xl bg-slate-950 border border-slate-800">
-                <span className="text-sky-400 font-bold block mb-1">Protocol Family:</span>
-                <span className="text-white">Interior Gateway Protocol (IGP)</span>
-                <p className="text-slate-400 font-sans text-xs mt-1">Designed for internal autonomous systems rather than inter-AS Internet peering.</p>
+              <div className="p-4 rounded-xl bg-[#121210] border border-[#D8CBB3]/20">
+                <span className="text-[#2F6BFF] font-bold block mb-1">Protocol Family:</span>
+                <span className="text-[#FAF7F2]">Interior Gateway Protocol (IGP)</span>
+                <p className="text-[#D8CBB3]/70 font-sans text-xs mt-1">Designed for internal autonomous systems rather than inter-AS Internet peering.</p>
               </div>
-              <div className="p-4 rounded-xl bg-slate-950 border border-slate-800">
-                <span className="text-emerald-400 font-bold block mb-1">Algorithmic Family:</span>
-                <span className="text-white">Distance-Vector Protocol</span>
-                <p className="text-slate-400 font-sans text-xs mt-1">Routers advertise vectors of (distance, direction) strictly to immediate neighbors.</p>
+              <div className="p-4 rounded-xl bg-[#121210] border border-[#D8CBB3]/20">
+                <span className="text-[#FAF7F2] font-bold block mb-1">Algorithmic Family:</span>
+                <span className="text-[#FAF7F2]">Distance-Vector Protocol</span>
+                <p className="text-[#D8CBB3]/70 font-sans text-xs mt-1">Routers advertise vectors of (distance, direction) strictly to immediate neighbors.</p>
               </div>
             </div>
           </section>
@@ -282,8 +282,8 @@ export const RIPArticlePage: React.FC = () => {
           {/* 04 — DISTANCE-VECTOR ROUTING */}
           {/* ========================================================================= */}
           <section id="sec-04" className="scroll-mt-24 space-y-6">
-            <div className="text-xs font-mono uppercase tracking-widest text-sky-400">04 / Algorithmic Paradigm</div>
-            <h2 className="text-3xl sm:text-4xl font-serif text-white tracking-tight">Distance-Vector Routing</h2>
+            <div className="text-xs font-mono uppercase tracking-widest text-[#2F6BFF] font-bold">04 / Algorithmic Paradigm</div>
+            <h2 className="text-3xl sm:text-4xl font-serif text-[#FAF7F2] tracking-tight">Distance-Vector Routing</h2>
             <p>
               Distance-vector protocols operate on a distributed paradigm colloquially known as <strong>"routing by rumor."</strong>
             </p>
@@ -299,8 +299,8 @@ export const RIPArticlePage: React.FC = () => {
           {/* 05 — THE BELLMAN-FORD ALGORITHM */}
           {/* ========================================================================= */}
           <section id="sec-05" className="scroll-mt-24 space-y-6">
-            <div className="text-xs font-mono uppercase tracking-widest text-sky-400">05 / Mathematical Engine</div>
-            <h2 className="text-3xl sm:text-4xl font-serif text-white tracking-tight">The Bellman-Ford Algorithm</h2>
+            <div className="text-xs font-mono uppercase tracking-widest text-[#2F6BFF] font-bold">05 / Mathematical Engine</div>
+            <h2 className="text-3xl sm:text-4xl font-serif text-[#FAF7F2] tracking-tight">The Bellman-Ford Algorithm</h2>
             <p>
               The mathematical engine powering distance-vector calculation is the <strong>Bellman-Ford algorithm</strong>, formulated independently by Lester Ford Jr. & Delbert Fulkerson (1956) and Richard Bellman (1958).
             </p>
@@ -310,12 +310,12 @@ export const RIPArticlePage: React.FC = () => {
 
             <FormulaCard />
 
-            <div className="p-5 rounded-2xl bg-slate-950 border border-slate-800 space-y-3 text-sm">
-              <span className="font-mono text-xs uppercase text-sky-400 font-bold block">Worked Numerical Example:</span>
+            <div className="p-5 rounded-2xl bg-[#121210] border border-[#D8CBB3]/20 space-y-3 text-sm">
+              <span className="font-mono text-xs uppercase text-[#2F6BFF] font-bold block">Worked Numerical Example:</span>
               <p>
                 Suppose Router A is connected to two neighbors: Router B via a 1-hop link ($c(A, B) = 1$) and Router C via a 1-hop link ($c(A, C) = 1$). Both advertise paths to Target Subnet Z:
               </p>
-              <ul className="list-disc pl-6 space-y-1 font-mono text-xs text-slate-300">
+              <ul className="list-disc pl-6 space-y-1 font-mono text-xs text-[#D8CBB3]">
                 <li>Router B advertises: $D_B(Z) = 3$ hops. Total cost via B = $1 + 3 = 4$ hops.</li>
                 <li>Router C advertises: $D_C(Z) = 1$ hop. Total cost via C = $1 + 1 = 2$ hops.</li>
               </ul>
@@ -329,8 +329,8 @@ export const RIPArticlePage: React.FC = () => {
           {/* 06 — HOW RIP WORKS */}
           {/* ========================================================================= */}
           <section id="sec-06" className="scroll-mt-24 space-y-6">
-            <div className="text-xs font-mono uppercase tracking-widest text-sky-400">06 / Operational Dynamics</div>
-            <h2 className="text-3xl sm:text-4xl font-serif text-white tracking-tight">How RIP Works</h2>
+            <div className="text-xs font-mono uppercase tracking-widest text-[#2F6BFF] font-bold">06 / Operational Dynamics</div>
+            <h2 className="text-3xl sm:text-4xl font-serif text-[#FAF7F2] tracking-tight">How RIP Works</h2>
             <p>
               In operational practice, a RIP daemon executes an ongoing state machine:
             </p>
@@ -351,17 +351,17 @@ export const RIPArticlePage: React.FC = () => {
           {/* 07 — UNDERSTANDING HOP COUNT & THE 15-HOP CEILING */}
           {/* ========================================================================= */}
           <section id="sec-07" className="scroll-mt-24 space-y-6">
-            <div className="text-xs font-mono uppercase tracking-widest text-sky-400">07 / Routing Metric</div>
-            <h2 className="text-3xl sm:text-4xl font-serif text-white tracking-tight">Understanding Hop Count</h2>
+            <div className="text-xs font-mono uppercase tracking-widest text-[#2F6BFF] font-bold">07 / Routing Metric</div>
+            <h2 className="text-3xl sm:text-4xl font-serif text-[#FAF7F2] tracking-tight">Understanding Hop Count</h2>
             <p>
               RIP evaluates paths exclusively by <strong>hop count</strong>—the number of intermediate router hops between the local machine and the destination network.
             </p>
-            <div className="p-5 rounded-2xl bg-slate-950 border border-slate-800 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono">
-              <div className="p-3 rounded-lg bg-emerald-950/40 border border-emerald-800">
-                <span className="text-emerald-400 font-bold block mb-1">Valid Operational Range (1 — 15 Hops)</span>
+            <div className="p-5 rounded-2xl bg-[#121210] border border-[#D8CBB3]/20 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono">
+              <div className="p-3.5 rounded-xl bg-[#2F6BFF]/15 border border-[#2F6BFF]/40">
+                <span className="text-[#FAF7F2] font-bold block mb-1">Valid Operational Range (1 — 15 Hops)</span>
                 Packets are forwarded across links normally. Any route with 15 or fewer hops is considered reachable.
               </div>
-              <div className="p-3 rounded-lg bg-rose-950/40 border border-rose-800">
+              <div className="p-3.5 rounded-xl bg-rose-950/40 border border-rose-800">
                 <span className="text-rose-400 font-bold block mb-1">Metric 16 = Infinity (Unreachable)</span>
                 A route that hits metric 16 is immediately poisoned and marked dead. RIP will not forward packets over it.
               </div>
@@ -375,8 +375,8 @@ export const RIPArticlePage: React.FC = () => {
           {/* 08 — RIP VERSIONS (V1, V2, RIPNG) */}
           {/* ========================================================================= */}
           <section id="sec-08" className="scroll-mt-24 space-y-6">
-            <div className="text-xs font-mono uppercase tracking-widest text-sky-400">08 / Protocol Evolution</div>
-            <h2 className="text-3xl sm:text-4xl font-serif text-white tracking-tight">RIP Versions: v1, v2, and RIPng</h2>
+            <div className="text-xs font-mono uppercase tracking-widest text-[#2F6BFF] font-bold">08 / Protocol Evolution</div>
+            <h2 className="text-3xl sm:text-4xl font-serif text-[#FAF7F2] tracking-tight">RIP Versions: v1, v2, and RIPng</h2>
             <p>
               Over its three-decade lifespan, RIP evolved across three distinct generations to address the changing architecture of IP addressing:
             </p>
@@ -390,12 +390,12 @@ export const RIPArticlePage: React.FC = () => {
           {/* 09 — RIP TIMERS & STATE MACHINES */}
           {/* ========================================================================= */}
           <section id="sec-09" className="scroll-mt-24 space-y-6">
-            <div className="text-xs font-mono uppercase tracking-widest text-sky-400">09 / Temporal Mechanics</div>
-            <h2 className="text-3xl sm:text-4xl font-serif text-white tracking-tight">RIP Timers & State Machines</h2>
+            <div className="text-xs font-mono uppercase tracking-widest text-[#2F6BFF] font-bold">09 / Temporal Mechanics</div>
+            <h2 className="text-3xl sm:text-4xl font-serif text-[#FAF7F2] tracking-tight">RIP Timers & State Machines</h2>
             <p>
               Because RIP lacks persistent connection handshakes, it depends on a hierarchy of soft-state timers. Default implementations typically configure:
             </p>
-            <ul className="list-disc pl-6 space-y-1 text-sm sm:text-base font-mono">
+            <ul className="list-disc pl-6 space-y-1 text-sm sm:text-base font-mono text-[#D8CBB3]">
               <li><strong>Periodic Update Timer:</strong> 30 seconds (with ±15% randomized jitter).</li>
               <li><strong>Route Timeout / Invalid Timer:</strong> 180 seconds (6 consecutive missed updates).</li>
               <li><strong>Flush / Garbage Collection Timer:</strong> 120–240 seconds (grace period to spread poison).</li>
@@ -409,8 +409,8 @@ export const RIPArticlePage: React.FC = () => {
           {/* 10 — ROUTING LOOPS AND PREVENTION */}
           {/* ========================================================================= */}
           <section id="sec-10" className="scroll-mt-24 space-y-6">
-            <div className="text-xs font-mono uppercase tracking-widest text-sky-400">10 / Loop Mitigation</div>
-            <h2 className="text-3xl sm:text-4xl font-serif text-white tracking-tight">Routing Loops & Prevention</h2>
+            <div className="text-xs font-mono uppercase tracking-widest text-[#2F6BFF] font-bold">10 / Loop Mitigation</div>
+            <h2 className="text-3xl sm:text-4xl font-serif text-[#FAF7F2] tracking-tight">Routing Loops & Prevention</h2>
             <p>
               The most notorious pathological failure mode of distance-vector routing is the <strong>Count-to-Infinity problem</strong>, where adjacent routers bounce incrementing metrics back and forth following a link failure.
             </p>
@@ -426,8 +426,8 @@ export const RIPArticlePage: React.FC = () => {
           {/* 11 — PRACTICAL CISCO CONFIGURATION */}
           {/* ========================================================================= */}
           <section id="sec-11" className="scroll-mt-24 space-y-6">
-            <div className="text-xs font-mono uppercase tracking-widest text-sky-400">11 / Practical Engineering</div>
-            <h2 className="text-3xl sm:text-4xl font-serif text-white tracking-tight">Practical Cisco Configuration</h2>
+            <div className="text-xs font-mono uppercase tracking-widest text-[#2F6BFF] font-bold">11 / Practical Engineering</div>
+            <h2 className="text-3xl sm:text-4xl font-serif text-[#FAF7F2] tracking-tight">Practical Cisco Configuration</h2>
             <p>
               Below is a real-world, production-ready Cisco IOS-XE configuration snippet implementing RIPv2, disabling legacy auto-summarization, and securing access ports with <code>passive-interface</code>:
             </p>
@@ -439,8 +439,8 @@ export const RIPArticlePage: React.FC = () => {
           {/* 12 — RIP VS OTHER ROUTING PROTOCOLS */}
           {/* ========================================================================= */}
           <section id="sec-12" className="scroll-mt-24 space-y-6">
-            <div className="text-xs font-mono uppercase tracking-widest text-sky-400">12 / Comparative Analysis</div>
-            <h2 className="text-3xl sm:text-4xl font-serif text-white tracking-tight">RIP vs. Other Routing Protocols</h2>
+            <div className="text-xs font-mono uppercase tracking-widest text-[#2F6BFF] font-bold">12 / Comparative Analysis</div>
+            <h2 className="text-3xl sm:text-4xl font-serif text-[#FAF7F2] tracking-tight">RIP vs. Other Routing Protocols</h2>
             <p>
               How does RIP measure up against modern Interior and Exterior Gateway Protocols like OSPF, EIGRP, and BGP?
             </p>
@@ -452,13 +452,13 @@ export const RIPArticlePage: React.FC = () => {
           {/* 13 — ADVANTAGES AND LIMITATIONS */}
           {/* ========================================================================= */}
           <section id="sec-13" className="scroll-mt-24 space-y-6">
-            <div className="text-xs font-mono uppercase tracking-widest text-sky-400">13 / Objective Evaluation</div>
-            <h2 className="text-3xl sm:text-4xl font-serif text-white tracking-tight">Advantages and Limitations</h2>
+            <div className="text-xs font-mono uppercase tracking-widest text-[#2F6BFF] font-bold">13 / Objective Evaluation</div>
+            <h2 className="text-3xl sm:text-4xl font-serif text-[#FAF7F2] tracking-tight">Advantages and Limitations</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 not-prose my-6 font-mono text-xs">
-              <div className="p-5 rounded-2xl bg-emerald-950/20 border border-emerald-800/40 space-y-2">
-                <span className="text-emerald-400 font-bold text-sm block">Architectural Advantages</span>
-                <ul className="space-y-1.5 text-slate-300">
+              <div className="p-5 rounded-2xl bg-[#121210] border border-[#D8CBB3]/20 space-y-2 shadow-liquid-glass">
+                <span className="text-[#2F6BFF] font-bold text-sm block">Architectural Advantages</span>
+                <ul className="space-y-1.5 text-[#D8CBB3]">
                   <li>• Minimal CPU and RAM utilization.</li>
                   <li>• Simple configuration; zero area hierarchy design needed.</li>
                   <li>• Universally supported across virtually every router vendor since 1988.</li>
@@ -466,9 +466,9 @@ export const RIPArticlePage: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="p-5 rounded-2xl bg-rose-950/20 border border-rose-800/40 space-y-2">
+              <div className="p-5 rounded-2xl bg-[#121210] border border-[#D8CBB3]/20 space-y-2 shadow-liquid-glass">
                 <span className="text-rose-400 font-bold text-sm block">Fundamental Limitations</span>
-                <ul className="space-y-1.5 text-slate-300">
+                <ul className="space-y-1.5 text-[#D8CBB3]">
                   <li>• Maximum hop count capped strictly at 15.</li>
                   <li>• Hop metric is bandwidth-blind (56k dialup preferred over 100Gbps fiber).</li>
                   <li>• Periodic 30-second broadcasts consume transmission bandwidth.</li>
@@ -482,8 +482,8 @@ export const RIPArticlePage: React.FC = () => {
           {/* 14 — CONCLUSION: IS RIP STILL RELEVANT? */}
           {/* ========================================================================= */}
           <section id="sec-14" className="scroll-mt-24 space-y-6">
-            <div className="text-xs font-mono uppercase tracking-widest text-sky-400">14 / Retrospective</div>
-            <h2 className="text-3xl sm:text-4xl font-serif text-white tracking-tight">Conclusion: Is RIP Still Relevant?</h2>
+            <div className="text-xs font-mono uppercase tracking-widest text-[#2F6BFF] font-bold">14 / Retrospective</div>
+            <h2 className="text-3xl sm:text-4xl font-serif text-[#FAF7F2] tracking-tight">Conclusion: Is RIP Still Relevant?</h2>
             <p>
               In contemporary enterprise and cloud hyperscaler backbones, RIP has largely been superseded by link-state protocols (OSPF, IS-IS) and path-vector systems (BGP). Its 15-hop boundary and inability to measure link bandwidth make it unsuited for complex high-throughput networks.
             </p>
@@ -496,21 +496,21 @@ export const RIPArticlePage: React.FC = () => {
           {/* 15 — STANDARDS & REFERENCES */}
           {/* ========================================================================= */}
           <section id="sec-15" className="scroll-mt-24 space-y-6">
-            <div className="text-xs font-mono uppercase tracking-widest text-sky-400">15 / Academic Bibliography</div>
-            <h2 className="text-3xl sm:text-4xl font-serif text-white tracking-tight">Standards & Primary References</h2>
+            <div className="text-xs font-mono uppercase tracking-widest text-[#2F6BFF] font-bold">15 / Academic Bibliography</div>
+            <h2 className="text-3xl sm:text-4xl font-serif text-[#FAF7F2] tracking-tight">Standards & Primary References</h2>
             <p className="text-sm">
               All claims, formulas, and protocol behaviors documented in this publication are cross-referenced with primary IETF standards:
             </p>
             <div className="space-y-2 not-prose font-mono text-xs">
-              <a href="https://datatracker.ietf.org/doc/html/rfc1058" target="_blank" rel="noopener noreferrer" className="p-3 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-between text-slate-300 hover:text-sky-400 hover:border-sky-500/40 transition-colors">
+              <a href="https://datatracker.ietf.org/doc/html/rfc1058" target="_blank" rel="noopener noreferrer" className="p-3 rounded-xl bg-[#121210] border border-[#D8CBB3]/20 flex items-center justify-between text-[#D8CBB3] hover:text-[#FAF7F2] hover:border-[#2F6BFF] transition-colors">
                 <span>RFC 1058 — Routing Information Protocol (Hedrick, 1988)</span>
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
-              <a href="https://datatracker.ietf.org/doc/html/rfc2453" target="_blank" rel="noopener noreferrer" className="p-3 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-between text-slate-300 hover:text-sky-400 hover:border-sky-500/40 transition-colors">
+              <a href="https://datatracker.ietf.org/doc/html/rfc2453" target="_blank" rel="noopener noreferrer" className="p-3 rounded-xl bg-[#121210] border border-[#D8CBB3]/20 flex items-center justify-between text-[#D8CBB3] hover:text-[#FAF7F2] hover:border-[#2F6BFF] transition-colors">
                 <span>RFC 2453 / STD 56 — RIP Version 2 (Malkin, 1998)</span>
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
-              <a href="https://datatracker.ietf.org/doc/html/rfc2080" target="_blank" rel="noopener noreferrer" className="p-3 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-between text-slate-300 hover:text-sky-400 hover:border-sky-500/40 transition-colors">
+              <a href="https://datatracker.ietf.org/doc/html/rfc2080" target="_blank" rel="noopener noreferrer" className="p-3 rounded-xl bg-[#121210] border border-[#D8CBB3]/20 flex items-center justify-between text-[#D8CBB3] hover:text-[#FAF7F2] hover:border-[#2F6BFF] transition-colors">
                 <span>RFC 2080 — RIPng for IPv6 (Malkin & Minnear, 1997)</span>
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
@@ -518,7 +518,7 @@ export const RIPArticlePage: React.FC = () => {
           </section>
 
           {/* Interactive Quiz & Glossary Embedded at bottom of Article */}
-          <div className="pt-12 border-t border-slate-800 space-y-12">
+          <div className="pt-12 border-t border-[#D8CBB3]/15 space-y-12">
             <InteractiveQuiz />
             <GlossaryDrawer />
           </div>

@@ -1,4 +1,5 @@
 @import 'katex/dist/katex.min.css';
+@import '@designcodeio/threeui/style.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,77 +7,186 @@
 @layer base {
   :root {
     color-scheme: dark;
+    --charcoal-base: #1E1E1C;
+    --sand-base: #D8CBB3;
+    --electric-blue: #2F6BFF;
   }
 
   body {
-    background-color: #070A0F;
-    color: #F1F5F9;
+    background-color: #1E1E1C;
+    color: #D8CBB3;
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   }
 
-  /* Custom subtle scrollbar */
+  /* Custom subtle scrollbar in charcoal & sand */
   ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: #0B0F17;
+    background: #181816;
   }
   ::-webkit-scrollbar-thumb {
-    background: #1E293B;
+    background: #383833;
     border-radius: 3px;
+    border: 1px solid rgba(216, 203, 179, 0.1);
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #334155;
+    background: #2F6BFF;
   }
 }
 
-/* Subtle Film Grain Effect for Editorial Monograph Feel */
+/* Subtle Film Grain Effect for Charcoal Monograph Feel */
 .grain-overlay {
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.025'/%3E%3C/svg%3E");
 }
 
-/* Editorial Glassmorphism */
+/* Charcoal & Sand Glassmorphism */
 .glass-panel {
-  background: rgba(11, 15, 23, 0.75);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(30, 30, 28, 0.78);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(216, 203, 179, 0.12);
 }
 
 .glass-panel-elevated {
-  background: rgba(16, 22, 34, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(56, 189, 248, 0.15);
-  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+  background: rgba(38, 38, 35, 0.88);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(216, 203, 179, 0.18);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.8), 0 0 25px -5px rgba(47, 107, 255, 0.12);
 }
 
-/* Pulsing radar effect */
-@keyframes radar-ping {
-  0% { transform: scale(1); opacity: 0.8; }
-  100% { transform: scale(2.2); opacity: 0; }
+/* Liquid Metal Glass Button Shader Frame */
+.shader-frame {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  border-radius: 9999px;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 15px rgba(47, 107, 255, 0.25));
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.25s ease;
 }
 
-.animate-radar {
-  animation: radar-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+.shader-frame:hover {
+  transform: translateY(-2px) scale(1.02);
+  filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.7)) drop-shadow(0 0 25px rgba(47, 107, 255, 0.45));
 }
 
-/* Glow effects */
-.glow-cyan-box {
-  box-shadow: 0 0 25px -3px rgba(56, 189, 248, 0.25);
-}
-.glow-emerald-box {
-  box-shadow: 0 0 25px -3px rgba(16, 185, 129, 0.25);
+.shader-frame:active {
+  transform: translateY(1px) scale(0.98);
 }
 
-/* KaTeX tweaks for dark editorial theme */
+/* Metal Liquid Glass UI Button */
+.liquid-metal-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.4rem;
+  border-radius: 9999px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #D8CBB3;
+  background: linear-gradient(135deg, rgba(216, 203, 179, 0.16) 0%, rgba(30, 30, 28, 0.85) 50%, rgba(47, 107, 255, 0.22) 100%);
+  border: 1px solid rgba(216, 203, 179, 0.28);
+  box-shadow: 
+    inset 0 1px 1px rgba(255, 255, 255, 0.35),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.6),
+    0 4px 14px rgba(0, 0, 0, 0.5),
+    0 0 16px rgba(47, 107, 255, 0.18);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.liquid-metal-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(216, 203, 179, 0.2), rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.6s ease;
+  pointer-events: none;
+}
+
+.liquid-metal-btn:hover {
+  color: #FFFFFF;
+  border-color: rgba(47, 107, 255, 0.7);
+  background: linear-gradient(135deg, rgba(47, 107, 255, 0.3) 0%, rgba(30, 30, 28, 0.9) 50%, rgba(216, 203, 179, 0.25) 100%);
+  box-shadow: 
+    inset 0 1px 2px rgba(255, 255, 255, 0.6),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.6),
+    0 6px 20px rgba(0, 0, 0, 0.6),
+    0 0 24px rgba(47, 107, 255, 0.45);
+  transform: translateY(-1.5px);
+}
+
+.liquid-metal-btn:hover::before {
+  left: 100%;
+}
+
+.liquid-metal-btn:active {
+  transform: translateY(1px);
+  box-shadow: 
+    inset 0 2px 4px rgba(0, 0, 0, 0.8),
+    0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* Secondary Liquid Metal Glass Pill */
+.liquid-metal-pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 9999px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #D8CBB3;
+  background: rgba(30, 30, 28, 0.8);
+  border: 1px solid rgba(216, 203, 179, 0.2);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.15), 0 2px 8px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.liquid-metal-pill:hover {
+  color: #FFFFFF;
+  border-color: #2F6BFF;
+  background: rgba(47, 107, 255, 0.15);
+  box-shadow: 0 0 15px rgba(47, 107, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.liquid-metal-pill-active {
+  color: #FFFFFF !important;
+  background: linear-gradient(135deg, rgba(47, 107, 255, 0.35) 0%, rgba(30, 30, 28, 0.9) 100%) !important;
+  border-color: #2F6BFF !important;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.4), 0 0 18px rgba(47, 107, 255, 0.45) !important;
+}
+
+/* KaTeX tweaks for Charcoal & Sand theme */
 .katex-display {
   margin: 1.25em 0 !important;
   padding: 1rem 0 !important;
-  color: #38BDF8 !important;
+  color: #D8CBB3 !important;
   overflow-x: auto;
   overflow-y: hidden;
+}
+
+.katex {
+  color: #D8CBB3 !important;
 }
 
 /* Print Styles */
