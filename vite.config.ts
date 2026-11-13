@@ -14,6 +14,7 @@ export default defineConfig({
         manualChunks: {
           vendor: ['react', 'react-dom'],
           animation: ['gsap', 'lenis'],
+          three: ['three'],
           katex: ['katex'],
         }
       }
