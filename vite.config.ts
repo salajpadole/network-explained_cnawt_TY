@@ -11,15 +11,34 @@ export default defineConfig({
       name: 'copy-404-github-pages',
       closeBundle() {
         const distDir = path.resolve(__dirname, 'dist')
-        const indexHtml = path.resolve(distDir, 'index.html')
         const notFoundHtml = path.resolve(distDir, '404.html')
-        if (fs.existsSync(indexHtml)) {
-          fs.copyFileSync(indexHtml, notFoundHtml)
-        }
+        // SPA redirection script for GitHub Pages (https://github.com/rafgraph/spa-github-pages)
+        const redirectScript = `<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>NETWORK EXPLAINED</title>
+    <script type="text/javascript">
+      var pathSegmentsToKeep = 1;
+      var l = window.location;
+      l.replace(
+        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+        l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/?/' +
+        l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
+        (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+        l.hash
+      );
+    </script>
+  </head>
+  <body>
+  </body>
+</html>
+`
+        fs.writeFileSync(notFoundHtml, redirectScript, 'utf-8')
       }
     }
   ],
-  base: './', // Ensures assets load correctly on GitHub Pages
+  base: '/network-explained_cnawt_TY/',
   build: {
     outDir: 'dist',
     assetsDir: 'assets',

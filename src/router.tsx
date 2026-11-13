@@ -15,11 +15,41 @@ const RouterContext = createContext<RouterContextType>({
 export const useRouter = () => useContext(RouterContext);
 
 export const RouterProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // Parse current route from pathname or hash (supports both direct URLs and GitHub Pages # hash routes)
+  // Normalize repository base prefix (e.g. '/network-explained_cnawt_TY')
+  const getBasePath = (): string => {
+    return (import.meta.env.BASE_URL || '/').replace(/\/$/, '');
+  };
+
+  const normalizePath = (rawPath: string): RoutePath => {
+    let clean = (rawPath || '')
+      .trim()
+      .replace(/^#/, '')
+      .replace(/\/$/, '');
+
+    // Strip repository base name if present at start of path
+    clean = clean.replace(/^\/network-explained_cnawt_TY(?=\/|$)/, '');
+
+    if (!clean || clean === '') {
+      return '/';
+    }
+
+    if (clean.includes('/articles/rip-routing-protocol') || clean.includes('/articles/rip')) {
+      return '/articles/rip-routing-protocol';
+    }
+    if (clean === '/articles' || clean.endsWith('/articles')) {
+      return '/articles';
+    }
+    if (clean === '/about' || clean.endsWith('/about')) {
+      return '/about';
+    }
+    return '/';
+  };
+
+  // Parse current route from pathname or hash (supports direct URLs, SPA redirects, and hash fallback)
   const getInitialPath = (): RoutePath => {
     if (typeof window === 'undefined') return '/';
     
-    // Check hash first e.g. /#/articles/rip-routing-protocol or #/articles
+    // Check hash first e.g. /#/articles or #/about
     const hash = window.location.hash.replace(/^#/, '');
     if (hash && hash.startsWith('/')) {
       return normalizePath(hash);
@@ -29,33 +59,18 @@ export const RouterProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     return normalizePath(pathname);
   };
 
-  const normalizePath = (path: string): RoutePath => {
-    let clean = path.trim().replace(/^#/, '').replace(/\/$/, '') || '/';
-    
-    if (clean.includes('/articles/rip-routing-protocol') || clean.includes('/articles/rip')) {
-      return '/articles/rip-routing-protocol';
-    }
-    if (clean.endsWith('/articles') || clean === '/articles') {
-      return '/articles';
-    }
-    if (clean.endsWith('/about') || clean === '/about') {
-      return '/about';
-    }
-    return '/';
-  };
-
   const [currentPath, setCurrentPath] = useState<RoutePath>(getInitialPath);
 
   useEffect(() => {
-    const handlePopState = () => {
+    const handleNavigationChange = () => {
       setCurrentPath(getInitialPath());
     };
 
-    window.addEventListener('popstate', handlePopState);
-    window.addEventListener('hashchange', handlePopState);
+    window.addEventListener('popstate', handleNavigationChange);
+    window.addEventListener('hashchange', handleNavigationChange);
     return () => {
-      window.removeEventListener('popstate', handlePopState);
-      window.removeEventListener('hashchange', handlePopState);
+      window.removeEventListener('popstate', handleNavigationChange);
+      window.removeEventListener('hashchange', handleNavigationChange);
     };
   }, []);
 
@@ -63,9 +78,11 @@ export const RouterProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     const normalized = normalizePath(path);
     setCurrentPath(normalized);
     
-    // Update hash for universal GitHub Pages compatibility with clean back/forward history
-    if (window.location.hash.replace(/^#/, '') !== normalized) {
-      window.history.pushState(null, '', '#' + normalized);
+    const base = getBasePath();
+    const targetUrl = normalized === '/' ? (base ? `${base}/` : '/') : `${base}${normalized}`;
+
+    if (window.location.pathname !== targetUrl) {
+      window.history.pushState(null, '', targetUrl);
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
