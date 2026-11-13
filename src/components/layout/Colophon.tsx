@@ -28,20 +28,20 @@ export const Colophon: React.FC = () => {
   };
 
   return (
-    <footer id="colophon" className="relative border-t border-[#D8CBB3]/15 bg-[#121210] pt-20 pb-24 text-[#D8CBB3]">
+    <footer id="colophon" className="relative border-t border-[#D8CBB3]/15 glass-panel pt-20 pb-24 text-[#D8CBB3]">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
         
         {/* Colophon Masthead */}
         <div className="pb-12 border-b border-[#D8CBB3]/15">
           <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#2F6BFF] mb-2 font-bold">
             <Award className="w-4 h-4" />
-            <span>Colophon & Critical Apparatus</span>
+            <span>Academic References & Bibliography</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-serif text-[#FAF7F2] tracking-tight">
             NETWORK EXPLAINED
           </h2>
           <p className="mt-3 text-sm sm:text-base text-[#D8CBB3]/80 max-w-2xl font-serif italic">
-            Volume 01: An interactive treatise on distributed Bellman-Ford computation, metric infinity, and convergence physics in autonomous network architectures.
+            Volume 01: An academic treatise on distributed Bellman-Ford computation, metric infinity, and convergence dynamics in autonomous network architectures.
           </p>
         </div>
 
@@ -137,31 +137,31 @@ export const Colophon: React.FC = () => {
           </div>
         </div>
 
-        {/* Technical Colophon Specifications */}
+        {/* Subject Matter & Academic Specifications */}
         <div className="py-8 grid grid-cols-2 sm:grid-cols-4 gap-6 text-xs font-mono">
           <div>
-            <div className="text-[#D8CBB3]/50 uppercase tracking-wider text-[10px]">Typography</div>
-            <div className="text-[#FAF7F2] mt-1">Newsreader Variable</div>
-            <div className="text-[#D8CBB3]/70">Plus Jakarta Sans</div>
-            <div className="text-[#D8CBB3]/70">JetBrains Mono</div>
+            <div className="text-[#D8CBB3]/50 uppercase tracking-wider text-[10px]">Protocol Focus</div>
+            <div className="text-[#FAF7F2] mt-1 font-sans font-medium">Routing Information Protocol</div>
+            <div className="text-[#D8CBB3]/70">RIPv1, RIPv2 & RIPng</div>
+            <div className="text-[#D8CBB3]/70">Interior Gateway Routing (IGP)</div>
           </div>
           <div>
-            <div className="text-[#D8CBB3]/50 uppercase tracking-wider text-[10px]">Engine & Physics</div>
-            <div className="text-[#FAF7F2] mt-1">React 18 + TypeScript</div>
-            <div className="text-[#D8CBB3]/70">GSAP ScrollTrigger</div>
-            <div className="text-[#D8CBB3]/70">Lenis Smooth Scroll</div>
+            <div className="text-[#D8CBB3]/50 uppercase tracking-wider text-[10px]">Algorithmic Foundations</div>
+            <div className="text-[#FAF7F2] mt-1 font-sans font-medium">Bellman-Ford Algorithm</div>
+            <div className="text-[#D8CBB3]/70">Distance-Vector Convergence</div>
+            <div className="text-[#D8CBB3]/70">Split Horizon & Poison Reverse</div>
           </div>
           <div>
-            <div className="text-[#D8CBB3]/50 uppercase tracking-wider text-[10px]">Liquid Metal Glass</div>
-            <div className="text-[#FAF7F2] mt-1">Raw WebGL2 Metal Shader</div>
-            <div className="text-[#D8CBB3]/70">GLSL WebGL Shaders</div>
-            <div className="text-[#D8CBB3]/70">Pure Web Audio API</div>
+            <div className="text-[#D8CBB3]/50 uppercase tracking-wider text-[10px]">Standards Track</div>
+            <div className="text-[#FAF7F2] mt-1 font-sans font-medium">IETF RFC 1058 & 2453</div>
+            <div className="text-[#D8CBB3]/70">RFC 2080 (IPv6 Extension)</div>
+            <div className="text-[#D8CBB3]/70">RFC 1724 (RIP Version 2 MIB)</div>
           </div>
           <div>
-            <div className="text-[#D8CBB3]/50 uppercase tracking-wider text-[10px]">Author & Verification</div>
-            <div className="text-[#FAF7F2] mt-1">Salaj Padole</div>
+            <div className="text-[#D8CBB3]/50 uppercase tracking-wider text-[10px]">Author & Curriculum</div>
+            <div className="text-[#FAF7F2] mt-1 font-sans font-medium">Salaj Padole</div>
             <div className="text-[#D8CBB3]/70">Roll No: 43 • PRN: 12412336</div>
-            <div className="text-[#2F6BFF] font-bold">Verified CNAWT Curriculum</div>
+            <div className="text-[#2F6BFF] font-bold">CNAWT Academic Research</div>
           </div>
         </div>
 
@@ -169,10 +169,10 @@ export const Colophon: React.FC = () => {
         <div className="pt-8 border-t border-[#D8CBB3]/10 flex flex-col sm:flex-row items-center justify-between text-xs text-[#D8CBB3]/50 font-mono gap-4">
           <div className="flex items-center gap-2">
             <Shield className="w-3.5 h-3.5 text-[#2F6BFF]" />
-            <span>Open Educational Resource • Free for academic & institutional use</span>
+            <span>Open Educational Resource • Free for academic & curriculum research</span>
           </div>
           <div>
-            Crafted for <span className="text-[#FAF7F2] font-medium">Network Explained</span> • Published 2026
+            Authored by <span className="text-[#FAF7F2] font-medium">Salaj Padole</span> • <span className="text-[#FAF7F2] font-medium">Network Explained</span> • Published 2026
           </div>
         </div>
 
