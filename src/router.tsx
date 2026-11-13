@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-export type RoutePath = '/' | '/articles' | '/articles/rip-routing-protocol' | '/lab' | '/about';
+export type RoutePath = '/' | '/articles' | '/articles/rip-routing-protocol' | '/about';
 
 interface RouterContextType {
   currentPath: RoutePath;
@@ -37,9 +37,6 @@ export const RouterProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     }
     if (path.startsWith('/articles')) {
       return '/articles';
-    }
-    if (path.startsWith('/lab')) {
-      return '/lab';
     }
     if (path.startsWith('/about')) {
       return '/about';

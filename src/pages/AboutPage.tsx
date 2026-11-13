@@ -17,7 +17,7 @@ export const AboutPage: React.FC = () => {
             About NETWORK EXPLAINED
           </h1>
           <p className="mt-4 text-base sm:text-xl text-[#D8CBB3]/80 font-serif italic max-w-3xl leading-relaxed">
-            An open educational publication exploring foundational internet protocols through high-craft creative development, mathematical rigor, and interactive digital laboratories.
+            An open educational publication exploring foundational internet protocols through high-craft creative development, mathematical rigor, and interactive technical storytelling.
           </p>
         </div>
 
@@ -47,9 +47,9 @@ export const AboutPage: React.FC = () => {
             <div className="w-10 h-10 rounded-xl bg-[#2F6BFF]/10 border border-[#2F6BFF]/30 flex items-center justify-center text-[#2F6BFF]">
               <Terminal className="w-5 h-5" />
             </div>
-            <h3 className="text-lg font-serif text-[#FAF7F2]">Interactive Physics</h3>
+            <h3 className="text-lg font-serif text-[#FAF7F2]">Interactive Visualizations</h3>
             <p className="text-xs text-[#D8CBB3]/80 leading-relaxed font-sans">
-              Replacing static screenshots with deterministic simulators that compute live Bellman-Ford exchanges and demonstrate failure modes.
+              Replacing static screenshots with interactive models that demonstrate Bellman-Ford exchanges, packet dissections, and loop failure mechanics.
             </p>
           </div>
         </div>

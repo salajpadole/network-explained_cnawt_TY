@@ -11,7 +11,6 @@ import { VersionComparator } from '../components/editorial/VersionComparator';
 import { ConfigTerminal } from '../components/editorial/ConfigTerminal';
 import { ProtocolRadar } from '../components/editorial/ProtocolRadar';
 import { CalloutBox } from '../components/editorial/CalloutBox';
-import { RipSimulator } from '../components/simulator/RipSimulator';
 import { InteractiveQuiz } from '../components/interactive/InteractiveQuiz';
 import { GlossaryDrawer } from '../components/interactive/GlossaryDrawer';
 import { Colophon } from '../components/layout/Colophon';

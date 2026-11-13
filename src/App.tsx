@@ -12,7 +12,6 @@ import { ElectricRaysBackground } from './effects/ElectricRaysBackground';
 import { HomePage } from './pages/HomePage';
 import { ArticlesPage } from './pages/ArticlesPage';
 import { RIPArticlePage } from './pages/RIPArticlePage';
-import { LaboratoryPage } from './pages/LaboratoryPage';
 import { AboutPage } from './pages/AboutPage';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -55,8 +54,6 @@ const AppContent: React.FC = () => {
         return <RIPArticlePage />;
       case '/articles':
         return <ArticlesPage />;
-      case '/lab':
-        return <LaboratoryPage />;
       case '/about':
         return <AboutPage />;
       case '/':

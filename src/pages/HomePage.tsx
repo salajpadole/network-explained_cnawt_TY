@@ -6,7 +6,7 @@ import { LiquidMetalButton } from "@designcodeio/threeui";
 import "@designcodeio/threeui/style.css";
 import { LiquidMetalAction, LiquidButton } from '../components/buttons/LiquidMetalAction';
 import { 
-  ArrowRight, Compass, Network, FlaskConical, BookOpen, 
+  ArrowRight, Compass, Network, BookOpen, 
   Cpu, ShieldCheck, Activity, Terminal, ExternalLink, Sparkles, Play
 } from 'lucide-react';
 import gsap from 'gsap';
@@ -90,10 +90,10 @@ export const HomePage: React.FC = () => {
                 <LiquidButton
                   variant="secondary"
                   size="md"
-                  onClick={() => handleNavigate('/lab')}
-                  icon={<FlaskConical className="w-4 h-4 text-[#2F6BFF]" />}
+                  onClick={() => handleNavigate('/articles')}
+                  icon={<BookOpen className="w-4 h-4 text-[#2F6BFF]" />}
                 >
-                  Interactive Lab
+                  Browse Catalog
                 </LiquidButton>
               </div>
 
@@ -103,7 +103,7 @@ export const HomePage: React.FC = () => {
                 <span>•</span>
                 <span>15-Hop Metric Limit</span>
                 <span>•</span>
-                <span>Interactive Hardware Simulator</span>
+                <span>Bellman-Ford Analysis</span>
               </div>
 
             </div>
@@ -439,25 +439,25 @@ export const HomePage: React.FC = () => {
             </p>
           </div>
 
-          {/* Interactive Lab Link */}
+          {/* Technical Standards & RFC Archive */}
           <div 
-            onClick={() => handleNavigate('/lab')}
-            className="p-6 rounded-2xl border border-[#D8CBB3]/30 bg-[#262624] hover:border-[#2F6BFF] transition-all cursor-pointer group flex flex-col justify-between shadow-metal-plate"
+            onClick={() => handleNavigate('/articles/rip-routing-protocol')}
+            className="p-6 rounded-2xl border border-[#D8CBB3]/30 glass-panel hover:border-[#2F6BFF] transition-all cursor-pointer group flex flex-col justify-between shadow-metal-plate"
           >
             <div>
               <div className="flex items-center justify-between text-xs font-mono mb-4">
-                <span className="text-[#2F6BFF] font-bold">5 Active Simulations</span>
-                <FlaskConical className="w-4 h-4 text-[#2F6BFF]" />
+                <span className="text-[#2F6BFF] font-bold">RFC Standards Archive</span>
+                <BookOpen className="w-4 h-4 text-[#2F6BFF]" />
               </div>
               <h3 className="text-xl font-serif text-[#F5EFE6] group-hover:text-white transition-colors">
-                Interactive Lab
+                IETF Standards & Specifications
               </h3>
               <p className="text-xs text-[#A8997C] mt-2 leading-relaxed font-sans">
-                Experience dynamic Bellman-Ford calculations and fault injection in real-time.
+                STD 56, RFC 2453, RFC 1058, and RIPng protocol mechanics analyzed with mathematical rigor.
               </p>
             </div>
             <div className="mt-4 text-xs font-mono text-[#2F6BFF] font-bold flex items-center gap-1">
-              <span>Enter Laboratory</span>
+              <span>Read Specifications</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </div>
           </div>
@@ -467,61 +467,7 @@ export const HomePage: React.FC = () => {
 
 
       {/* ========================================================================= */}
-      {/* SCENE 05 — INTERACTIVE PREVIEW ("SEE HOW THE NETWORK THINKS") */}
-      {/* ========================================================================= */}
-      <section className="py-24 sm:py-32 px-4 sm:px-8 md:px-16 border-b border-[#D8CBB3]/10 max-w-6xl mx-auto">
-        <div className="rounded-3xl border border-[#D8CBB3]/25 glass-panel-elevated p-8 sm:p-12 relative overflow-hidden shadow-2xl">
-          
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            
-            <div className="lg:col-span-7 space-y-4">
-              <span className="text-xs font-mono uppercase tracking-widest text-[#2F6BFF] font-bold">
-                Signature Educational Instrument
-              </span>
-              <h2 className="text-3xl sm:text-5xl font-serif text-[#F5EFE6] leading-tight">
-                SEE HOW THE NETWORK THINKS.
-              </h2>
-              <p className="text-base sm:text-lg text-[#D8CBB3] font-serif italic leading-relaxed">
-                Explore how routing information moves between routers and how a network learns where to send data.
-              </p>
-              <p className="text-xs sm:text-sm text-[#A8997C] font-sans leading-relaxed">
-                Our custom digital simulator models link failure injection, count-to-infinity route metric inflation, Split Horizon, and Layer-3 IP packet routing.
-              </p>
-              <div className="pt-4 flex items-center gap-4">
-                <LiquidMetalAction
-                  text="Enter The Lab"
-                  onClick={() => handleNavigate('/lab')}
-                />
-              </div>
-            </div>
-
-            {/* Mini Animated Topology Preview Graphic */}
-            <div className="lg:col-span-5 flex justify-center">
-              <div className="w-full max-w-xs p-6 rounded-2xl glass-panel border border-[#D8CBB3]/20 text-center font-mono text-xs space-y-4 shadow-metal-plate">
-                <div className="text-[10px] uppercase tracking-wider text-[#A8997C]">Live Simulation Sandbox</div>
-                <div className="flex items-center justify-between px-2">
-                  <div className="p-2.5 rounded-lg bg-[#262624] border border-[#2F6BFF]/40 text-[#2F6BFF] font-bold">R1</div>
-                  <div className="flex-1 h-0.5 bg-[#2F6BFF] mx-2 relative">
-                    <span className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-[#D8CBB3] shadow-glow-sand animate-ping" />
-                  </div>
-                  <div className="p-2.5 rounded-lg bg-[#262624] border border-[#2F6BFF]/40 text-[#2F6BFF] font-bold">R2</div>
-                  <div className="flex-1 h-0.5 bg-[#2F6BFF] mx-2" />
-                  <div className="p-2.5 rounded-lg bg-[#262624] border border-[#2F6BFF]/40 text-[#2F6BFF] font-bold">R3</div>
-                </div>
-                <div className="p-2 rounded bg-[#181816] border border-[#D8CBB3]/15 text-[11px] text-[#2F6BFF] font-bold">
-                  State: Deterministic Convergence
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-      </section>
-
-
-      {/* ========================================================================= */}
-      {/* SCENE 06 — CLOSING SECTION & TRANSITION INTO FOOTER */}
+      {/* SCENE 05 — CLOSING SECTION & TRANSITION INTO FOOTER */}
       {/* ========================================================================= */}
       <section className="py-24 sm:py-32 px-4 sm:px-8 md:px-16 text-center max-w-4xl mx-auto">
         <span className="text-xs font-mono uppercase tracking-widest text-[#2F6BFF] mb-3 block font-bold">

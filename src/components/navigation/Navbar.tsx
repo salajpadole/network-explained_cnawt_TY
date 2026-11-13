@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter, RoutePath } from '../../router';
 import { sound } from '../../audio/soundEngine';
-import { Network, Volume2, VolumeX, Menu, X, Compass, FlaskConical, BookOpen, Info } from 'lucide-react';
+import { Network, Volume2, VolumeX, Menu, X, Compass, BookOpen, Info } from 'lucide-react';
 import { ReadingProgressBar } from '../layout/ReadingProgressBar';
 import { LiquidMetalButton } from "@designcodeio/threeui";
 import "@designcodeio/threeui/style.css";
@@ -34,8 +34,7 @@ export const Navbar: React.FC = () => {
 
   const navLinks: { label: string; path: RoutePath; icon: React.FC<{ className?: string }> }[] = [
     { label: 'Home', path: '/', icon: Compass },
-    { label: 'Articles', path: '/articles', icon: BookOpen },
-    { label: 'Lab', path: '/lab', icon: FlaskConical },
+    { label: 'Monographs', path: '/articles', icon: BookOpen },
     { label: 'About', path: '/about', icon: Info },
   ];
 
@@ -100,11 +99,11 @@ export const Navbar: React.FC = () => {
             <span className="text-[#D8CBB3]/80">all systems normal</span>
           </div>
 
-          {/* Quick Lab CTA with Liquid Metal Styling */}
-          {currentPath !== '/lab' && (
+          {/* Direct Monograph Action */}
+          {currentPath !== '/articles/rip-routing-protocol' && (
             <LiquidMetalAction
-              text="Interactive Lab"
-              onClick={() => handleNav('/lab')}
+              text="Read Monograph"
+              onClick={() => handleNav('/articles/rip-routing-protocol')}
               className="hidden lg:flex"
               width={160}
               height={46}
