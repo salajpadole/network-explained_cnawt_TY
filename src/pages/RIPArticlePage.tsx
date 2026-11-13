@@ -11,7 +11,6 @@ import { VersionComparator } from '../components/editorial/VersionComparator';
 import { ConfigTerminal } from '../components/editorial/ConfigTerminal';
 import { ProtocolRadar } from '../components/editorial/ProtocolRadar';
 import { CalloutBox } from '../components/editorial/CalloutBox';
-import { InteractiveQuiz } from '../components/interactive/InteractiveQuiz';
 import { GlossaryDrawer } from '../components/interactive/GlossaryDrawer';
 import { Colophon } from '../components/layout/Colophon';
 import { LiquidMetalButton } from '../effects/liquid-metal-button/LiquidMetalButton';
@@ -516,9 +515,8 @@ export const RIPArticlePage: React.FC = () => {
             </div>
           </section>
 
-          {/* Interactive Quiz & Glossary Embedded at bottom of Article */}
-          <div className="pt-12 border-t border-[#D8CBB3]/15 space-y-12">
-            <InteractiveQuiz />
+          {/* Glossary Embedded at bottom of Article */}
+          <div className="pt-12 border-t border-[#D8CBB3]/15">
             <GlossaryDrawer />
           </div>
 

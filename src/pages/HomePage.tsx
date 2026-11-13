@@ -242,12 +242,12 @@ export const HomePage: React.FC = () => {
               <strong className="text-[#F5EFE6]">NETWORK EXPLAINED</strong> was conceived to illuminate these fundamental protocols. We reject generic documentation summaries and superficial definitions in favor of deep mathematical rigor, frame-by-frame packet inspections, and deterministic network simulations.
             </p>
 
-            {/* Subtle Interactive Reactive Diagram in Charcoal & Sand */}
+            {/* Subtle Editorial Routing Diagram in Charcoal & Sand */}
             <div className="p-6 rounded-2xl bg-[#181816] border border-[#D8CBB3]/15 not-prose mt-8 shadow-metal-plate">
               <div className="flex items-center justify-between text-xs font-mono text-[#A8997C] mb-4 pb-2 border-b border-[#D8CBB3]/10">
                 <span className="flex items-center gap-2">
                   <Activity className="w-3.5 h-3.5 text-[#2F6BFF]" />
-                  <span className="text-[#D8CBB3]">Interactive Routing Axiom</span>
+                  <span className="text-[#D8CBB3]">Routing Axiom Architecture</span>
                 </span>
                 <span className="text-[11px] text-[#2F6BFF] font-bold">Bellman-Ford Dynamic</span>
               </div>
