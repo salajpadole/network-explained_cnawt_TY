@@ -369,7 +369,7 @@ export const HomePage: React.FC = () => {
           {/* Active: Routing */}
           <div 
             onClick={() => handleNavigate('/articles/rip-routing-protocol')}
-            className="p-6 rounded-2xl border border-[#2F6BFF]/40 bg-[#262624] hover:border-[#2F6BFF] transition-all cursor-pointer group shadow-metal-plate"
+            className="p-6 rounded-2xl border border-[#2F6BFF]/40 glass-panel-elevated hover:border-[#2F6BFF] transition-all cursor-pointer group shadow-liquid-glass"
           >
             <div className="flex items-center justify-between text-xs font-mono mb-4">
               <span className="text-[#2F6BFF] font-bold">● Published (Article 001)</span>
@@ -384,7 +384,7 @@ export const HomePage: React.FC = () => {
           </div>
 
           {/* Planned: Network Architecture */}
-          <div className="p-6 rounded-2xl border border-[#D8CBB3]/10 bg-[#181816]/70 opacity-75">
+          <div className="p-6 rounded-2xl border border-[#D8CBB3]/15 glass-panel opacity-80">
             <div className="flex items-center justify-between text-xs font-mono mb-4 text-[#8C816E]">
               <span>Planned Series</span>
               <Network className="w-4 h-4 text-[#8C816E]" />
@@ -398,7 +398,7 @@ export const HomePage: React.FC = () => {
           </div>
 
           {/* Planned: Protocols */}
-          <div className="p-6 rounded-2xl border border-[#D8CBB3]/10 bg-[#181816]/70 opacity-75">
+          <div className="p-6 rounded-2xl border border-[#D8CBB3]/15 glass-panel opacity-80">
             <div className="flex items-center justify-between text-xs font-mono mb-4 text-[#8C816E]">
               <span>Planned Series</span>
               <Activity className="w-4 h-4 text-[#8C816E]" />
@@ -412,7 +412,7 @@ export const HomePage: React.FC = () => {
           </div>
 
           {/* Planned: Security */}
-          <div className="p-6 rounded-2xl border border-[#D8CBB3]/10 bg-[#181816]/70 opacity-75">
+          <div className="p-6 rounded-2xl border border-[#D8CBB3]/15 glass-panel opacity-80">
             <div className="flex items-center justify-between text-xs font-mono mb-4 text-[#8C816E]">
               <span>Planned Series</span>
               <ShieldCheck className="w-4 h-4 text-[#8C816E]" />
@@ -426,7 +426,7 @@ export const HomePage: React.FC = () => {
           </div>
 
           {/* Planned: Data Transmission */}
-          <div className="p-6 rounded-2xl border border-[#D8CBB3]/10 bg-[#181816]/70 opacity-75">
+          <div className="p-6 rounded-2xl border border-[#D8CBB3]/15 glass-panel opacity-80">
             <div className="flex items-center justify-between text-xs font-mono mb-4 text-[#8C816E]">
               <span>Planned Series</span>
               <Terminal className="w-4 h-4 text-[#8C816E]" />
@@ -442,7 +442,7 @@ export const HomePage: React.FC = () => {
           {/* Technical Standards & RFC Archive */}
           <div 
             onClick={() => handleNavigate('/articles/rip-routing-protocol')}
-            className="p-6 rounded-2xl border border-[#D8CBB3]/30 glass-panel hover:border-[#2F6BFF] transition-all cursor-pointer group flex flex-col justify-between shadow-metal-plate"
+            className="p-6 rounded-2xl border border-[#D8CBB3]/25 glass-panel hover:border-[#2F6BFF] transition-all cursor-pointer group flex flex-col justify-between shadow-liquid-glass"
           >
             <div>
               <div className="flex items-center justify-between text-xs font-mono mb-4">

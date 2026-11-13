@@ -30,7 +30,7 @@ export const PacketDissector: React.FC = () => {
         </div>
 
         {/* View mode toggle */}
-        <div className="flex flex-wrap items-center gap-1.5 p-1 bg-[#121210] rounded-xl border border-[#D8CBB3]/20 text-xs font-mono">
+        <div className="flex flex-wrap items-center gap-1.5 p-1.5 bg-[#12141A]/60 backdrop-blur-md rounded-xl border border-[#D8CBB3]/20 text-xs font-mono shadow-inner">
           <LiquidButton
             variant="pill"
             isActive={activeTab === 'visual'}

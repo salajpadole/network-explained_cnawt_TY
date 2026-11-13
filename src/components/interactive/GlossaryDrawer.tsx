@@ -55,7 +55,7 @@ export const GlossaryDrawer: React.FC = () => {
             placeholder="Search terms, acronyms (e.g. CIDR, Split Horizon, AD)..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 bg-[#121210] border border-[#D8CBB3]/25 rounded-xl text-xs sm:text-sm text-[#FAF7F2] placeholder-[#D8CBB3]/40 focus:outline-none focus:border-[#2F6BFF] font-mono transition-colors shadow-inner"
+            className="w-full pl-10 pr-4 py-2 bg-[#12141A]/60 backdrop-blur-md border border-[#D8CBB3]/25 rounded-xl text-xs sm:text-sm text-[#FAF7F2] placeholder-[#D8CBB3]/40 focus:outline-none focus:border-[#2F6BFF] font-mono transition-colors shadow-inner"
           />
         </div>
 

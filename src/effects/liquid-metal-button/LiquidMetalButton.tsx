@@ -160,11 +160,11 @@ export const LiquidMetalButton: React.FC<LiquidMetalButtonProps> = ({
       ctx.roundRect(0, 0, w, h, radius);
       ctx.clip();
 
-      // 1. Base Deep Liquid Obsidian Bed
+      // 1. Base Translucent Liquid Glass Bed (Lets background rays refract through)
       const baseGrad = ctx.createLinearGradient(0, 0, w, h);
-      baseGrad.addColorStop(0, "#101217");
-      baseGrad.addColorStop(0.5, "#0A0B0E");
-      baseGrad.addColorStop(1, "#07080A");
+      baseGrad.addColorStop(0, "rgba(20, 23, 32, 0.65)");
+      baseGrad.addColorStop(0.5, "rgba(12, 14, 19, 0.55)");
+      baseGrad.addColorStop(1, "rgba(7, 8, 12, 0.72)");
       ctx.fillStyle = baseGrad;
       ctx.fillRect(0, 0, w, h);
 
@@ -279,7 +279,7 @@ export const LiquidMetalButton: React.FC<LiquidMetalButtonProps> = ({
       onMouseLeave={handleMouseLeave}
       onMouseDown={() => setIsPressed(true)}
       onMouseUp={() => setIsPressed(false)}
-      className={`group relative inline-flex items-center justify-center select-none overflow-hidden transition-all duration-300 ${
+      className={`group relative inline-flex items-center justify-center select-none overflow-hidden transition-all duration-300 backdrop-blur-xl bg-[#101217]/50 ${
         isCircle
           ? "rounded-full"
           : "rounded-full px-6 py-3.5 sm:px-7 sm:py-4"

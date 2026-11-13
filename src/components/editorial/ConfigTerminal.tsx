@@ -116,7 +116,7 @@ export const ConfigTerminal: React.FC = () => {
         </div>
 
         {/* Platform Switcher */}
-        <div className="flex flex-wrap items-center gap-1.5 p-1 bg-[#121210] rounded-xl border border-[#D8CBB3]/20 text-xs font-mono">
+        <div className="flex flex-wrap items-center gap-1.5 p-1.5 bg-[#12141A]/60 backdrop-blur-md rounded-xl border border-[#D8CBB3]/20 text-xs font-mono shadow-inner">
           <LiquidButton
             variant="pill"
             isActive={activePlatform === 'cisco'}
@@ -142,9 +142,9 @@ export const ConfigTerminal: React.FC = () => {
       </div>
 
       {/* Terminal Window */}
-      <div className="mt-6 rounded-xl bg-[#121210] border border-[#D8CBB3]/25 overflow-hidden shadow-2xl">
+      <div className="mt-6 rounded-xl bg-[#101217]/70 backdrop-blur-xl border border-[#D8CBB3]/25 overflow-hidden shadow-2xl">
         {/* Terminal Titlebar */}
-        <div className="px-4 py-2.5 bg-[#1E1E1C] border-b border-[#D8CBB3]/15 flex items-center justify-between">
+        <div className="px-4 py-2.5 bg-[#14161F]/60 backdrop-blur-md border-b border-[#D8CBB3]/15 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="flex gap-1.5">
               <span className="w-2.5 h-2.5 rounded-full bg-rose-500/70" />

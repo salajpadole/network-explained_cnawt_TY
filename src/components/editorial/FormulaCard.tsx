@@ -79,7 +79,7 @@ export const FormulaCard: React.FC = () => {
       </div>
 
       {/* Rendered Math Formula */}
-      <div className="py-8 px-4 bg-[#121210] rounded-xl my-6 border border-[#D8CBB3]/20 flex flex-col items-center justify-center overflow-x-auto">
+      <div className="py-8 px-4 bg-[#12141A]/50 backdrop-blur-md rounded-xl my-6 border border-[#D8CBB3]/20 flex flex-col items-center justify-center overflow-x-auto shadow-inner">
         <div 
           className="text-2xl sm:text-3xl md:text-4xl select-none text-[#FAF7F2]"
           dangerouslySetInnerHTML={{ __html: formulaHtml }} 
@@ -89,7 +89,7 @@ export const FormulaCard: React.FC = () => {
         </div>
       </div>
 
-      {/* Interactive Token Buttons */}
+      {/* Interactive Token Buttons (Liquid Glass Styled) */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {TOKENS.map((item) => {
           const isSelected = selectedToken.token === item.token;
@@ -97,10 +97,10 @@ export const FormulaCard: React.FC = () => {
             <button
               key={item.token}
               onClick={() => handleSelectToken(item)}
-              className={`p-3 rounded-xl border text-left transition-all ${
+              className={`p-3 rounded-xl border text-left transition-all backdrop-blur-md ${
                 isSelected
-                  ? 'border-[#2F6BFF] bg-[#2F6BFF]/20 shadow-glow-electric text-[#FAF7F2]'
-                  : 'border-[#D8CBB3]/20 bg-[#121210] hover:border-[#2F6BFF] text-[#D8CBB3]/70 hover:text-[#FAF7F2]'
+                  ? 'border-[#2F6BFF] bg-[#18284B]/60 shadow-[0_0_16px_rgba(47,107,255,0.4)] text-[#FAF7F2]'
+                  : 'border-[#D8CBB3]/20 bg-[#14161F]/60 hover:bg-[#18284B]/30 hover:border-[#2F6BFF] text-[#D8CBB3]/70 hover:text-[#FAF7F2]'
               }`}
             >
               <div className="font-mono text-xs text-[#2F6BFF] font-bold flex items-center justify-between">
@@ -116,7 +116,7 @@ export const FormulaCard: React.FC = () => {
       </div>
 
       {/* Selected Token Deep Dive */}
-      <div className="mt-6 p-5 rounded-xl bg-[#121210] border border-[#D8CBB3]/20 text-sm">
+      <div className="mt-6 p-5 rounded-xl bg-[#12141A]/60 backdrop-blur-md border border-[#D8CBB3]/20 text-sm">
         <div className="flex items-start gap-3">
           <div className="p-2 rounded-lg bg-[#2F6BFF]/15 border border-[#2F6BFF]/30 text-[#2F6BFF] shrink-0 mt-0.5">
             <Info className="w-4 h-4" />
@@ -127,11 +127,11 @@ export const FormulaCard: React.FC = () => {
               <span className="text-[#D8CBB3]">{selectedToken.description}</span>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2 text-xs font-mono">
-              <div className="p-2.5 rounded bg-[#1E1E1C] border border-[#D8CBB3]/15">
+              <div className="p-2.5 rounded bg-[#101217]/60 backdrop-blur-sm border border-[#D8CBB3]/15">
                 <span className="text-[#D8CBB3]/50 block mb-1 uppercase tracking-wider text-[10px]">Physical Router Implementation:</span>
                 <span className="text-[#FAF7F2]">{selectedToken.physicalRole}</span>
               </div>
-              <div className="p-2.5 rounded bg-[#1E1E1C] border border-[#D8CBB3]/15">
+              <div className="p-2.5 rounded bg-[#101217]/60 backdrop-blur-sm border border-[#D8CBB3]/15">
                 <span className="text-[#2F6BFF] block mb-1 uppercase tracking-wider text-[10px] font-bold">RIP Protocol Behavior:</span>
                 <span className="text-[#D8CBB3]">{selectedToken.ripContext}</span>
               </div>
