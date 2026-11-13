@@ -63,7 +63,7 @@ const AppContent: React.FC = () => {
   };
 
   return (
-    <div className="relative min-h-screen text-[#D8CBB3] bg-[#090A0C] overflow-x-hidden selection:bg-[#2F6BFF]/30 selection:text-white">
+    <div className="relative min-h-screen text-[#D8CBB3] bg-[#090A0C] overflow-x-clip selection:bg-[#2F6BFF]/30 selection:text-white">
       {/* Dynamic Flowing Electric Blue Rays & Dot Matrix (Lenis-driven) */}
       <ElectricRaysBackground />
 
