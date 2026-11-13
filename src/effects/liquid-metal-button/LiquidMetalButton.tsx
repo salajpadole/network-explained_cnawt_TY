@@ -118,6 +118,13 @@ export const LiquidMetalButton: React.FC<LiquidMetalButtonProps> = ({
 
     let time = 0;
     let isRunning = true;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let isTabVisible = !document.hidden;
+
+    const handleVisibility = () => {
+      isTabVisible = !document.hidden;
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
 
     const updateCanvasSize = () => {
       const rect = container.getBoundingClientRect();
@@ -134,6 +141,10 @@ export const LiquidMetalButton: React.FC<LiquidMetalButtonProps> = ({
 
     const render = () => {
       if (!isRunning) return;
+      if (!isTabVisible) {
+        animFrameRef.current = requestAnimationFrame(render);
+        return;
+      }
       time += 0.024;
 
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -261,6 +272,7 @@ export const LiquidMetalButton: React.FC<LiquidMetalButtonProps> = ({
 
     return () => {
       isRunning = false;
+      document.removeEventListener('visibilitychange', handleVisibility);
       ro.disconnect();
       if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
     };

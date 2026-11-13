@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Lenis from 'lenis';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -18,6 +18,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const AppContent: React.FC = () => {
   const { currentPath } = useRouter();
+  const lenisRef = useRef<Lenis | null>(null);
 
   // Initialize Lenis smooth scroll and connect to GSAP ScrollTrigger
   useEffect(() => {
@@ -32,19 +33,32 @@ const AppContent: React.FC = () => {
       gestureOrientation: 'vertical',
       smoothWheel: true,
     });
+    lenisRef.current = lenis;
 
     lenis.on('scroll', ScrollTrigger.update);
 
-    gsap.ticker.add((time) => {
+    // Named callback stored so it can be cleanly removed
+    const tickerCallback = (time: number) => {
       lenis.raf(time * 1000);
-    });
+    };
 
+    gsap.ticker.add(tickerCallback);
     gsap.ticker.lagSmoothing(0);
 
     return () => {
+      gsap.ticker.remove(tickerCallback);
       lenis.destroy();
-      gsap.ticker.remove(lenis.raf);
+      lenisRef.current = null;
     };
+  }, []);
+
+  // Handle scroll position reset on route change without re-creating Lenis instance
+  useEffect(() => {
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo(0, { immediate: true });
+    } else {
+      window.scrollTo(0, 0);
+    }
   }, [currentPath]);
 
   // Page Routing Switch

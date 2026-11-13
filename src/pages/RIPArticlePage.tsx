@@ -111,7 +111,7 @@ export const RIPArticlePage: React.FC = () => {
           <span className="text-[#D8CBB3]/40">•</span>
           <span className="text-[#D8CBB3]/80">ROUTING PROTOCOLS</span>
           <span className="text-[#D8CBB3]/40">•</span>
-          <span className="text-[#2F6BFF] font-semibold">PEER-REVIEWED MONOGRAPH</span>
+          <span className="text-[#2F6BFF] font-semibold">TECHNICAL MONOGRAPH</span>
         </div>
 
         <h1 className="text-4xl sm:text-6xl md:text-7xl font-serif font-normal text-[#FAF7F2] tracking-tight leading-[1.08]">
@@ -130,7 +130,7 @@ export const RIPArticlePage: React.FC = () => {
             </div>
             <div>
               <div className="text-[#FAF7F2] font-bold">Salaj Padole</div>
-              <div className="text-[#D8CBB3]/50">CNAWT Tutorial Track • PRN: 12412336 • Roll: 43</div>
+              <div className="text-[#D8CBB3]/50">CNAWT Academic Monograph • Research Track</div>
             </div>
           </div>
 
@@ -357,7 +357,7 @@ export const RIPArticlePage: React.FC = () => {
             <div className="text-xs font-mono uppercase tracking-widest text-[#2F6BFF] font-bold">05 / Mathematical Engine</div>
             <h2 className="text-3xl sm:text-4xl font-serif text-[#FAF7F2] tracking-tight">The Bellman-Ford Algorithm</h2>
             <p>
-              The mathematical engine powering distance-vector calculation is the <strong>Bellman-Ford algorithm</strong>, formulated independently by Lester Ford Jr. & Delbert Fulkerson (1956) and Richard Bellman (1958).
+              The mathematical engine powering distance-vector calculation is the <strong>Bellman-Ford algorithm</strong>, developed by Lester R. Ford Jr. (1956, Paper P-923) and Richard Bellman (1958).
             </p>
             <p>
               Formulated as a dynamic programming problem, the Bellman-Ford equation determines the shortest path $D_x(y)$ from node $x$ to node $y$ by minimizing across all immediate neighbors $v$:
@@ -448,13 +448,14 @@ export const RIPArticlePage: React.FC = () => {
             <div className="text-xs font-mono uppercase tracking-widest text-[#2F6BFF] font-bold">09 / Temporal Mechanics</div>
             <h2 className="text-3xl sm:text-4xl font-serif text-[#FAF7F2] tracking-tight">RIP Timers & State Machines</h2>
             <p>
-              Because RIP lacks persistent connection handshakes, it depends on a hierarchy of soft-state timers. Default implementations typically configure:
+              Because RIP lacks persistent transport handshakes, it depends on a deterministic hierarchy of soft-state timers:
             </p>
-            <ul className="list-disc pl-6 space-y-1 text-sm sm:text-base font-mono text-[#D8CBB3]">
-              <li><strong>Periodic Update Timer:</strong> 30 seconds (with ±15% randomized jitter).</li>
-              <li><strong>Route Timeout / Invalid Timer:</strong> 180 seconds (6 consecutive missed updates).</li>
-              <li><strong>Flush / Garbage Collection Timer:</strong> 120–240 seconds (grace period to spread poison).</li>
-              <li><strong>Triggered Updates:</strong> Millisecond-level flash broadcast upon topology change.</li>
+            <ul className="list-disc pl-6 space-y-1.5 text-sm sm:text-base font-mono text-[#D8CBB3]">
+              <li><strong>Periodic Update Timer (RFC 2453 §3.8):</strong> 30 seconds with ±15% randomized jitter (25.5s–34.5s) to eliminate spontaneous oscillator synchronization storms (Floyd-Jacobson).</li>
+              <li><strong>Route Timeout / Invalid Timer:</strong> 180 seconds (6 consecutive missed updates). Clamps route metric to 16 (Infinity).</li>
+              <li><strong>Garbage Collection / Flush Timer:</strong> In RFC 2453, set to 120 seconds after invalidation before complete route purge. In Cisco IOS (<code>timers basic 30 180 180 240</code>), flush runs for 240 seconds total from the last valid update (purging the route 60 seconds after invalidation).</li>
+              <li><strong>Holddown Timer:</strong> 180 seconds in Cisco IOS. Note that holddown is a vendor-specific / implementation-dependent loop dampener and is <em>not</em> specified in RFC 1058 or RFC 2453.</li>
+              <li><strong>Triggered Updates (RFC 2453 §3.8.1):</strong> Emitted promptly upon topology changes without waiting for the 30-second interval, but rate-limited by a 1–5 second randomized suppression timer to prevent update storms across large meshes.</li>
             </ul>
 
             <TimerLifecycleVisualizer />

@@ -39,7 +39,7 @@ export const AboutPage: React.FC = () => {
             </div>
             <h3 className="text-lg font-serif text-[#FAF7F2]">Technical Accuracy & RFCs</h3>
             <p className="text-xs text-[#D8CBB3]/80 leading-relaxed font-sans">
-              Every formula, metric limitation, and timer duration is grounded in primary IETF standards (RFC 1058, RFC 2453, RFC 2080) and peer-reviewed computer networking literature.
+              Every formula, metric limitation, and timer duration is grounded in primary IETF standards (RFC 1058, RFC 2453, RFC 2080, RFC 2082) and authoritative computer networking literature.
             </p>
           </div>
 
@@ -64,7 +64,7 @@ export const AboutPage: React.FC = () => {
             <div>
               <span className="text-[#D8CBB3]/50 block uppercase text-[10px]">Author & Researcher:</span>
               <strong className="text-[#FAF7F2] text-sm">Salaj Padole</strong>
-              <div className="text-[#D8CBB3]/70">Roll No: 43 • PRN: 12412336</div>
+              <div className="text-[#D8CBB3]/70">Undergraduate Research & Monograph Author</div>
             </div>
             <div>
               <span className="text-[#D8CBB3]/50 block uppercase text-[10px]">Curriculum Track & Focus:</span>

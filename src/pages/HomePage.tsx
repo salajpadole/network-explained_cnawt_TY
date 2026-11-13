@@ -176,7 +176,7 @@ export const HomePage: React.FC = () => {
                   <span>STD 56 / 240 AS CONNECTED</span>
                 </div>
                 <span className="text-[#A8997C]">•</span>
-                <span className="text-[#D8CBB3] text-[11px]">PEER-REVIEWED MONOGRAPH</span>
+                <span className="text-[#D8CBB3] text-[11px]">TECHNICAL MONOGRAPH</span>
               </div>
 
               {/* Main Headline */}
@@ -199,7 +199,7 @@ export const HomePage: React.FC = () => {
                 <LiquidButton
                   variant="secondary"
                   size="md"
-                  onClick={() => handleNavigate('/articles/rip-routing-protocol')}
+                  onClick={() => handleNavigate('/articles')}
                   icon={<BookOpen className="w-4 h-4 text-[#2F6BFF]" />}
                 >
                   Browse Catalog
@@ -467,7 +467,7 @@ export const HomePage: React.FC = () => {
             Explore Networking Subjects
           </h2>
           <p className="mt-2 text-[#A8997C] text-sm font-sans max-w-xl">
-            Explore the core pillars of autonomous networking. Active monographs are available immediately; future editions are currently in peer review.
+            Explore the core pillars of autonomous networking. Active monographs are available immediately; future editions are in development.
           </p>
         </div>
 

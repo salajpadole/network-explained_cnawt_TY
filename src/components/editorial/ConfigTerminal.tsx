@@ -36,7 +36,7 @@ exit`,
       { line: 2, explanation: 'Enables the RIP routing daemon process in the IOS kernel.' },
       { line: 4, explanation: 'Forces RIPv2 (RFC 2453) which adds subnet masks, 224.0.0.9 multicast, and authentication.' },
       { line: 6, explanation: 'CRITICAL: Without "no auto-summary", RIP collapses subnets like 10.1.2.0/24 to classful 10.0.0.0/8.' },
-      { line: 11, explanation: 'passive-interface stops sending periodic updates to end-user PCs while still advertising that subnet to neighbors.' },
+      { line: 11, explanation: 'In RIP, passive-interface suppresses outbound RIP advertisements on that port while still listening to incoming updates and advertising the subnet out other interfaces.' },
       { line: 13, explanation: 'Configures standard timers: 30s update, 180s invalid, 180s holddown, 240s flush.' }
     ]
   },

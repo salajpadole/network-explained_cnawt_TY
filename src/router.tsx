@@ -19,23 +19,26 @@ export const RouterProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const getInitialPath = (): RoutePath => {
     if (typeof window === 'undefined') return '/';
     
-    // Check hash first e.g. /#/articles/rip-routing-protocol
+    // Check hash first e.g. /#/articles/rip-routing-protocol or #/articles
     const hash = window.location.hash.replace(/^#/, '');
-    if (hash && (hash.startsWith('/'))) {
+    if (hash && hash.startsWith('/')) {
       return normalizePath(hash);
     }
 
     const pathname = window.location.pathname;
-    // Normalize relative base path if deployed in a subdirectory like /repo-name/
-    const cleanPath = pathname.replace(/^\/[^/]+(?=\/)/, '') || '/';
-    return normalizePath(cleanPath);
+    return normalizePath(pathname);
   };
 
   const normalizePath = (path: string): RoutePath => {
-    if (path.includes('rip') || path.includes('articles/rip') || path === '/articles' || path.startsWith('/articles')) {
+    let clean = path.trim().replace(/^#/, '').replace(/\/$/, '') || '/';
+    
+    if (clean.includes('/articles/rip-routing-protocol') || clean.includes('/articles/rip')) {
       return '/articles/rip-routing-protocol';
     }
-    if (path.startsWith('/about')) {
+    if (clean.endsWith('/articles') || clean === '/articles') {
+      return '/articles';
+    }
+    if (clean.endsWith('/about') || clean === '/about') {
       return '/about';
     }
     return '/';
@@ -60,8 +63,10 @@ export const RouterProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     const normalized = normalizePath(path);
     setCurrentPath(normalized);
     
-    // Update hash for universal GitHub Pages compatibility without 404s
-    window.location.hash = normalized;
+    // Update hash for universal GitHub Pages compatibility with clean back/forward history
+    if (window.location.hash.replace(/^#/, '') !== normalized) {
+      window.history.pushState(null, '', '#' + normalized);
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 

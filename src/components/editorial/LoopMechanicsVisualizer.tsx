@@ -107,12 +107,12 @@ export const LoopMechanicsVisualizer: React.FC = () => {
               <div className="flex items-center justify-between font-mono text-xs text-[#FAF7F2] font-bold">
                 <span className="flex items-center gap-1.5">
                   <Zap className="w-3.5 h-3.5 text-amber-400" />
-                  3. Triggered Updates (Flash Poison)
+                  3. Triggered Updates (Rate-Limited Poison)
                 </span>
                 <span className="text-[10px] text-[#A8997C]">RFC 2453 §3.8.1</span>
               </div>
               <p className="text-xs font-sans text-[#D8CBB3]/80 mt-1 leading-relaxed">
-                Upon detecting a link failure, a router does not wait for the next 30-second timer. It emits an immediate flash update with metric 16 across all neighbor adjacencies.
+                Upon detecting a link failure or metric change, the router immediately broadcasts an update without waiting for the 30s timer. To prevent packet storms, RFC 2453 mandates rate-limiting subsequent triggered updates with a randomized 1–5 second suppression window.
               </p>
             </div>
           </div>

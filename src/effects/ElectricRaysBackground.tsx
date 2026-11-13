@@ -39,6 +39,14 @@ export const ElectricRaysBackground: React.FC = () => {
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
 
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let isTabVisible = !document.hidden;
+
+    const handleVisibilityChange = () => {
+      isTabVisible = !document.hidden;
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
     const handleResize = () => {
       if (!canvas) return;
       width = canvas.width = window.innerWidth;
@@ -85,7 +93,9 @@ export const ElectricRaysBackground: React.FC = () => {
       { core: '#00F0FF', glow: '#2F6BFF', alpha: 0.80 },
     ];
 
-    const rayCount = 38;
+    // Responsive scaling: reduce particle and ray workload on mobile devices
+    const isMobile = window.innerWidth < 768;
+    const rayCount = isMobile ? 20 : 38;
     const rays: RaySpline[] = [];
 
     for (let i = 0; i < rayCount; i++) {
@@ -106,8 +116,8 @@ export const ElectricRaysBackground: React.FC = () => {
       });
     }
 
-    // Floating data particles traveling along the electric rays
-    const particleCount = 55;
+    // Floating data particles traveling along the electric rays (halved on mobile)
+    const particleCount = isMobile ? 22 : 55;
     const particles: Particle[] = [];
     for (let i = 0; i < particleCount; i++) {
       particles.push({
@@ -162,6 +172,10 @@ export const ElectricRaysBackground: React.FC = () => {
     const introDuration = 1800; // 1.8 seconds surging wave on page load / refresh
 
     const render = () => {
+      if (!isTabVisible) {
+        animationFrameId = requestAnimationFrame(render);
+        return;
+      }
       const now = performance.now();
       const introElapsed = now - introStartTime;
       const introRaw = Math.min(Math.max(introElapsed / introDuration, 0), 1);
@@ -389,6 +403,9 @@ export const ElectricRaysBackground: React.FC = () => {
       ctx.fill();
       ctx.restore();
 
+      // If user prefers reduced motion, render static frame once and avoid loop
+      if (prefersReducedMotion) return;
+
       animationFrameId = requestAnimationFrame(render);
     };
 
@@ -398,6 +415,8 @@ export const ElectricRaysBackground: React.FC = () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, []);
 

@@ -7,18 +7,15 @@ import { LiquidButton } from '../buttons/LiquidMetalAction';
 export const Colophon: React.FC = () => {
   const [copiedFormat, setCopiedFormat] = useState<string | null>(null);
 
-  const bibtexCitation = `@article{padole2026rip,
-  title={The Routing Information Protocol & Distance-Vector Convergence Dynamics},
+  const bibtexCitation = `@misc{padole2026rip,
+  title={The Routing Information Protocol: Distance-Vector Dynamics and Convergence Mechanics},
   author={Padole, Salaj},
-  journal={Network Explained: Interactive Technical Monographs},
-  volume={1},
-  number={RFC-2453},
-  pages={1--42},
   year={2026},
-  publisher={Network Explained Foundation}
+  howpublished={Interactive Technical Monograph, Network Explained},
+  note={Computer Networks and Web Technology (CNAWT) Research}
 }`;
 
-  const ieeeCitation = `S. Padole, "The Routing Information Protocol & Distance-Vector Convergence Dynamics," Network Explained: Interactive Technical Monographs, vol. 1, no. RFC-2453, Nov. 2026.`;
+  const ieeeCitation = `S. Padole, "The Routing Information Protocol: Distance-Vector Dynamics and Convergence Mechanics," Network Explained, Interactive Technical Monograph, Nov. 2026.`;
 
   const copyToClipboard = (text: string, format: string) => {
     navigator.clipboard.writeText(text);
@@ -153,14 +150,14 @@ export const Colophon: React.FC = () => {
           </div>
           <div>
             <div className="text-[#D8CBB3]/50 uppercase tracking-wider text-[10px]">Standards Track</div>
-            <div className="text-[#FAF7F2] mt-1 font-sans font-medium">IETF RFC 1058 & 2453</div>
+            <div className="text-[#FAF7F2] mt-1 font-sans font-medium">IETF RFC 1058, 2453 & 2082</div>
             <div className="text-[#D8CBB3]/70">RFC 2080 (IPv6 Extension)</div>
             <div className="text-[#D8CBB3]/70">RFC 1724 (RIP Version 2 MIB)</div>
           </div>
           <div>
             <div className="text-[#D8CBB3]/50 uppercase tracking-wider text-[10px]">Author & Curriculum</div>
             <div className="text-[#FAF7F2] mt-1 font-sans font-medium">Salaj Padole</div>
-            <div className="text-[#D8CBB3]/70">Roll No: 43 • PRN: 12412336</div>
+            <div className="text-[#D8CBB3]/70">Undergraduate Research Track</div>
             <div className="text-[#2F6BFF] font-bold">CNAWT Academic Research</div>
           </div>
         </div>

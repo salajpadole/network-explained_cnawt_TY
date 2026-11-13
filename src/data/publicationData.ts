@@ -150,7 +150,7 @@ export const RIPV2_PACKET_FIELDS: PacketField[] = [
     decimalValue: 2,
     category: 'route-entry',
     description: 'Specifies protocol family. 2 represents standard IPv4. (0xFFFF indicates an authentication block).',
-    significance: 'If the AFI in the first route entry is set to 0xFFFF, the remainder of the 20-byte record is repurposed as an Authentication Header (Plaintext or MD5).'
+    significance: 'If the AFI in the first route entry is set to 0xFFFF, the remainder of the 20-byte record is repurposed as an Authentication Header: Type 2 for simple cleartext passwords (RFC 2453) or Keyed MD5 authentication (RFC 2082).'
   },
   {
     byteRange: '6 - 8',
@@ -350,8 +350,8 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
       { id: 'c', text: '10s Hello -> 40s Dead Interval -> Immediate removal.', isCorrect: false },
       { id: 'd', text: '15s Polling -> 30s Wait -> 120s Garbage collection.', isCorrect: false }
     ],
-    explanation: 'In standard RFC 2453 implementation: If no update arrives within 180 seconds (Route Timeout / Invalid Timer, equal to 6 missed 30s updates), the metric is set to 16. The route remains in the table with metric 16 for an additional 60 seconds (total 240s Flush / Garbage Collection timer) so that poison reverse advertisements can spread network-wide before the record is destroyed.',
-    rfcAnchor: 'RFC 2453 §3.8'
+    explanation: 'In RFC 2453 (§3.8), if no update arrives within 180 seconds (Route Timeout / Invalid Timer, equal to 6 missed 30s updates), the metric is clamped to 16. The route remains in the table for an additional 120 seconds under the Garbage Collection timer before removal. Under Cisco IOS defaults (timers basic 30 180 180 240), the flush timer is set to 240s total (evicting the route 60s after invalidation), while an implementation-dependent 180s holddown timer suppresses equal or inferior metrics.',
+    rfcAnchor: 'RFC 2453 §3.8 / Cisco IOS'
   },
   {
     id: 6,
@@ -442,7 +442,16 @@ export const RFC_BIBLIOGRAPHY = [
     year: '1998',
     status: 'Internet Standard (STD 56)',
     url: 'https://datatracker.ietf.org/doc/html/rfc2453',
-    summary: 'The modern standard adding CIDR/VLSM subnet mask support, multicast destination 224.0.0.9, MD5 cryptographic authentication, route tagging, and next-hop overrides.'
+    summary: 'The modern standard adding CIDR/VLSM subnet mask support, multicast destination 224.0.0.9, Type 2 cleartext authentication, route tagging, and next-hop overrides.'
+  },
+  {
+    code: 'RFC 2082',
+    title: 'RIP-2 MD5 Authentication',
+    author: 'F. Baker, R. Atkinson',
+    year: '1997',
+    status: 'Proposed Standard',
+    url: 'https://datatracker.ietf.org/doc/html/rfc2082',
+    summary: 'Specifies keyed MD5 cryptographic authentication for RIPv2, replacing cleartext passwords with digital signatures to prevent unauthorized route injection.'
   },
   {
     code: 'RFC 2080',
@@ -473,12 +482,12 @@ export const RFC_BIBLIOGRAPHY = [
   },
   {
     code: 'Academic Paper',
-    title: 'Maximal Flow Through a Network',
-    author: 'L. R. Ford Jr. & D. R. Fulkerson',
+    title: 'Network Flow Theory',
+    author: 'Lester R. Ford Jr.',
     year: '1956',
-    status: 'Canadian Journal of Mathematics, 8:399-404',
-    url: 'https://doi.org/10.4153/CJM-1956-045-5',
-    summary: 'Seminal formulation of network optimization algorithms foundational to distance-vector routing theory.'
+    status: 'Paper P-923, The RAND Corporation, Santa Monica, CA',
+    url: 'https://www.rand.org/pubs/papers/P923.html',
+    summary: 'The seminal paper introducing the shortest-path relaxation procedure that forms the algorithmic foundation of the Bellman-Ford algorithm in distance-vector routing.'
   },
   {
     code: 'ACM SIGCOMM Paper',

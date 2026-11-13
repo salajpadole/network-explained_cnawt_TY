@@ -46,10 +46,10 @@ const COMPARISON_ROWS: VersionRow[] = [
   {
     feature: 'Cryptographic Authentication',
     v1: 'None (Plain vulnerability)',
-    v2: 'Plaintext & MD5 HMAC',
+    v2: 'Plaintext (RFC 2453) & MD5 (RFC 2082)',
     vng: 'Delegated to IPv6 IPsec AH/ESP',
     highlight: true,
-    notes: 'RFC 2453 repurposes the first route entry (AFI 0xFFFF) as an MD5 authentication block.'
+    notes: 'RFC 2453 defines Type 2 cleartext authentication; RFC 2082 specifies Keyed MD5 digest authentication using AFI 0xFFFF.'
   },
   {
     feature: 'Next-Hop Specification',

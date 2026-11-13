@@ -206,7 +206,7 @@ export const ArticlesPage: React.FC = () => {
                     />
                   ) : (
                     <span className="text-xs font-mono text-[#D8CBB3]/40 italic">
-                      In Peer Review / Upcoming
+                      In Development / Forthcoming
                     </span>
                   )}
                 </div>
