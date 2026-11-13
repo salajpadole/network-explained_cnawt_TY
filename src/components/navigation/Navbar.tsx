@@ -25,7 +25,7 @@ export const Navbar: React.FC = () => {
 
   const navLinks: { label: string; path: RoutePath; icon: React.FC<{ className?: string }> }[] = [
     { label: 'Home', path: '/', icon: Compass },
-    { label: 'Monographs', path: '/articles', icon: BookOpen },
+    { label: 'Monographs', path: '/articles/rip-routing-protocol', icon: BookOpen },
     { label: 'About', path: '/about', icon: Info },
   ];
 
@@ -41,22 +41,43 @@ export const Navbar: React.FC = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 flex items-center justify-between">
         
-        {/* Publication Wordmark matching Image 4 */}
+        {/* Brandable Typography Wordmark with Hand-Drawn Sketch Accent */}
         <button
           onClick={() => handleNav('/')}
-          className="flex items-center gap-3 group text-left focus:outline-none"
+          className="group text-left focus:outline-none flex flex-col justify-center"
         >
-          <div className="w-9 h-9 rounded-xl bg-[#141518]/90 border border-[#2F6BFF]/50 flex items-center justify-center text-[#2F6BFF] group-hover:border-[#2F6BFF] transition-all shadow-[0_0_15px_rgba(47,107,255,0.25)]">
-            <Network className="w-4.5 h-4.5" />
+          <div className="flex items-baseline gap-2 leading-none">
+            <span className="font-sans uppercase tracking-[0.14em] text-sm sm:text-base font-extrabold text-[#FAF7F2] transition-colors group-hover:text-white">
+              NETWORK
+            </span>
+            <span className="relative inline-block font-serif italic font-normal text-base sm:text-lg text-[#2F6BFF] transition-colors group-hover:text-[#4d82ff]">
+              EXPLAINED
+              {/* Hand-drawn sketch SVG underline for organic depth */}
+              <svg
+                className="absolute -bottom-1.5 left-0 w-full h-2 text-[#2F6BFF] overflow-visible pointer-events-none opacity-85 transition-opacity group-hover:opacity-100"
+                viewBox="0 0 100 8"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M1 5.5C20 2 45 6.5 65 3.5C78 1.5 88 4 99 2.5"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M4 6.8C25 4 52 7.2 75 4.8C86 3.5 94 5.2 97 3.8"
+                  stroke="#D8CBB3"
+                  strokeWidth="0.8"
+                  strokeOpacity="0.5"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </span>
           </div>
-          <div>
-            <div className="text-base sm:text-lg font-bold tracking-tight text-[#D8CBB3] flex items-center gap-1.5">
-              <span className="font-sans uppercase tracking-wider text-xs sm:text-sm font-extrabold text-[#F5EFE6]">NETWORK</span>
-              <span className="font-serif italic font-normal text-[#2F6BFF]">EXPLAINED</span>
-            </div>
-            <div className="text-[9px] uppercase font-mono tracking-widest text-[#A8997C]">
-              INTERACTIVE TECHNICAL MONOGRAPH
-            </div>
+          <div className="text-[9px] uppercase font-mono tracking-[0.22em] text-[#A8997C] mt-2 font-medium">
+            INTERACTIVE TECHNICAL MONOGRAPH
           </div>
         </button>
 

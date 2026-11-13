@@ -66,6 +66,13 @@ export const RIPArticlePage: React.FC = () => {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const el = document.getElementById(`toc-${activeSectionId}`);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }, [activeSectionId]);
+
   const scrollToSection = (id: string) => {
     sound.playClick();
     const el = document.getElementById(id);
@@ -178,15 +185,15 @@ export const RIPArticlePage: React.FC = () => {
       {/* ========================================================================= */}
       {/* READING LAYOUT */}
       {/* ========================================================================= */}
-      <div className={`w-full mx-auto px-4 sm:px-8 md:px-12 mt-6 transition-all duration-300 ${
+      <div className={`w-full mx-auto px-4 sm:px-8 md:px-12 mt-6 ${
         sidebarOpen 
-          ? 'max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-start' 
+          ? 'max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-8' 
           : 'max-w-[1680px] block'
       }`}>
         
-        {/* Sticky Table of Contents (Desktop Sidebar) */}
+        {/* Sticky Table of Contents (Desktop Sidebar - Follows User Scroll) */}
         {sidebarOpen && (
-          <aside className="hidden lg:block lg:col-span-3 sticky top-28 p-5 rounded-2xl topbar-glass-card space-y-4 max-h-[82vh] overflow-y-auto pr-3 font-mono text-xs">
+          <aside className="hidden lg:block lg:col-span-3 sticky top-24 self-start p-5 rounded-2xl topbar-glass-card space-y-4 max-h-[calc(100vh-7rem)] overflow-y-auto pr-3 font-mono text-xs z-30 shadow-2xl">
             <div className="text-[11px] uppercase tracking-widest text-[#D8CBB3]/60 pb-2 border-b border-[#D8CBB3]/15 flex items-center justify-between font-bold">
               <span>Article Contents</span>
               <button
@@ -208,6 +215,7 @@ export const RIPArticlePage: React.FC = () => {
                 return (
                   <button
                     key={sec.id}
+                    id={`toc-${sec.id}`}
                     onClick={() => scrollToSection(sec.id)}
                     className={`w-full text-left py-1.5 px-3 rounded-lg transition-all flex items-center gap-2.5 ${
                       isActive

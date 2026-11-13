@@ -32,11 +32,8 @@ export const RouterProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   };
 
   const normalizePath = (path: string): RoutePath => {
-    if (path.includes('rip') || path.includes('articles/rip')) {
+    if (path.includes('rip') || path.includes('articles/rip') || path === '/articles' || path.startsWith('/articles')) {
       return '/articles/rip-routing-protocol';
-    }
-    if (path.startsWith('/articles')) {
-      return '/articles';
     }
     if (path.startsWith('/about')) {
       return '/about';

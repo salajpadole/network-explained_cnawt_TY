@@ -90,7 +90,7 @@ export const HomePage: React.FC = () => {
                 <LiquidButton
                   variant="secondary"
                   size="md"
-                  onClick={() => handleNavigate('/articles')}
+                  onClick={() => handleNavigate('/articles/rip-routing-protocol')}
                   icon={<BookOpen className="w-4 h-4 text-[#2F6BFF]" />}
                 >
                   Browse Catalog
@@ -285,9 +285,9 @@ export const HomePage: React.FC = () => {
             <h2 className="text-2xl sm:text-3xl font-serif text-[#F5EFE6] mt-1">Featured Publication</h2>
           </div>
           <LiquidMetalAction
-            text="Browse Index"
-            onClick={() => handleNavigate('/articles')}
-            width={170}
+            text="Inspect Monograph"
+            onClick={() => handleNavigate('/articles/rip-routing-protocol')}
+            width={180}
             height={50}
           />
         </div>
